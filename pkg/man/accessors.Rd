@@ -1,6 +1,6 @@
 \encoding{UTF-8}
 \docType{methods}
-\name{Accessors}
+\name{Accessors} 
 \alias{$,simugeno-method}
 \alias{$,simumix-method}
 \alias{$,tabfreq-method}
