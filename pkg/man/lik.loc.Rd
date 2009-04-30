@@ -8,7 +8,7 @@ The \code{lik.loc} function computes the likelihood of the observed data in a fo
 the mixture. 
 }
 \usage{
-lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
+lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL) 
 }
 
 \arguments{
