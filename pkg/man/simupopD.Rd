@@ -72,7 +72,7 @@ Wright S. The genetical structure of populations. \emph{Ann Eugen} 1951;15:323-3
 \examples{
 # simulate allele frequencies for two populations
 data(Tu)
-simupopD(2,2,2,globalfreq=Tu, which.loc=c("FGA","TH01","TPOX"),alpha1=c(0.2,0.3),alpha2=1)
+simupopD(npop=2,globalfreq=Tu, which.loc=c("FGA","TH01","TPOX"),alpha1=c(0.2,0.3),alpha2=1)
   
 }
 \keyword{datagen}
