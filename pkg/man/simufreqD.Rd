@@ -41,7 +41,7 @@ alpha = (alpha1, ..., alphan) where p1+...+pn=1  and  alpha1,..., alphan  > 0.
   
   A matrix containing the simulated allele frequencies. The data is presented in the format of the Journal of
   Forensic Sciences for genetic data: allele names are given in the first column, and frequencies for a given allele are read in rows for the
-  different markers. When a given allele is not observed, the value is encoded  NA (instead of  "-" in the 
+  different markers. When a given allele is not observed, the value is coded  NA (instead of  "-" in the 
   original format).
 }
 \references{ 

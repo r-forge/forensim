@@ -11,7 +11,7 @@ Population genetic analysis of 15 STR loci of Chinese Tu ethnic minority group.
 \format{
 
 a data frame  presented in the format of the Journal of Forensic Sciences for genetic data: allele names are given in the first column, and frequencies for a given 
-allele are read in rows for the different markers. When a given allele is not observed, value is encoded NA 
+allele are read in rows for the different markers. When a given allele is not observed, value is coded NA 
 (rather than "-" in the original format).
   
 

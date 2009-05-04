@@ -21,8 +21,8 @@
     \item{\code{popind}:}{ factor giving the population of each individual   }
     \item{\code{which.loc}:}{character vector giving the locus names}
     \item{\code{tab.geno}:}{ matrix giving the genotypes (in rows) for each locus (in columns). 
-	The genotype of a homozygous individual carrying the allele "12" is encoded "12/12". A heterozygous 
-			individual carrying alleles "12" and "13" is encoded "12/13" or "13/12".}
+	The genotype of a homozygous individual carrying the allele "12" is coded "12/12". A heterozygous 
+			individual carrying alleles "12" and "13" is coded "12/13" or "13/12".}
     \item{\code{indID}:}{ charcter vector giving the individuals ID's}
   }
 }

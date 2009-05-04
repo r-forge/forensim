@@ -25,7 +25,7 @@ been removed.
  This function was designed to handle missing values in data frames in the format of the Journal of Forensic
  Sciences for population genetic data:  allele names are given in the first column, and frequencies for a 
  given allele   are read in rows for  different loci. 
-  When a given allele is not observed, the value is  encoded NA (originally encoded  "-" in the journal).
+  When a given allele is not observed, the value is  coded NA (originally coded  "-" in the journal).
 }
 \author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
 

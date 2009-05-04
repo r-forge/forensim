@@ -15,8 +15,8 @@ along with informations about the individuals poulations and the loci used to si
     \item{\code{ncontri}:}{ integer vector giving the number of contributors to the DNA mixture. If there are 
 	several populations, \code{ncontri} gives the number of contributors per population}
     \item{\code{mix.prof}:}{ matrix giving the contributors genotypes (in rows) for each locus (in columns). 
-	The genotype of a homozygous individual carrying the allele "12" is encoded "12/12". A heterozygous 
-			individual carrying alleles "12" and "13" is encoded "12/13" or "13/12".}
+	The genotype of a homozygous individual carrying the allele "12" is coded "12/12". A heterozygous 
+			individual carrying alleles "12" and "13" is coded "12/13" or "13/12".}
     \item{\code{mix.all}:}{list giving the alleles present in the mixture for each locus}
     \item{\code{which.loc}:}{ character vector giving the locus  names}
     \item{\code{popinfo}:}{ factor giving the population of each contributor }
