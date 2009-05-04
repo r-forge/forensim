@@ -1,12 +1,8 @@
 #include <R.h>
 #include <Rmath.h>
 
-//recurs function for ... o
 
 void taballoc (double ***tab, int l1, int c1)
-/*--------------------------------------------------
-* Allocation de memoire dynamique pour un tableau (l1, c1)
---------------------------------------------------*/
 {
     int i, j;
 
@@ -29,9 +25,6 @@ void taballoc (double ***tab, int l1, int c1)
 
 
 void freetab (double **tab)
-/*--------------------------------------------------
-* Allocation de memoire dynamique pour un tableau (l1, c1)
---------------------------------------------------*/
 {
     int     i, n;
 
