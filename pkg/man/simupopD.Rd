@@ -37,7 +37,7 @@ simupopD(npop = 1, nloc = 1, na = 2, globalfreq = NULL, which.loc = NULL, alpha1
  At  a given locus  L with n alleles,  the  allele frequencies are modelled as a vector of random 
  variables p=(p1, ..., pn) following a Dirichlet distribution with a  parameter vector of length n, 
  where each component is equal to alpha2,  p1+...+pn=1  and alpha2 > 0.\cr  
- Note that a  more sophisticated generation of global allele frequencies is possible using  the \code{simufreqD} function.\cr
+ Note that a  more sophisticated generation of global allele frequencies is possible using  the \code{\link{simufreqD}} function.\cr
  Similarly, allele frequencies in the independent populations are simulated using a Dirichlet Distribution. 
  For example, for the first population to simualte, at a given locus  L with n alleles, 
  the  allele frequencies are modelled as a vector 
