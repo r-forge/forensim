@@ -364,10 +364,12 @@ function(tab,which.loc=NULL,ncontri=1)
 	 for(i in which.loc)
 	 {
 			 loc <- sort(unique(unlist(strsplit(mixprof[,i],'/'))))
-			 mix.all[[i]] <- loc 
+			 temp.loc<- as.character(sort(as.numeric(loc)))
+			 mix.all[[i]] <- temp.loc
 	 }
 	
 	res <- new('simumix')
+	
 	res@mix.all <- mix.all
 	res@mix.prof <- mixprof
 	res@ncontri <- sum(N)
