@@ -40,6 +40,10 @@ lik(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 
 
 \references{ 
+Haned H, Pontier D, Lobry J R, Pene L, Dufour AB.
+Estimating the number of contributors to forensic DNA mixtures: does maximizing the likelihood performs better
+than the maximum allele count? In prep, 2009.\cr
+
 Curran JM, Triggs CM, Buckleton J, Weir BS. Interpreting DNA Mixtures in Structured Populations. 
 \emph{ J Forensic Sci} 1999;44(5): 987-995
 

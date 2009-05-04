@@ -32,6 +32,10 @@ of the number of contributors for each locus in column. The second row, \code{ma
 
 
 \references{
+Haned H, Pontier D, Lobry J R, Pene L, Dufour AB.
+Estimating the number of contributors to forensic DNA mixtures: does maximizing the likelihood performs better
+than the maximum allele count? In prep, 2009.\cr
+
 Egeland T , Dalen I, Mostad PF. 
 Estimating the number of contributors to a DNA profile. \emph{Int J Legal Med} 2003, 117: 271-275 \cr
 Curran, JM , Triggs CM,   Buckleton J , Weir BS. 
