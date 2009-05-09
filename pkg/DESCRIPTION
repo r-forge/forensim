@@ -10,3 +10,4 @@ Description: Statistical methods and simulation tools for the interpretation of 
 License: (>=2)
 LazyLoad: yes
 Collate: classes_definitions.R classes_constructors.R accessors.R simufreqD.R simupopD.R  zzz.R AuxFunc.R  changepop.R PE.R likelihood.R likestim.R mincontri.R
+
