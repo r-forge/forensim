@@ -13,7 +13,7 @@ findfreq(mix, freq, refpop = NULL)
 }
 \arguments{
   \item{mix}{ a \code{simumix} object }
-  \item{freq}{ a \code{tabfreq} object from which to extract the alleles frequencies of the mixture }
+  \item{freq}{ a \code{tabfreq} object from which to extract the allele frequencies of the mixture }
   \item{refpop}{a factor giving the reference population in \code{tabfreq} from which to extract the 
   allele frequencies }
 }

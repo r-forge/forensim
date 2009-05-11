@@ -12,12 +12,12 @@ likestim.loc(mix, freq, refpop = NULL, theta = NULL, loc = NULL)
 \arguments{
   \item{mix}{ a \code{simumix} object}
   \item{freq}{ a \code{tabfreq} object containing the allele frequencies to use for the likelihood calculation}
-  \item{refpop}{ the reference population form which to extract the allele frequencies used in the likelihood 
+  \item{refpop}{ the reference population from which to extract the allele frequencies used in the likelihood 
   calculation.  Default set to NULL, if \code{tabfreq} contains more than one population, \code{refpop} must be 
   specified}
   \item{theta}{a float from  [0,1[ giving Wright's  Fst coefficient. \code{theta} acounts for population subdivision while 
   computing the likelihood of the data. }
-  \item{loc}{ loci to be considered in th estimation. Default (set to NULL) corresponds to all loci. }
+  \item{loc}{ loci to be considered in the estimation. Default (set to NULL) corresponds to all loci. }
 }
 \details{
   The number of contributors which maximizes the likelihood of the data observed in the mixture is searched in the discrete
@@ -35,7 +35,6 @@ of the number of contributors for each locus in column. The second row, \code{ma
 Haned H, Pontier D, Lobry J R, Pene L, Dufour AB.
 Estimating the number of contributors to forensic DNA mixtures: does maximizing the likelihood performs better
 than the maximum allele count? In prep, 2009.\cr
-
 Egeland T , Dalen I, Mostad PF. 
 Estimating the number of contributors to a DNA profile. \emph{Int J Legal Med} 2003, 117: 271-275 \cr
 Curran, JM , Triggs CM,   Buckleton J , Weir BS. 
@@ -46,7 +45,7 @@ Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999
 
 
 
-\seealso{  \code{\link{likestim}}  for overall loci estimations
+\seealso{  \code{\link{likestim}}  for multiloci estimations
 }
 
 

@@ -11,7 +11,7 @@ forensic casework: \linkS4class{tabfreq},   \linkS4class{simugeno} and \linkS4cl
 \linkS4class{tabfreq} objects are used to store allele frequencies, \linkS4class{simugeno} objects are 
 used to store genotypes and 
 \linkS4class{simumix} objects are used to store DNA mixtures.\cr
-For more informations about these classes type 'class ?tabfreq', 'class ?simugeno' and 'class ?simumix'.\cr
+For more information about these classes type 'class ?tabfreq', 'class ?simugeno' and 'class ?simumix'.\cr
 
 %Statistical tools for interpretation of the functions
 %-\code{\link{mincontri}}: the maximum allele count method

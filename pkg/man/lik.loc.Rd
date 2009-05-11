@@ -13,7 +13,7 @@ lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 
 \arguments{
   \item{x}{the number of  contributors to the DNA  mixture }
-  \item{mix}{ a \code{simumix} object which contains the mixture to be analysed }
+  \item{mix}{ a \code{simumix} object which contains the mixture to be analyzed }
   \item{freq}{ a \code{tabfreq} object from which to extract the mixture allele frequencies }
   \item{refpop}{ a factor giving the reference population in \code{tabfreq} from which to extract the mixture allele frequencies
   }
@@ -26,7 +26,7 @@ lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 \details{
 \code{lik.loc} computes the likelihood per locus of the observed alleles.
 This functions implements a particular case of the general formula of the match probability in the 
-case of subdivised populations (Curran et al, 1999), in the particular case where all contributors 
+case of subdivided populations (Curran et al, 1999), in the particular case where all contributors 
 are unknown.\cr
 The Fst coefficient given in the \code{theta} argument allows accounting for population subdivision when all
 contributors belong to the same subpopulation.\cr
@@ -41,8 +41,7 @@ giving the likelihood of the data for each locus.
 Haned H, Pontier D, Lobry J R, Pene L, Dufour AB.
 Estimating the number of contributors to forensic DNA mixtures: does maximizing the likelihood performs better
 than the maximum allele count? In prep, 2009.\cr
- 
-Curran JM, Triggs CM, Buckleton J, Weir BS.
+ Curran JM, Triggs CM, Buckleton J, Weir BS.
 Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999;44(5): 987-995
 }
 

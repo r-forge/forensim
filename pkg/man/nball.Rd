@@ -24,9 +24,9 @@ nball(mix, byloc = FALSE)
 data(strusa)
 #simulating 100 genotypes with allele frequencies from the   African American population
 gaa<-simugeno(strusa,n=c(100,0,0))
-#simulating a 2-person mixture
-maa2<-simumix(gaa,ncontri=c(2,0,0))
-nball(maa2,byloc=TRUE)
+#simulating a 4-person mixture
+maa4<-simumix(gaa,ncontri=c(4,0,0))
+nball(maa4,byloc=TRUE)
 }
 
 \keyword{ misc }

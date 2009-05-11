@@ -27,10 +27,10 @@ mincontri(mix, loc = NULL)
 data(strusa)
 #simulation of 1000 genotypes from the African American allele frequencies
 gen<-simugeno(strusa,n=c(1000,0,0))
-#3-person mixture
-mix3<-simumix(gen,ncontri=c(3,0,0))
+#5-person mixture
+mix5<-simumix(gen,ncontri=c(5,0,0))
 #compare
-likestim(mix3, strusa, refpop="Afri")
-mincontri(mix3)
+likestim(mix5, strusa, refpop="Afri")
+mincontri(mix5)
 }
 \keyword{htest}

@@ -15,7 +15,7 @@ lik(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 
 \arguments{
   \item{x}{the number of contributors to the DNA mixture, default is 1 }
-  \item{mix}{ a \code{simumix} object which contains the mixture to be analysed  }
+  \item{mix}{ a \code{simumix} object which contains the mixture to be analyzed  }
   \item{freq}{ a \code{tabfreq} object from which to extract the allele frequencies }
   \item{refpop}{ a factor giving the reference population in \code{tabfreq} from which to extract the mixture 
   allele frequencies. This argument is used only if \code{freq} contains allele frequencies for multiple
@@ -43,7 +43,6 @@ lik(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 Haned H, Pontier D, Lobry J R, Pene L, Dufour AB.
 Estimating the number of contributors to forensic DNA mixtures: does maximizing the likelihood performs better
 than the maximum allele count? In prep, 2009.\cr
-
 Curran JM, Triggs CM, Buckleton J, Weir BS. Interpreting DNA Mixtures in Structured Populations. 
 \emph{ J Forensic Sci} 1999;44(5): 987-995
 
