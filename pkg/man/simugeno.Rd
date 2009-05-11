@@ -16,14 +16,14 @@
 	If there are several populations,
 	\code{tab.freq}	gives allele frequencies  in each population }
     \item{\code{nind}:}{ integer vector giving the number of individuals. If there are several
-	populations, \code{nind} gives the number of  individuals per population}
+	populations, \code{nind} gives the numbers of  individuals per population}
     \item{\code{pop.names}:}{ factor of populations names}
     \item{\code{popind}:}{ factor giving the population of each individual   }
     \item{\code{which.loc}:}{character vector giving the locus names}
     \item{\code{tab.geno}:}{ matrix giving the genotypes (in rows) for each locus (in columns). 
 	The genotype of a homozygous individual carrying the allele "12" is coded "12/12". A heterozygous 
 			individual carrying alleles "12" and "13" is coded "12/13" or "13/12".}
-    \item{\code{indID}:}{ charcter vector giving the individuals ID's}
+    \item{\code{indID}:}{ character vector giving the individuals ID}
   }
 }
 
