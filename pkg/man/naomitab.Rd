@@ -4,7 +4,7 @@
 
 \title{ Handling of missing values in a data frame }
 \description{
-  \code{naomitab} handles missing values (NA) in a data frame: it returns  a list  of the columns where NA's have
+  \code{naomitab} handles missing values (NA) in a data frame: it returns  a list  of the columns where NAs have
   been  removed.
 }
 \usage{
@@ -17,7 +17,7 @@ naomitab(tab)
 
 \value{
 Returns a list of  length the number of columns in \code{tab}
-where each component is a column of \code{tab}, and the values are the corresponding rows where NA's have
+where each component is a column of \code{tab}, and the values are the corresponding rows where NAs have
 been removed.
   
 }

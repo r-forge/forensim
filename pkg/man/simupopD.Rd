@@ -9,8 +9,8 @@
 Simulate multi-population allele frequencies for independent loci, from a given reference population, 
 fallowing a Dirichlet model.
 Allele frequencies in the populations are generated as random deviates from
-a Dirichlet distribution, which parameters control the deviation of allele frequencies from the avreage values
-in the refrence population. 
+a Dirichlet distribution, which parameters control the deviation of allele frequencies from the average values
+in the reference population. 
 }
 
 \usage{
@@ -25,7 +25,7 @@ simupopD(npop = 1, nloc = 1, na = 2, globalfreq = NULL, which.loc = NULL, alpha1
   Sciences for genetic data. Default corresponds to allele frequencies generated form a Dirichlet distribution 
   with parameter \code{alpha2} for all allele frequencies. }
   \item{which.loc}{ which loci to simulate from the \code{globalfreq} matrix, default considers all loci }
-  \item{alpha1}{ a postive float  vector of length \code{npop} giving  the variance parameter  of the Dirichlet 
+  \item{alpha1}{ a positive float  vector of length \code{npop} giving  the variance parameter  of the Dirichlet 
   distribution used
   to generate allele frequencies in the \code{npop} independent populations }
   \item{alpha2}{a positive float giving the parameter to be used to in the Dirichlet distribution to  generate 
@@ -34,13 +34,13 @@ simupopD(npop = 1, nloc = 1, na = 2, globalfreq = NULL, which.loc = NULL, alpha1
 \details{
  In the reference population, allele frequencies for independent loci  are simulated using a Dirichlet distribution with 
  parameter \code{alpha2}.\cr
- At  a given locus  L with n alleles,  the  allele frequencies are modelled as a vector of random 
+ At  a given locus  L with n alleles,  the  allele frequencies are modeled as a vector of random 
  variables p=(p1, ..., pn) following a Dirichlet distribution with a  parameter vector of length n, 
  where each component is equal to alpha2,  p1+...+pn=1  and alpha2 > 0.\cr  
  Note that a  more sophisticated generation of global allele frequencies is possible using  the \code{\link{simufreqD}} function.\cr
  Similarly, allele frequencies in the independent populations are simulated using a Dirichlet Distribution. 
- For example, for the first population to simualte, at a given locus  L with n alleles, 
- the  allele frequencies are modelled as a vector 
+ For example, for the first population to simulate, at a given locus  L with n alleles, 
+ the  allele frequencies are modeled as a vector 
  of random  variables p=(p1, ..., pn) following a Dirichlet distribution with a  parameter vector of length n:\cr
  (p1(1-a1)/alpha1[1], ..., pn(1-alpha1[1])/alpha1[1]),  where p1+...+pn=1  and alpha1[1] > 0 .
 
@@ -68,7 +68,7 @@ Wright S. The genetical structure of populations. \emph{Ann Eugen} 1951;15:323-3
 \seealso{ \code{\link{simufreqD}}}
  
  
- 
+ 	
  
 \examples{
 # simulate allele frequencies for two populations

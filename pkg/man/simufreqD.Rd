@@ -22,18 +22,18 @@ simufreqD(nloc = 1, nal = 2, alpha = 1)
   
   When  the number of alleles differ between loci, \code{alpha} can either be the same or differ between alleles  at a given locus.
   In the first  case \code{alpha} is a vector of length \code{nloc}, in the second case,  \code{alpha} is a matrix of dimensions
- \code{nal} x \code{loc} where NA's are introduced for alleles not seen at a given locus.
+ \code{nal} x \code{loc} where NAs are introduced for alleles not seen at a given locus.
  }
 }
 
 
 \details{
 Allele frequencies for independent loci  are simulated using a Dirichlet distribution with parameter 
-\code{alpha}. At  a given locus  L with n alleles,  the  allele frequencies are modelled as a  vector of random 
+\code{alpha}. At  a given locus  L with n alleles,  the  allele frequencies are modeled as a  vector of random 
 variables
 p=(p1, ..., pn), following a Dirichlet distribution with parameters:\cr
 alpha = (alpha1, ..., alphan) where p1+...+pn=1  and  alpha1,..., alphan  > 0. 
-%Giving the case that is being considered, the alpha parametrs can either be all equal,
+%Giving the case that is being considered, the alpha parameters can either be all equal,
 %or differ.
 }
 
