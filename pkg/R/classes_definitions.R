@@ -59,7 +59,7 @@ setMethod("show", "simugeno", function(object){
   cat("\n")
   cat("\n@which.loc: vector of ", length(x@which.loc), " locus names")
   cat("\n@nind:", ifelse(length(x@nind)==0,0, x@nind))
-  cat("\n@indID:  vector of individuals ID")
+  cat("\n@indID:  vector of the individuals ID")
   cat("\n@tab.geno: ", nrow(x@tab.geno),"x", ncol(x@tab.geno), "data frame of genotypes")
   cat("\n@tab.freq:  allele frequencies for the", length(x@which.loc), " loci")
   cat("\n\n")
