@@ -8,7 +8,7 @@ Exclusion probability}
 Computes the exclusion probability of a mixture stored in a \code{\linkS4class{simumix}} object
 }
 \usage{
-PE(mix, freq, refpop = NULL, theta = 0, byloc = FALSE, digits = 2)
+PE(mix, freq, refpop = NULL, theta = 0, byloc = FALSE)
 }
 
 \arguments{
@@ -23,8 +23,7 @@ allele frequencies for multiple populations
 \item{byloc}{logical, if TRUE, than the exclusion probability is computed per locus, if FALSE (default),
 the calculations are done for all loci simultaneously
 }
-  \item{digits}{ number of digits to display in the exclusion probability, default is 2
-}
+
 }
 \details{
 \code{PE} gives the exclusion probability  at  a locus, or at several loci when conditions for Hardy Weinberg are

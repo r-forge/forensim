@@ -80,7 +80,7 @@ setMethod("show", "simumix", function(object){
   cat("\n@which.loc: vector of ", length(x@which.loc), " locus names")
   cat("\n@ncontri:", ifelse(length(x@ncontri)==0, 0, x@ncontri))
   cat("\n@mix.prof: ", nrow(x@mix.prof),"x",ncol(x@mix.prof),"data frame of the contributors genotypes")
-  cat("\n@mix.all: list of the alleles found in the mixtures")
+  cat("\n@mix.all: list of the alleles found in the mixture")
   cat("\n@popinfo:",  ifelse(is.null(x@popinfo), "- empty -", "populations of the contributors"))
   cat("\n")
 } 

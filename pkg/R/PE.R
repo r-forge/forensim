@@ -2,9 +2,9 @@
 # haned@biomserv.univ-lyon1.fr
 
 PE <-
-function(mix, freq, refpop=NULL, theta=0,byloc=FALSE,digits=2)
+function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 {
-	options(digits=digits)
+	
 	popinfo <-mix@popinfo
 	loc <- mix@which.loc
 	pe.loc<-matrix(0,nrow=1,ncol=length(loc))
