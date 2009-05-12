@@ -75,7 +75,7 @@ setMethod("show", "simugeno", function(object){
 setMethod("show", "simumix", function(object){
   x <- object
   cat("\n")
-  cat("   # Simumix object: simulated mixtures # \n")
+  cat("   # Simumix object: simulated mixture # \n")
   cat("\n")
   cat("\n@which.loc: vector of ", length(x@which.loc), " locus names")
   cat("\n@ncontri:", ifelse(length(x@ncontri)==0, 0, x@ncontri))
