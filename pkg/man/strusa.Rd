@@ -18,7 +18,7 @@ D8S1179, D13S317, D16S539, D18S51 and  D21S11, belong to the core CODIS loci use
 \usage{data(strusa)}
 
 \format{
-    \code{strusa} is a tabfreq  object giving allele frequencies of 15 lociin three American populations. 
+    \code{strusa} is a tabfreq  object giving allele frequencies of 15 loci in three American populations. 
 }
 
 \references{
@@ -32,7 +32,7 @@ strusa
 #genotypes simulations from each population
 geno<- simugeno(strusa,n=c(100,100,100))
 geno
-#3-person mixture simulation with the contributors from the three different populations
+#3-person mixture simulation with the contributors from the 3 populations
 mix3<- simumix(geno,ncontri=c(1,1,1))
 mix3
 

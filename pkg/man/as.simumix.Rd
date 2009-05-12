@@ -28,7 +28,7 @@ is.simumix(x)
   \item{which.loc}{a character vector giving the chosen loci for the genotypes simulation. The default is set to NULL, 
   which corresponds to all the loci of the \code{simugeno} object given in argument }
   \item{ncontri}{integer vector giving the number of individuals. If there are several populations, 
-  \code{ncontri} gives the number of individuals to simulate per population. Default is one.}
+  \code{ncontri} gives the numbers of individuals to simulate per population. Default is one.}
   \item{x}{an object}}
 
 
@@ -45,7 +45,7 @@ is.simumix(x)
 \examples{
 data(Tu)
 tab<-simugeno(tabfreq(Tu),n=1200)
-#simulation of 3 individual mixture with markers 'FGA', 'TH01' and 'TPOX' 
+#simulation of a 3-person mixture characterized with markers FGA, TH01 and TPOX 
 simumix(tab,which.loc=c('FGA','TH01', 'TPOX') , n =3)
 
 }

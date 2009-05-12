@@ -30,7 +30,7 @@ is.simugeno(x)
   which corresponds to all the loci of the \code{tabfreq} object given in argument }
 	
   \item{n}{ integer vector giving the number of individuals. If there are several
-	populations, \code{n} gives the number individuals to simulate per population. For a single population, default is 1.}
+	populations, \code{n} gives the numbers of  individuals to simulate per population. For a single population, default is 1.}
   \item{x}{an object}
 }
 \value{
@@ -46,7 +46,7 @@ is.simugeno(x)
 \examples{
 data(Tu)
 tab<-tabfreq(Tu)
-#simulation of 3 individual genotypes for the str  marker FGA
+#simulation of 3 individual genotypes for the STR  marker FGA
 geno1 <- simugeno(tab,which.loc='FGA', n =1000)
 geno1@tab.geno
 }
