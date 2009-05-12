@@ -47,6 +47,7 @@ alpha = (alpha1, ..., alphan) where p1+...+pn=1  and  alpha1,..., alphan  > 0.
 }
 \references{ 
 Johnson NL, Kotz S, Balakrishnan N. Continuous Univariate Distributions, vol 2. John Wiley & Sons, 1995.\cr
+
 Wright S. The genetical structure of populations. Ann Eugen 1951;15:323-354. 
 }
 

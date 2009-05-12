@@ -26,8 +26,10 @@ dataL(x = 1, p, theta = 0)
 Haned H, Pontier D, Lobry J R, Pene L, Dufour AB.
 Estimating the number of contributors to forensic DNA mixtures: does maximizing the likelihood performs better
 than the maximum allele count? In prep, 2009.\cr
+
 Curran JM, Triggs CM, Buckleton J,  Weir BS.
 Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999;44(5): 987-995}
+
 \note{\code{dataL} function has several similarities with the \code{Pevid.gen} function 
  of the \emph{forensic} package which gives the match probability of the evidentiary DNA profile with a
  suspect's profile, \code{dataL}  implements a particular case of this probability. Please see \url{http://cran.r-project.org/web/packages/forensic/}}

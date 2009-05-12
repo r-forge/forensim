@@ -62,8 +62,10 @@ the more the population allele frequencies are different from the values  of the
 Nicholson G, Smith AV, Jonsson F, Gustafsson O, Stefansson K, Donnelly P.
  Assessing population differentiation and isolation from single-nucleotide polymorphism data. 
  \emph{J Roy Stat Soc B} 2002;64:695–715 \cr
+ 
 Marchini J, Cardon LR. Discussion on the meeting on "Statistical modelling and analysis of genetic data" 
- \emph{J Roy Stat Soc B}, 2002;64:740-741
+ \emph{J Roy Stat Soc B}, 2002;64:740-741\cr
+ 
 Wright S. The genetical structure of populations. \emph{Ann Eugen} 1951;15:323-354
 
 

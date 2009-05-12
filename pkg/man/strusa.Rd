@@ -22,7 +22,8 @@ D8S1179, D13S317, D16S539, D18S51 and  D21S11, belong to the core CODIS loci use
 }
 
 \references{
-Butler JM, Reeder DJ.  http://www.cstl.nist.gov/strbase/index.htm, last visited: March 4th 2009 \cr
+Butler JM, Reeder DJ.  http://www.cstl.nist.gov/strbase/index.htm, last visited: May 11th 2009 \cr
+
 Butler JM, Schoske R, Vallone MP, Redman JW, Kline MC.  Allele frequencies for 15 autosomal STR loci on U.S. Caucasian, 
 African American, and Hispanic populations. \emph{ J Forensic Sci} 2003;48(8):908-911.
 }
