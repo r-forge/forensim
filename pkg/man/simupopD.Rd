@@ -9,7 +9,7 @@
 Simulate multi-population allele frequencies for independent loci, from a given reference population, 
 following a Dirichlet model.
 Allele frequencies in the populations are generated as random deviates from
-a Dirichlet distribution, the parameters of which control the deviation of allele frequencies from the average values
+a Dirichlet distribution, the parameters of which control the deviation of allele frequencies from the values
 in the reference population. 
 }
 
@@ -45,10 +45,11 @@ alpha1, alpha2 = 1)
  of random  variables p=(p1, ..., pn) following a Dirichlet distribution with a  parameter vector of length n:\cr
  (p1(1-a1)/alpha1[1], ..., pn(1-alpha1[1])/alpha1[1]),  where p1+...+pn=1  and alpha1[1] > 0.\cr
 alpha1[1] is the variance parameter for population 1 and is equivalent to Wright's Fst. The closest this parameter is to one,
-the more the population allele frequencies are different from those of the reference population. Note that the term subpopulation
-is not used here because the only effect of subdivision taken into account is the deviance of the subpopulation allele frequencies
-from the average values of the reference population. The  genotypes are simulated independently within a subpopulation, this 
-might not be the case in subdivided populations.
+the more the population allele frequencies are different from the values  of the reference population. 
+%Note that the term subpopulation
+%is not used here because the only effect of subdivision taken into account is the deviance of the subpopulation allele frequencies
+%from the average values of the reference population. The  genotypes are simulated independently within a subpopulation, this 
+%might not be the case in subdivided populations.
 }
 \value{
   The result is stored in a list with two elements :
