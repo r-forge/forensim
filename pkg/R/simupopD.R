@@ -2,8 +2,7 @@
 # haned@biomserv.univ-lyon1.fr
 
 #simulate  populations allele frequencies from a Dirichlet Distribution
-# the original function simMD in the popgen package (J L Marchini 2004)  is modified to allow different numbers of alleles per marker
-# but only allele frequencies are simulated here 
+
 
 simupopD <-
 function( npop=1, nloc=1, na = 2,  globalfreq = NULL, which.loc=NULL,  alpha1, alpha2 = 1) 
