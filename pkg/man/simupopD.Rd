@@ -9,7 +9,7 @@
 Simulate multi-population allele frequencies for independent loci, from a given reference population, 
 following a Dirichlet model.
 Allele frequencies in the populations are generated as random deviates from
-a Dirichlet distribution, which parameters control the deviation of allele frequencies from the average values
+a Dirichlet distribution, the parameters of which control the deviation of allele frequencies from the average values
 in the reference population. 
 }
 

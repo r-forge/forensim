@@ -5,7 +5,7 @@
 \title{ Function to simulate allele frequencies for independent loci from  a Dirichlet model}
 \description{
  The \code{simufreqD} function simulate single population allele frequencies for independent loci.
- Allele frequencies are generated as random deviates from a Dirichlet distribution, which parameters control
+ Allele frequencies are generated as random deviates from a Dirichlet distribution, the parameters of which control
  the mean and the  variance of the  simulated allele frequencies. 
 }
 \usage{
