@@ -2,7 +2,7 @@
 \name{mincontri}
 \alias{mincontri}
 
-\title{ Minimum of contributors required to explain a forensic DNA mixture}
+\title{ Minimum number of contributors required to explain a forensic DNA mixture}
 \description{
   \code{mincontri} gives the minimum number of contributors required to explain a forensic DNA mixture. This method
   is also known as the maximum allele count as it relies on the maximum number of alleles showed through all available

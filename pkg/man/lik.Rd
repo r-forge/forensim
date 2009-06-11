@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{lik}
 \alias{lik}
-\title{ Likelihood of the alleles observed at different loci in a DNA mixture conditional on the number of 
+\title{ Likelihood of the observed alleles at different loci in a DNA mixture conditional on the number of 
 contributors to the mixture}
 \description{
 The \code{lik} function computes the likelihood of the observed alleles in a forensic DNA mixture, for a set 
@@ -17,8 +17,8 @@ lik(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
   \item{x}{the number of contributors to the DNA mixture, default is 1 }
   \item{mix}{ a \code{simumix} object which contains the mixture to be analyzed  }
   \item{freq}{ a \code{tabfreq} object from which to extract the allele frequencies }
-  \item{refpop}{ a factor giving the reference population in \code{tabfreq} from which to extract the mixture 
-  allele frequencies. This argument is used only if \code{freq} contains allele frequencies for multiple
+  \item{refpop}{ a factor giving the reference population in \code{tabfreq} from which to 
+  extract the allele frequencies. This argument is used only if \code{freq} contains allele frequencies for multiple
   populations, otherwise it is by default set to NULL
   }
   \item{theta}{a float from  [0,1[ giving Wright's  Fst coefficient.

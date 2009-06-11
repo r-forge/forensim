@@ -1,7 +1,7 @@
 \encoding{UTF-8}
 \name{lik.loc}
 \alias{lik.loc}
-\title{Likelihood  per locus of the alleles observed in a DNA mixture conditional on the number of contributors
+\title{Likelihood  per locus of the observed alleles in a DNA mixture conditional on the number of contributors
 to the mixture}
 \description{
 The \code{lik.loc} function computes the likelihood of the observed data in a forensic DNA mixture, for each of the loci involved, conditional on the number of contributors to 
@@ -14,8 +14,9 @@ lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 \arguments{
   \item{x}{the number of  contributors to the DNA  mixture }
   \item{mix}{ a \code{simumix} object which contains the mixture to be analyzed }
-  \item{freq}{ a \code{tabfreq} object from which to extract the mixture allele frequencies }
-  \item{refpop}{ a factor giving the reference population in \code{tabfreq} from which to extract the mixture allele frequencies
+  \item{freq}{ a \code{tabfreq} object from which to extract the allele frequencies }
+  \item{refpop}{ a factor giving the reference population in \code{tabfreq} from which to 
+  extract the allele frequencies
   }
   \item{theta}{a float from  [0,1[ giving Wright's  Fst coefficien. \code{theta}
   acounts for population subdivision while computing the likelihood of the data. }

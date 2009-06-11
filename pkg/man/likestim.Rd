@@ -2,7 +2,7 @@
 \name{likestim}
 \alias{likestim}
 
-\title{ Maximum of likelihood estimation of the number of contributors to a forensic DNA mixture
+\title{ Maximum likelihood estimation of the number of contributors to a forensic DNA mixture
  for a set of loci}
 \description{
   The \code{likestim} function gives  multiloci estimation of the number of contributors to a forensic DNA mixture
@@ -14,7 +14,7 @@ likestim(mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 
 \arguments{
   \item{mix}{ a \code{simumix} object}
-  \item{freq}{ a \code{tabfreq} object containing the allele frequencies to use for the likelihood calculation}
+  \item{freq}{ a \code{tabfreq} object containing the allele frequencies to use for the calculation}
   \item{refpop}{ the reference population from which to extract the allele frequencies used in the likelihood 
   calculation.   If \code{tabfreq} contains more than one population, \code{refpop} must be 
   specified, otherwise, \code{refpop} is set to default (NULL). }

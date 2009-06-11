@@ -2,7 +2,7 @@
 \name{likestim.loc}
 \alias{likestim.loc}
 
-\title{ Maximum of likelihood estimation per locus  of the number of contributors to  forensic DNA mixtures.}
+\title{ Maximum likelihood estimation per locus  of the number of contributors to  forensic DNA mixtures.}
 \description{
  The \code{likestim.loc} function returns the estimation of the number of contributors,
   at each locus, obtained by maximizing the likelihood. }
@@ -11,7 +11,7 @@ likestim.loc(mix, freq, refpop = NULL, theta = NULL, loc = NULL)
 }
 \arguments{
   \item{mix}{ a \code{simumix} object}
-  \item{freq}{ a \code{tabfreq} object containing the allele frequencies to use for the likelihood calculation}
+  \item{freq}{ a \code{tabfreq} object containing the allele frequencies to use for the calculation}
   \item{refpop}{ the reference population from which to extract the allele frequencies used in the likelihood 
   calculation.  Default set to NULL, if \code{tabfreq} contains more than one population, \code{refpop} must be 
   specified}

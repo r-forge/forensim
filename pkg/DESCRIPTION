@@ -1,12 +1,13 @@
 Package: forensim
 Type: Package
 Title: Statistical tools for the interpretation of forensic DNA mixtures
-Version: 1.0-0
+Version: 1.1-0
 Date: 2009-01-19
 Author: Hinda Haned <haned@biomserv.univ-lyon1.fr>
 Maintainer: Hinda Haned <haned@biomserv.univ-lyon1.fr>
+Suggests: gdata,gtools,MASS,mvtnorm,genetics
 Depends: methods
 Description: Statistical methods and simulation tools for the interpretation of forensic DNA mixtures
 License: (>=2)
 LazyLoad: yes
-Collate: classes_definitions.R classes_constructors.R accessors.R simufreqD.R simupopD.R  zzz.R AuxFunc.R  changepop.R PE.R likelihood.R likestim.R mincontri.R
+Collate: classes_definitions.R classes_constructors.R accessors.R simufreqD.R simupopD.R  zzz.R AuxFunc.R  changepop.R PE.R likelihood.R likestim.R mincontri.R Pevid2.R LR.R RMP.R

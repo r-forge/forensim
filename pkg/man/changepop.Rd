@@ -3,10 +3,10 @@
 \alias{changepop}
 
 \title{
-Function to change population related information in forensim objects
+Function to change population-related information in forensim objects
 }
 \description{
-The \code{changepop} function changes population related information in  \linkS4class{tabfreq},  \linkS4class{simugeno} and
+The \code{changepop} function changes population-related information in  \linkS4class{tabfreq},  \linkS4class{simugeno} and
 \linkS4class{simumix} objects
 }
 \usage{
@@ -27,7 +27,7 @@ a character vector  giving the new population names
 }
 
 \value{
-a \code{\link{forensim}} object where the slots containing population related information have been modified
+a \code{\link{forensim}} object where the slots containing population-related information have been modified
 }
 
 \author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}

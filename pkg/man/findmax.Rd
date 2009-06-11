@@ -23,8 +23,9 @@ A matrix of two rows:\cr
 \code{maxval} the  maximum 
 }
 
-\note{\code{findmax} is an auxiliary function for the \code{\link{dataL}} function, used to compute the
-likelihood of a mixture alleles given the number of contributors.  }
+\note{\code{findmax} is an auxiliary function for the \code{\link{dataL}} function, 
+used to compute the
+likelihood of the observed alleles in a mixed DNA stain given the number of contributors.  }
 
 \author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
 

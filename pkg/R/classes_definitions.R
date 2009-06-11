@@ -63,7 +63,7 @@ setMethod("show", "simugeno", function(object){
   cat("\n@tab.geno: ", nrow(x@tab.geno),"x", ncol(x@tab.geno), "data frame of genotypes")
   cat("\n@tab.freq:  allele frequencies for the", length(x@which.loc), " loci")
   cat("\n\n")
-  cat("Population related information: ")
+  cat("Population-related information: ")
   cat("\n@pop.names:", ifelse(is.null(x@pop.names), "- empty -", "population names"))
   cat("\n@popind:", ifelse(is.null(x@popind), "- empty -", "factor giving the population of each individual"))
   cat("\n")
