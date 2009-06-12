@@ -101,42 +101,68 @@ function(mix,freq, refpop=NULL)
 		freqpop <- freq@tab
 		#print(refpop)
 		#no reference pop specified
-		if(is.null(refpop))
-		{	
-			#print('here')
-			#populations in freq and mix mus then be the same
-			stop("no reference population was given")
-		}
-			
-		if(!is.null(refpop))
+		if(length(pop)==1)
 		{
 			respop <- vector('list', 1)
-			names(respop) <- refpop
-			if(!(refpop %in% pop))
-			{
-				stop('uknown reference population')
-			}
-				
-			freq2 <- freqpop[[refpop]][mixmark]
+			names(respop) <- pop
+			freq2 <- freqpop[[pop]][mixmark]
 			res2 <- vector('list',length(mixmark))
 			names(res2) <- mixmark
-				
+					
 			for(k in mixmark)
 			{	#special case when alleles in the mixture are not found un the reference population
 				A2 <- mix.all[[k]]
 				tmp <-freq2[[k]][A2]
-				
+					
 				names(tmp) <- A2
 				y <- which(is.na(tmp))
 				tmp <- replace(tmp,y, 0)
 				res2[[k]] <- tmp
-				
-				
 			}
-			
-			respop[[refpop]] <- res2
-			
-			
+				
+			respop[[pop]] <- res2
+		}
+		
+	
+		#no need to give a name for refpop
+		
+		if(length(pop)>1)
+		{
+			if(is.null(refpop))
+			{	
+				print('here')
+				#populations in freq and mix mus then be the same
+				stop("no reference population was given")
+			}
+				
+			if(!is.null(refpop))
+			{
+				respop <- vector('list', 1)
+				names(respop) <- refpop
+				if(!(refpop %in% pop))
+				{
+					stop('uknown reference population')
+				}
+					
+				freq2 <- freqpop[[refpop]][mixmark]
+				res2 <- vector('list',length(mixmark))
+				names(res2) <- mixmark
+					
+				for(k in mixmark)
+				{	#special case when alleles in the mixture are not found un the reference population
+					A2 <- mix.all[[k]]
+					tmp <-freq2[[k]][A2]
+					
+					names(tmp) <- A2
+					y <- which(is.na(tmp))
+					tmp <- replace(tmp,y, 0)
+					res2[[k]] <- tmp
+					
+					
+				}
+				
+				respop[[refpop]] <- res2
+			}
 		}
 		return(respop)
 	}

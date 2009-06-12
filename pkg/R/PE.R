@@ -5,7 +5,8 @@ PE <-
 function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 {
 	
-	popinfo <-mix@popinfo
+	popinfo <-unique(mix@popinfo)
+	freqinfo <- freq$pop.names
 	loc <- mix@which.loc
 	pe.loc<-matrix(0,nrow=1,ncol=length(loc))
 	colnames(pe.loc) <- loc
@@ -13,13 +14,23 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 	if(is.null(popinfo))
 	{
 		af <- findfreq(mix,freq)
-		print(af)
+		#print(af)
 	}
-	else
-	{
-		af <- findfreq(mix,freq, refpop)[[refpop]]
+	
+	if(!is.null(popinfo))
+	{	
+		if(length(freqinfo)==1)
+		{
+			af <- findfreq(mix,freq)[[popinfo]]
+		}
 		
-	}
+		if(length(freqinfo) >1)
+		{
+			#
+			af <- findfreq(mix,freq, refpop)[[refpop]]
+		}
+	}	#if(length(popinfo>1))
+	
 	
 	if(theta==0)
 	{
