@@ -89,7 +89,7 @@ function(suspect=NULL, filename=NULL, freq, k = c(1, 0, 0), theta = 0,refpop=NUL
 	
     for (h in 1:length(locus))#or in 1:hetstate, as hetstate is of length nlcous
 	{
-        print('hstate');print(hetstate[h])
+        #print('hstate');print(hetstate[h])
 		if(!hetstate[h])#homo case
 		{
 			res[[h]] <- k[1]*(2*theta + (1 - theta)*pi[h,1])* 
