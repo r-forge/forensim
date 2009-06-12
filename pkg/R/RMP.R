@@ -80,8 +80,8 @@ function(suspect=NULL, filename=NULL, freq, k = c(1, 0, 0), theta = 0,refpop=NUL
 	for(i in geno)
 	{	
 		loc <- strsplit(i,'/')[[1]]
-		if(loc[1]==loc[2]){hetstate <-c(hetstate,TRUE)}
-		else{hetstate<-c(hetstate,FALSE)}
+		if(loc[1]==loc[2]){hetstate <-c(hetstate,FALSE)}
+		else{hetstate<-c(hetstate,TRUE)}
 	}
 	
 	
@@ -89,7 +89,8 @@ function(suspect=NULL, filename=NULL, freq, k = c(1, 0, 0), theta = 0,refpop=NUL
 	
     for (h in 1:length(locus))#or in 1:hetstate, as hetstate is of length nlcous
 	{
-        if(!hetstate[h])#homo case
+        print('hstate');print(hetstate[h])
+		if(!hetstate[h])#homo case
 		{
 			res[[h]] <- k[1]*(2*theta + (1 - theta)*pi[h,1])* 
 			(3*theta + (1 - theta)*pi[h,1])/((1+theta)*(1+2*theta)) +
