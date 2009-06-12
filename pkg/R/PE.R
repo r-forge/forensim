@@ -36,7 +36,8 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 	{
 		for( l in  loc)
 		{
-			pe.loc[1,l]<-1-sum((af[[l]]*af[[l]]))
+			#print(af[[l]])
+			pe.loc[1,l]<-1-sum(af[[l]])^2
 		}
 		
 		
@@ -61,7 +62,7 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 		
 		for( l in  loc)
 		{
-			pe.loc[1,l]<-1-sum((af[[l]]*af[[l]]))-theta*sum(af[[l]])*(1-sum(af[[l]]))
+			pe.loc[1,l]<-1-sum(af[[l]])^2-theta*sum(af[[l]])*(1-sum(af[[l]]))
 		}
 		
 		
