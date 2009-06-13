@@ -28,7 +28,7 @@ lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 \code{lik.loc} computes the likelihood per locus of the observed alleles.
 This function implements the general formula for the interpretation
 of DNA mixtures in case of subdivided populations (Curran et al, 1999), in the particular case where all contributors 
-are unknown.\cr
+are unknown and belong to the same subpopulation.\cr
 The Fst coefficient given in the \code{theta} argument allows accounting for population subdivision when all
 contributors belong to the same subpopulation.\cr
 }

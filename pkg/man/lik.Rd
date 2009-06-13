@@ -30,7 +30,8 @@ lik(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 \details{
 \code{lik} computes the likelihood of the alleles observed at all loci conditional on the number of contributors. 
   This function implements the general formula for the interpretation of DNA mixtures
- in case of population subdivision, in the particular case when all contributors belong to the same subpopulation.\cr
+ in case of population subdivision (Curran et al, 1999), in the particular case where all contributors are unknown
+ and belong to the same subpopulation.\cr
   The likelihood for multiple loci is computed as the product of loci likelihoods.
 }
 
