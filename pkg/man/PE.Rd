@@ -3,9 +3,9 @@
 \alias{PE}
 
 \title{
-Exclusion probability}
+The random man exclusion probability}
 \description{
-Computes the exclusion probability of a mixture stored in a \code{\linkS4class{simumix}} object
+Computes the random man exclusion probability of a mixture stored in a \code{\linkS4class{simumix}} object
 }
 \usage{
 PE(mix, freq, refpop = NULL, theta = 0, byloc = FALSE)
