@@ -63,9 +63,9 @@ victim<-"15/18"
 freq<-c(0.033,0.331,0.239,0.056)
 
 # Prosecution proposition: Contributors were the victim and the suspect 
-# Defense proposition: Contributors were the victim and 1 unknown contributor
+# defence proposition: Contributors were the victim and 1 unknown contributor
 # from the same subpopulationas the victim
-# Evaluation of the defense proposition, in case of independence between alleles
+# Evaluation of the defence proposition, in case of independence between alleles
 Pevid2(stain, freq, x=1, T = victim)
 
 # note that if theta=0, the suspect's profile plays no role in the calculation
