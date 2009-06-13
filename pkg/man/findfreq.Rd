@@ -2,9 +2,9 @@
 \name{findfreq}
 \alias{findfreq}
 
-\title{Finds the frequencies of the alleles of a mixture from a tabfreq object }
+\title{Finds the allele frequencies of a mixture from a tabfreq object }
 \description{
- The \code{findfreq} function finds the frequencies of the alleles of a mixture stored in a simumix object, form a given tabfreq object. 
+ The \code{findfreq} function finds the allele frequencies of a mixture stored in a simumix object, form a given tabfreq object. 
  If the tabfreq object contains multiple populations, a reference population from which to extract the  
  frequencies must be specified.
 }
