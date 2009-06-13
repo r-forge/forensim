@@ -15,7 +15,7 @@ Pevid2(stain, freq, x, T = NULL, V = NULL, theta = 0)
   \item{stain}{ vector of distinct alleles (from one specific locus) found in 
    the crime sample.}
   
-  \item{freq}{vector of corresponding allele frequencies in the global population}
+  \item{freq}{vector of the corresponding allele frequencies in the global population}
   
   \item{x}{ the number of unknown contributors to the mixture }
   
