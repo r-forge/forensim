@@ -68,7 +68,7 @@ freq<-c(0.033,0.331,0.239,0.056)
 # Evaluation of the defense proposition, in case of independence between alleles
 Pevid2(stain, freq, x=1, T = victim)
 
-# note that if theta=0, the suspect's profile plays no role in the calculation, a
+# note that if theta=0, the suspect's profile plays no role in the calculation
 #and the same result is obtained
 Pevid2(stain, freq, x=1, T = victim, V = suspect)
 # In case of allele dependencies, measured by theta=0.03

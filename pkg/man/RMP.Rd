@@ -28,7 +28,10 @@ The DNA evidence can also be given in a text file, see argument \code{filename}.
 
 
   \item{filename}{
-the file name from which the input data should be read
+the file name from which the input data should be read. Data mut be a matrix of dimension L x 2, L being the number of loci involved in the DNA
+ evidence.The first column gives the loci names, and the second column gives the suspect's genotype 
+at each locus. A genotype is coded as a character where each string contains two alleles
+ separated by '/'. 
 }
   \item{freq}{
 a \code{tabfreq} object giving the allele frequencies 

@@ -18,7 +18,7 @@ LR(stain, freq, xp=0, xd=0, Tp=NULL, Vp=NULL, Td=NULL, Vd=NULL, theta=0)
 a vector giving the set of (distinct) alleles present in the DNA stain
 }
   \item{freq}{
-vector of corresponding allele frequencies in the global population
+vector of the corresponding allele frequencies in the global population
 }
   \item{xp}{
   the number of unknown contributors to the stain under the prosecuting hypotheses Hp. Default is 0.
@@ -58,7 +58,7 @@ subpopulation of interest}
 \details{
 \code{LR} is the implementation of the general formula of Curran et al (1999) for the
 evaluation of forensic DNA mixtures through likelihood ratios. The likelihood ratio is computed 
-as ratio of two probabilities of the DNA evidence, \eqn{E}, conditional on the evaluated hypotheses:
+as a ratio of two probabilities of the DNA evidence, \eqn{E}, conditional on the evaluated hypotheses:
 \deqn{LR=\frac{P(E|H_p)}{P(E|H_d)},}{P(E|H_p) / P(E|H_d),}
 where \eqn{H_p} denotes the prosecution hypotheses and \eqn{H_d} the defense hypotheses. 
 
@@ -84,7 +84,7 @@ the forensic package by Miriam Marusiakova
 
 
 \seealso{
- the exclusion probability (Random man not excluded) \code{\link{PE}}.}
+ the exclusion probability \code{\link{PE}}.}
 
 \examples{
 # A rape case in Hong Kong (Hu and Fung, Int J Legal Med 2003)

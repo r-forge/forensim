@@ -26,7 +26,7 @@ lik.loc(x = 1, mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 
 \details{
 \code{lik.loc} computes the likelihood per locus of the observed alleles.
-This functions implements a particular case of the general formula of the match probability in the 
+This functions implements a particular case of the general formula of the conditional profile probability in the 
 case of subdivided populations (Curran et al, 1999), in the particular case where all contributors 
 are unknown.\cr
 The Fst coefficient given in the \code{theta} argument allows accounting for population subdivision when all
