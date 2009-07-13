@@ -70,7 +70,7 @@
 	}
 	# Two-allele model main frame
 	tt <- tktoplevel()
-	tkwm.title(tt,"Two Alleles Simulation")
+	tkwm.title(tt,"Two-allele model simulations")
 	frame1 <- tkframe(tt, relief="groove", borderwidth=2)
 	frame2 <- tkframe(tt, relief="groove", borderwidth=2)
  

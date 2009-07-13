@@ -82,7 +82,7 @@
 
 	#main frame
 	tt <- tktoplevel()
-	tkwm.title(tt,"Four-allele model")
+	tkwm.title(tt,"Four-allele model simulations")
 
     frame1 <- tkframe(tt, relief="groove", borderwidth=2)
     frame2 <- tkframe(tt, relief="groove", borderwidth=2)
