@@ -9,7 +9,7 @@ A Tcl/Tk graphical user interface for simple DNA mixtures resolution using allel
 The \code{mastermix} function launches a Tcl/Tk graphical user interface dedicated 
 to the resolution of two-person DNA mixtures using allele peak heights/ or areas information. 
 \code{mastermix} is the implementation of a method developed by Gill et al (see the references section),
-and previously programmed into an Excel macro.  
+and previously programmed into an Excel macro by Dr. Peter Gill. 
 }
 \usage{
 mastermix()
