@@ -42,7 +42,8 @@ plausible genotypes among the six possible combinations. The matrix can be saved
 
 \note{
 \item Please note that some buttons won't be working the same according to your platform, this is because
-the tcl/tk package (more specifically, the tktable widget) is not up to date under Linux and MacOS systems. 
+some of the functionalities of the tcl/tk package (more specifically, the tktable widget) are not up to date under certain  Unix-like 
+systems. 
 Consequently, under these systems, the ``Simulations details" and ``Genotypes filter" buttons yield an interface
 to save the results, and the corresponding tables can only be displayed under the Windows system.
 
