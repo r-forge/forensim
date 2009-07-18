@@ -30,18 +30,21 @@ The likelihood of peak heights (or areas), conditional on the combination of gen
 high if the residuals are low. 
 Genotype combinations are thus selected according to the peak heights with the highest (conditioned) likelihoods. \cr
 
-\code{mastermix} offers a graphical representation of the simulation for three models: 
-\item The two allele model: at a given locus, two alleles are observed in the DNA stain
-\item The three allele model: at a given locus, three alleles are observed in the DNA stain
-\item The four allele model: at a given locus, four alleles are observed in the DNA stain
+\code{mastermix} offers a graphical representation of the simulation for three models:\cr
+-The two allele model: at a given locus, two alleles are observed in the DNA stain.\cr
+-The three allele model: at a given locus, three alleles are observed in the DNA stain.\cr
+-The four allele model: at a given locus, four alleles are observed in the DNA stain.\cr
 
 %Clicking on each button launches a simulation  dialog window for the corresponding model.
 A left-click on each button launches a simulation dialog window for the corresponding
 model, while a right-click opens the corresponding help page. 
 }
 
-\note{Each implemented model can either  be launched  using the  \code{mastermix} interface, or the 
-\code{\link{A2.simu}}, \code{\link{A3.simu}} and  \code{\link{A4.simu}} functions, depending on the considered model.
+\note{
+-Each implemented model can either  be launched  using the  \code{mastermix} interface, or the 
+\code{\link{A2.simu}}, \code{\link{A3.simu}} and  \code{\link{A4.simu}} functions, depending on the considered model.\cr
+-For the computational details, please see forensim tutorial at \url{http://forensim.r-forge.r-project.org/misc/forensim-tutorial.pdf}.
+
 }
 
 \references{
@@ -49,7 +52,7 @@ Gill P, Sparkes P, Pinchin R, Clayton, Whitaker J, Buckleton J. Interpreting sim
 areas. \emph{Forensic Sci Int} 1998;91:41-5.
 }
 \author{ Hinda Haned  \email{haned@biomserv.univ-lyon1.fr} }
-\seealso{\code{\link{A2.simu}}, \code{\link{A3.simu}} and {\code{\link{A4.simu}}}}
+\seealso{\code{\link{A2.simu}}, \code{\link{A3.simu}} and \code{\link{A4.simu}}}
 
  
 

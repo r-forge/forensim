@@ -4,8 +4,8 @@
 #________________________________
 "A2.simu" <- function()
 {
-	sys.info<-.Platform$OS.type
 	if(!require(tcltk)) stop("package tcltk is required")
+	tclRequire("Tktable")
 	#fonts definition
 	font0 <- tkfont.create(family="times",size=35,weight="bold",slant="italic")
 	font1<-tkfont.create(family="times",size=14,weight="bold")#,slant="italic")
@@ -238,59 +238,24 @@
 			tkpack(SSframe)
 		}
 		
-		if(sys.info=="windows")  #add Mcos ?
-		{
-			tclRequire("Tktable")
-			tt<-tktoplevel()
-			tkwm.title(tt,"Most likely genotypes combination")
-			table1 <- tkwidget(tt,"table",variable=tclarray,rows=18,colwidth=8,cols=8,titlerows=1,background="white")
-			
-			table2 <- tkwidget(tt,"table",variable=tclarray2,
-			cols=length(resgeno),selectmode="extended",colwidth=10,rows=1,background="lightblue")
-			
-			table3 <- tkwidget(tt,"table",variable=tclarray3,
-			cols=length(resmix),selectmode="extended",colwidth=10,rows=1,background="lightblue")
-			
-			
-			
-			tit1<-tkwidget(tt,"label",text="Matrix of the residuals",font=font1,foreground="blue")	
-			tit2<-tkwidget(tt,"label",text="Maximum likelihood estimation results",font=font1,foreground="blue")
-			tit3<-tkwidget(tt,"label",text="Most likely genotype combinations",font=font1,foreground="blue")
-			tit4<-tkwidget(tt,"label",text="Corresponding mixture proportions",font=font1,foreground="blue")
 		
-			#tkgrid(tklabel(tt,text="File name"), filevar.entry, save1.butt)
-			filelab<-tkwidget(tt,"label",text="-Save the results-",font=font3,foreground="blue")
-			save.butt<-tkbutton(tt, text="Save", font=font3,command=saveFunction)
-			tkpack(tit1,table1,tit3,table2,tit4,table3,save.butt)
+		tt<-tktoplevel()
+		tkwm.title(tt,"Most likely genotypes combination")
+		table1 <- tkwidget(tt,"table",variable=tclarray,rows=18,colwidth=8,cols=8,titlerows=1,background="white")
+		table2 <- tkwidget(tt,"table",variable=tclarray2,
+		cols=length(resgeno),selectmode="extended",colwidth=10,rows=1,background="lightblue")
+		table3 <- tkwidget(tt,"table",variable=tclarray3,
+		cols=length(resmix),selectmode="extended",colwidth=10,rows=1,background="lightblue")
+		tit1<-tkwidget(tt,"label",text="Matrix of the residuals",font=font1,foreground="blue")	
+		tit2<-tkwidget(tt,"label",text="Maximum likelihood estimation results",font=font1,foreground="blue")
+		tit3<-tkwidget(tt,"label",text="Most likely genotype combinations",font=font1,foreground="blue")
+		tit4<-tkwidget(tt,"label",text="Corresponding mixture proportions",font=font1,foreground="blue")
+		#tkgrid(tklabel(tt,text="File name"), filevar.entry, save1.butt)
+		filelab<-tkwidget(tt,"label",text="-Save the results-",font=font3,foreground="blue")
+		save.butt<-tkbutton(tt, text="Save", font=font3,command=saveFunction)
+		tkpack(tit1,table1,tit3,table2,tit4,table3,save.butt)
 		
-		}
-		
-		else
-		{
-			
-			ss<-tktoplevel()
-			SSframe <- tkframe(ss, relief="groove",width=35)
-			tkwm.title(ss,"Filenames")
-			filevar1 <- tclVar("simulation2.txt")
-			filevar1.entry <- tkentry(SSframe, textvariable=filevar1, width=12)
-			filevar2 <- tclVar("likelihood2.txt")
-			filevar2.entry <- tkentry(SSframe, textvariable=filevar2, width=12)
-			#filevar2.entry <- tkentry(SSframe, textvariable=filevar, width=12)
-			#tkgrid(tklabel(SSframe, text="- Enter filenames -",font=font1, foreground="blue"), columnspan=15)
-			save1.butt<-tkbutton(ss, text="Enter", font=font3,command=function() save1(tclvalue(filevar1),tclvalue(filevar2)))
-			tkgrid(tklabel(SSframe,text="Simulations results",font=font4), filevar1.entry)
-			tkgrid(tklabel(SSframe,text="Maximum likelihood",font=font4), filevar2.entry)
-			tkgrid(filevar2.entry, save1.butt)		
-			tkpack(SSframe)
-								
-			# tt<-tktoplevel()
-			# tkwm.title(tt,"Most likely genotypes combination")
-			# tkpack(save1.butt)
-		}
-		
-		
-		
-		#tkpack(filevar.entry,save1.butt,side="left")
+	#tkpack(filevar.entry,save1.butt,side="left")
 	}
 
 
@@ -338,33 +303,16 @@
 		
 		
 		
-		if(sys.info=="windows")
-		{
-			tclRequire("Tktable")
-			tt2<-tktoplevel()
-			tkwm.title(tt2,"Genotypes filter")
-			#tab1.tit<-tkwidget(tt2,"label",text="Genotypes filter",font=font1,foreground="blue")
-			save2.butt<-tkbutton(tt2, text="Save", font=font3,command=saveFunction2)
-			tab1.tcl<-tkwidget(tt2,"table",variable=tab1array,rows=8,colwidth=18,cols=2,titlerows=1,background="white")
-			tkpack(tab1.tcl,save2.butt)
-			#tkpack(tab1.tit,tab1.tcl,save2.butt)
-		}
+		tt2<-tktoplevel()
+		tkwm.title(tt2,"Genotypes filter")
+		#tab1.tit<-tkwidget(tt2,"label",text="Genotypes filter",font=font1,foreground="blue")
+		save2.butt<-tkbutton(tt2, text="Save", font=font3,command=saveFunction2)
+		tab1.tcl<-tkwidget(tt2,"table",variable=tab1array,rows=8,colwidth=18,cols=2,titlerows=1,background="white")
+		tkpack(tab1.tcl,save2.butt)
+		#tkpack(tab1.tit,tab1.tcl,save2.butt)
 		
-		else
-		{
-			hh<-tktoplevel()
-			HHframe<- tkframe(hh, relief="groove")
-			tkwm.title(hh,"Filenames")
-			filtervar<- tclVar("filter2.txt")
-			filtervar.entry <- tkentry(HHframe, textvariable=filtervar, width=12)
-			#filevar2.entry <- tkentry(SSframe, textvariable=filevar, width=12)
-			#tkgrid(tklabel(HHframe, text="- Enter filename -",font=font1, foreground="blue"), columnspan=15)
-			saveHH.butt<-tkbutton(hh, text="Enter", font=font3,command=function() saveHH(tclvalue(filtervar)))
-			tkgrid(tklabel(HHframe,text="Genotypes filter",font=font4), filtervar.entry)
-			tkgrid(filtervar.entry, saveHH.butt)		
-			tkpack(HHframe)
-			
-		}
+		
+		
 			
 	}
 

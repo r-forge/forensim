@@ -28,24 +28,23 @@ The likelihood of peak heights (or areas), given the combination of genotypes, i
 high if the residuals are low. 
 Genotype combinations are thus selected according to the peak heights with the highest  likelihoods. \cr
 
-The \code{A3.simu()} function launches a dialog window with three  buttons:
-\item \code{Plot simulations}: plot of the residuals of each possible genotype combination for varying values of the mixture proportion across the interval [0.1, 0.9].
-The observed mixture proportion is also reported on the plot. 
-\item \code{Simulation details}: a matrix containing the simulation results. Simulation details and  genotype combinations
+The \code{A3.simu()} function launches a dialog window with three  buttons:\cr
+-\code{Plot simulations}: plot of the residuals of each possible genotype combination for varying values of the mixture proportion across the interval [0.1, 0.9].
+The observed mixture proportion is also reported on the plot.\cr
+-\code{Simulation details}: a matrix containing the simulation results. Simulation details and genotype combinations
 with the lowest residuals can be saved as a text file by clicking the 
-``Save" button.  It is also possible to choose specific paths and names for the save files
-\item \code{Genotypes filter}: a matrix giving the mixture proportion conditional on the genotype combination. This conditional mixture proportion helps filter the most
-plausible genotypes among the twelve possible combinations. The matrix can be saved as a  text file by clicking the ``Save" button. It is also possible to choose a specific path and a name for the save file.\cr
+``Save" button.  It is also possible to choose specific paths and names for the save files.\cr
+-\code{Genotypes filter}: a matrix giving the mixture proportion conditional on the genotype combination. This conditional mixture proportion helps filter the most
+plausible genotypes among the twelve possible combinations. The matrix can be saved as a text file by clicking the ``Save" button. 
+It is also possible to choose a specific path and a name for the save file.\cr
 }
 
 \note{
-\item Please note that some buttons won't be working the same according to your platform, this is because
-some of the functionalities of the tcl/tk package (more specifically, the tktable widget) are not up to date under certain Unix-like 
-systems. 
-Consequently, under these systems, the ``Simulations details" and ``Genotypes filter" buttons yield an interface
-to save the results, and the corresponding tables can only be displayed under the Windows system.
 
-\item Please see forensim tutorial for the computational details at \url{http://forensim.r-forge.r-project.org/misc/forensim-tutorial.pdf}
+-Linux users may have to download the \code{libtktable} package to their system before using the \code{A3.simu} function. 
+This is due to the \code{Tktable} widget,  used in \code{forensim}, which is not (always)
+downloaded with the Tcl/Tk package.\cr
+-For the computational details, please see forensim tutorial at \url{http://forensim.r-forge.r-project.org/misc/forensim-tutorial.pdf}.
 }
 
 \references{
