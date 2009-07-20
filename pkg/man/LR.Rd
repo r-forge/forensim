@@ -21,29 +21,29 @@ a vector giving the set of (distinct) alleles present in the DNA stain
 vector of the corresponding allele frequencies in the global population
 }
   \item{xp}{
-  the number of unknown contributors to the stain under the prosecuting hypotheses Hp. Default is 0.
+  the number of unknown contributors to the stain under the prosecution hypothesis Hp. Default is 0.
 }
   \item{xd}{
- the number of unknown contributors to the stain under the defence hypotheses Hd. Default is 0.
+ the number of unknown contributors to the stain under the defence hypothesis Hd. Default is 0.
 }
 \item{Tp}{
 a vector of strings where each string contains two alleles separated by '/', 
-corresponding to one known contributor under the prosecution hypotheses Hp. 
+corresponding to one known contributor under the prosecution hypothesis Hp. 
 The length of the vector equals the number of known contributors. Default is NULL.
 }
 \item{Vp}{
 a vector of strings where each string contains two alleles separated by '/', 
-corresponding to one known non-contributor under the prosecution hypotheses Hp. The length of 
+corresponding to one known non-contributor under the prosecution hypothesis Hp. The length of 
 the vector equals the number of known non-contributors.  Default is NULL.
 }
 \item{Td}{
 a vector of strings where each string contains two alleles separated by '/', 
-corresponding to one known contributor under the defence hypotheses Hd. The length of the
+corresponding to one known contributor under the defence hypothesis Hd. The length of the
 vector equals the number of known contributors.  Default is NULL.
 }
   \item{Vd}{
 a vector of strings where each string contains two alleles separated by '/', 
-corresponding to one known non-contributor under the defence hypotheses H2. The length of the
+corresponding to one known non-contributor under the defence hypothesis Hd. The length of the
  vector equals the number of known non-contributors.  Default is NULL.
 }
 
@@ -60,7 +60,7 @@ subpopulation of interest}
 evaluation of forensic DNA mixtures through likelihood ratios. The likelihood ratio is computed 
 as a ratio of two probabilities of the DNA evidence, \eqn{E}, conditional on the evaluated hypotheses:
 \deqn{LR=\frac{P(E|H_p)}{P(E|H_d)},}{P(E|H_p) / P(E|H_d),}
-where \eqn{H_p} denotes the prosecution hypotheses and \eqn{H_d} the defence hypotheses. 
+where \eqn{H_p} denotes the prosecution hypothesis and \eqn{H_d} the defence hypothesis. 
 
 In case of population subdivision, contributors to the DNA stain are considered to come from the same 
 subpopulation.
@@ -97,8 +97,8 @@ victim<-"15/18"
 # corresponding allele frequencies 
 freq<-c(0.033,0.331,0.239,0.056)
 
-# Prosecution hypotheses: Contributors were the victim and the suspect 
-# defence hypotheses: Contributors were the victim and 1 unknown contributor
+# Prosecution hypothesis: Contributors were the victim and the suspect 
+# defence hypothesis: Contributors were the victim and 1 unknown contributor
 # Likelihood ratios for DNA evidence for different alternatives:
 LR(stain,freq,xp=0,Tp=c(victim,suspect),Vp=NULL,Td=victim,Vd=suspect,xd=1)
 

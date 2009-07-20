@@ -3,7 +3,7 @@
 \title{ Conditional profile probabilities}
 
 \description{
-Calculates the probability of observing a set of DNA profiles conditional on a given hypotheses
+Calculates the probability of observing a set of DNA profiles conditional on a given hypothesis
 specifying who were the contributors to the observed profiles.
 All the  individuals involved in the analyzed case are assumed to come from the same
 subpopulation with a given coancestry coefficient. 
