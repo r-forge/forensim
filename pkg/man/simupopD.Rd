@@ -46,10 +46,7 @@ alpha1, alpha2 = 1)
  (p1(1-a1)/alpha1[1], ..., pn(1-alpha1[1])/alpha1[1]),  where p1+...+pn=1  and alpha1[1] > 0.\cr
 alpha1[1] is the variance parameter for population 1 and is equivalent to Wright's Fst. The closest this parameter is to one,
 the more the population allele frequencies are different from the values  of the reference population. 
-%Note that the term subpopulation
-%is not used here because the only effect of subdivision taken into account is the deviance of the subpopulation allele frequencies
-%from the average values of the reference population. The  genotypes are simulated independently within a subpopulation, this 
-%might not be the case in subdivided populations.
+
 }
 \value{
   The result is stored in a list with two elements :

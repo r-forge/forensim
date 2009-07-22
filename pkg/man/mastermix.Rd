@@ -34,7 +34,7 @@ Genotype combinations are thus selected according to the peak heights with the h
 -The three allele model: at a given locus, three alleles are observed in the DNA stain.\cr
 -The four allele model: at a given locus, four alleles are observed in the DNA stain.\cr
 
-%Clicking on each button launches a simulation  dialog window for the corresponding model.
+
 A left-click on each button launches a simulation dialog window for the corresponding
 model, while a right-click opens the corresponding help page. 
 }

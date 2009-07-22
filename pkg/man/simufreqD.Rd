@@ -34,8 +34,7 @@ Allele frequencies for independent loci  are simulated using a Dirichlet distrib
 variables
 p=(p1, ..., pn), following a Dirichlet distribution with parameters:\cr
 alpha = (alpha1, ..., alphan) where p1+...+pn=1  and  alpha1,..., alphan  > 0. 
-%Giving the case that is being considered, the alpha parameters can either be all equal,
-%or differ.
+
 }
 
 \value{
