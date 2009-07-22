@@ -1,5 +1,4 @@
 \name{changepop}
-\Rdversion{1.1}
 \alias{changepop}
 
 \title{

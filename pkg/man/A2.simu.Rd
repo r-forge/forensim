@@ -1,5 +1,4 @@
 \name{A2.simu}
-\Rdversion{1.1}
 \alias{A2.simu}
 \title{
 

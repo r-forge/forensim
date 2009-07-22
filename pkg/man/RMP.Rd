@@ -1,5 +1,4 @@
 \name{RMP}
-%\Rdversion{1.1}
 \alias{RMP}
 
 \title{

@@ -1,5 +1,4 @@
 \name{LR}
-\Rdversion{1.1}
 \alias{LR}
 
 \title{ Likelihood ratio for DNA evidence interpretation}

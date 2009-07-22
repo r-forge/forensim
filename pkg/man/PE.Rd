@@ -1,5 +1,4 @@
 \name{PE}
-\Rdversion{1.1}
 \alias{PE}
 
 \title{

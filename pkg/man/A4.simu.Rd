@@ -1,5 +1,4 @@
 \name{A4.simu}
-\Rdversion{1.1}
 \alias{A4.simu}
 \title{
 A Tcl/Tk graphical user interface for simple DNA mixtures resolution using allele peak heights or areas when four

@@ -1,5 +1,4 @@
 \name{strveneto}
-\Rdversion{1.1}
 \alias{strveneto}
 \docType{data}
 \title{

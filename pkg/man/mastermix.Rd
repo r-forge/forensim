@@ -1,5 +1,4 @@
 \name{mastermix}
-\Rdversion{1.1}
 \alias{mastermix}
 \title{
 A Tcl/Tk graphical user interface for simple DNA mixtures resolution using allele peak heights/ or
