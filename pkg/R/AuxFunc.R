@@ -6,8 +6,8 @@
 # returns the  position and the value of the maximum of a vector 
 
 findmax<-function(vec)
-	{
-	res0<-matrix(0,nrow=2,ncol=1)
+{
+	res0<-matrix(0,nrow=1,ncol=2)
 	#res0<-data.frame(res0)
 	if(all(vec==0))
 	{
@@ -15,22 +15,22 @@ findmax<-function(vec)
 		maxval<-0
 	}
 	else{
-	xmax<-which(vec==max(vec))#car discret...
-	maxval<-vec[xmax]
+	xmax<-which(vec==max(vec))
+	maxval<-(vec[xmax])
 	}
 	#print(round(xmax))
 	res0[1,1]<-xmax
-	res0[2,1]<-maxval
+	res0[1,2]<-maxval
 	
-	rownames(res0)<-c('max','maxval')
-	colnames(res0)<-names(vec)
-	return(res0)
-	}
+	colnames(res0)<-c('max','maxval')
+	rownames(res0)<-names(vec)
+	return((res0))
+}
 
 
 
 
-#takes a matrix or a data frame in format of the  Journal of Forenis Sciences for genetic data, and returns a list of markers with their allele frequencies,
+#takes a matrix or a data frame in the format of the  Journal of Forenis Sciences for genetic data, and returns a list of markers with their allele frequencies,
 #skips the NA markers
 naomitab<-
 function(tab)

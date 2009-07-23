@@ -25,8 +25,9 @@ likestim.loc(mix, freq, refpop = NULL, theta = NULL, loc = NULL)
   
 }
 \value{
-A matrix of dimension 2  x \code{loc}. The first row, \code{max}, gives the maximum likelihood estimation 
-of the number of contributors for each locus in column. The second row, \code{maxvalue}, gives the corresponding likelihood value.
+A matrix of dimension \code{loc} x 2. The first colum, \code{max}, gives the maximum likelihood estimation 
+of the number of contributors for each locus in row. The second column, \code{maxvalue}, 
+gives the corresponding likelihood value.
 }
 
 

@@ -20,7 +20,7 @@ function(mix,freq,refpop=NULL,theta=NULL, loc=NULL)
 	#the maximum is searched in the discrete interval : 1: 6, more contributors is unlikely ?
 	locres <- as.matrix(apply(sapply(1:6,function(i) lik.loc(i,mix,freq,refpop,theta, loc)),1,findmax))
 	rownames(locres) <- c('max','maxval') 
-	return(locres)
+	return(t(locres))
 	
 }
 #likestm.loc(mix1,freq1)
