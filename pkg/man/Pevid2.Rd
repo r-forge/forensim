@@ -50,7 +50,7 @@ name). \code{Pevid2} calls external functions in C code.
 }
 
 
-\seealso{  \code{\link{LR}}, \code{\link{Pmatch}}} 
+\seealso{\code{\link{LR}}, \code{\link{RMP}}} 
 \examples{
 # A rape case in Hong Kong (Hu and Fung, Int J Legal Med 2003)
 # The stain shows alleles 14, 15, 17 and 18 at locus D3S1358.
