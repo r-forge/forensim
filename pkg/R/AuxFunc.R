@@ -19,12 +19,13 @@ findmax<-function(vec)
 	maxval<-(vec[xmax])
 	}
 	#print(round(xmax))
+	
 	res0[1,1]<-xmax
-	res0[1,2]<-maxval
+	res0[1,2]<-signif(maxval,2)
 	
 	colnames(res0)<-c('max','maxval')
 	rownames(res0)<-names(vec)
-	return((res0))
+	return(res0)
 }
 
 

@@ -109,8 +109,8 @@ function(suspect=NULL, filename=NULL, freq, k = c(1, 0, 0), theta = 0,refpop=NUL
 	names(res) <-locus
     final <-vector('list',2)
 	names(final) <- c('RMP.loc','RMP')
-	final$RMP.loc <-unlist(res)
-	final$RMP <- prod(unlist(res))
+	final$RMP.loc <-signif(unlist(res),2)
+	final$RMP <- signif(prod(unlist(res)),2)
 	return(final)
 	
 }

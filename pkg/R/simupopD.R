@@ -68,7 +68,7 @@ if(is.null(globalfreq))
 
 					}
 					
-					mat[,i]<-(temp1)
+					mat[,i]<-signif(temp1,4)
 				}	
 			Allele <- rownames(mat)
 			
@@ -117,7 +117,7 @@ if(is.null(globalfreq))
 				temp1 <- rdirichlet(1, varp)
 				temp1 <- as.vector(temp1)
 				names(temp1)<-locA
-				listemp[[j]]<-unlist(temp1)
+				listemp[[j]]<-signif(unlist(temp1),4)
 			}
 			#print(listemp)
 			tab[[i]]<- listemp

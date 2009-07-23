@@ -43,14 +43,14 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 		
 		if(byloc)
 		{
-			return(pe.loc)
+			return(signif(pe.loc,4))
 		}
 		
 		else
 		{
 			PE <- 1-prod(1-pe.loc)
 			names(PE) <- "PE"
-			return(PE)
+			return(signif(PE,6))
 		}
 	}
 	if(theta!=0)
@@ -75,7 +75,7 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 		{
 			PE <- 1-prod(1-pe.loc)
 			names(PE) <- "PE"
-			return(PE)
+			return(signif(PE,6))
 		}
 	}
 }

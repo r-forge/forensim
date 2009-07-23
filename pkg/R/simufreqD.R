@@ -133,5 +133,5 @@ function(nloc=1,nal=2, alpha=1)
 	p <- cbind(as.factor(1:maxna), p)		
 	colnames(p) <- c('Allele', paste('Marker',1:nloc,sep=''))
 	rownames(p) <- 1:maxna
-	return(p)
+	return(signif(p,2))
 }
