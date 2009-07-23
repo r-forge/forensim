@@ -130,7 +130,6 @@ function(mix,freq, refpop=NULL)
 		{
 			if(is.null(refpop))
 			{	
-				print('here')
 				#populations in freq and mix mus then be the same
 				stop("no reference population was given")
 			}
