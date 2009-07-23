@@ -8,7 +8,7 @@
 findmax<-function(vec)
 	{
 	res0<-matrix(0,nrow=2,ncol=1)
-	
+	#res0<-data.frame(res0)
 	if(all(vec==0))
 	{
 		xmax<-0
