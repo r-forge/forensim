@@ -18,7 +18,7 @@ findmax(vec)
 \code{findmax} finds the maximum value of a vector and its position. 
 }
 \value{
-A matrix of two rows:\cr
+A matrix of two columns:\cr
 \code{max} the position of the maximum in \code{vec} \cr
 \code{maxval} the  maximum 
 }

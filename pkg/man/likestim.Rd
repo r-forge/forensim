@@ -29,8 +29,8 @@ likestim(mix, freq, refpop = NULL, theta = NULL, loc=NULL)
 }
 
 \value{
-A matrix, the first row, \code{max}, gives the maximum likelihood estimation  of the number of contributors, 
-the second row
+A matrix of dimension  1 x 2, the first column, \code{max}, gives the maximum likelihood estimation  of the number of contributors, 
+the second column
 gives the corresponding likelihood value \code{maxvalue}.
 
 }
