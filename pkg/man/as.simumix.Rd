@@ -34,7 +34,7 @@ is.simumix(x)
 \details{DNA mixtures are created by randomly drawing individual genotypes  
 with a uniform probability. 
 If there are N individuals in the sample (the \code{simugeno} object), then
-all individuals have a probability of  1/N to be selected.}
+each individual has a probability of  1/N to be selected.}
 
 
 \value{
