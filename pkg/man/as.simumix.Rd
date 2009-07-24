@@ -31,6 +31,11 @@ is.simumix(x)
   \code{ncontri} gives the numbers of individuals to simulate per population. Default is one.}
   \item{x}{an object}}
 
+\details{DNA mixtures are created by randomly drawing individual genotypes  
+with a uniform probability. 
+If there are N individuals in the sample (the \code{simugeno} object), then
+all individuals have a probability of  1/N to be selected.}
+
 
 \value{
   For \code{simumix} and \code{as.simumix}, a simumix object. For \code{is.simumix}, a logical.

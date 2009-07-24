@@ -33,6 +33,12 @@ is.simugeno(x)
 	populations, \code{n} gives the numbers of  individuals to simulate per population. For a single population, default is 1.}
   \item{x}{an object}
 }
+
+\details{
+At a given locus, an individual's genotype is simulated by randomly drawing two 
+alleles (with replacement) 
+at their respective allele frequencies in the target population.  
+}
 \value{
   For \code{simugeno} and \code{as.simugeno}, a simugeno object. For \code{is.simugeno}, a logical.
 }
