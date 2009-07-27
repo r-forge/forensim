@@ -43,7 +43,7 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 		
 		if(byloc)
 		{
-			return(signif(pe.loc,4))
+			return(signif(t(pe.loc),4))
 		}
 		
 		else
@@ -68,7 +68,7 @@ function(mix, freq, refpop=NULL, theta=0,byloc=FALSE)
 		
 		if(byloc)
 		{
-			return(pe.loc)
+			return(t(pe.loc))
 		}
 		
 		else
