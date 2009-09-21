@@ -3,7 +3,8 @@
 ##############################################
 # forensim  classes constructors definitions 
 ##############################################
-
+#making sure that the simulations are reproducible
+set.seed(125890)
 #simugeno class constructor :  simugeno function 
 simugeno <-
 function(tab,which.loc=NULL,n=1)
