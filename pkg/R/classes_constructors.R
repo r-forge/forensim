@@ -330,8 +330,6 @@ function(tab,which.loc=NULL,ncontri=1)
 		#print(poptemp)
 		for(p in poptemp)
 		{
-			#print('merde')
-			#print(N[p])
 			if(N[p]!=0)
 			{
 				samp1 <- sample(indID[popind == p  ],N[p],replace=FALSE)#chosen profiles to ssimulate the mixture
