@@ -94,11 +94,9 @@
 	TFrame <- tkframe(tt, relief="groove")
 	labh <- tklabel(TFrame)
 	tkgrid(tklabel(TFrame,text="Two-allele model", font=font2, foreground="red"), labh)
-	#tkbind(labh, "<Button-1>", function() print(help("s.match")))
+	
 	tkpack(TFrame)
-	#
-	# Coordinates frame
-	#
+	
 	xy1.entry <- tkentry(xyframe, textvariable=xy1var, width=8)
 	xy2.entry <- tkentry(xyframe, textvariable=xy2var, width=8)
 		
