@@ -328,7 +328,7 @@ function(tab,which.loc=NULL,ncontri=1)
 		popinfo <- NULL
 		poptemp <- as.character(unique(popind))
 		#print(poptemp)
-		for(p in poptemp)
+		for(p in popfac)
 		{
 			if(N[p]!=0)
 			{
