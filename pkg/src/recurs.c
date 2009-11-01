@@ -8,7 +8,7 @@
 
 void taballoc (double ***tab, int l1, int c1)
 {
-    int i, j;
+    int i;
 
 
 #ifdef DEBUG_TOOL
