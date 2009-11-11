@@ -39,9 +39,9 @@ giving the likelihood of the data for each locus.
 }
 
 \references{
-Haned H, Pontier D, Lobry JR, Pene L, Dufour AB.
+Haned H, Pene L, Lobry JR, Dufour AB, Pontier D.
 Estimating the number of contributors to forensic DNA mixtures: Does maximum likelihood 
-perform better than maximum allele count? Submitted, 2009.\cr
+perform better than maximum allele count? \emph{ J Forensic Sci}, accepted 2010.\cr
 
  Curran JM, Triggs CM, Buckleton J, Weir BS.
 Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999;44(5): 987-995

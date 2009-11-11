@@ -35,9 +35,9 @@ gives the corresponding likelihood value \code{maxvalue}.
 
 }
 \references{
-Haned H, Pontier D, Lobry JR, Pene L, Dufour AB.
+Haned H, Pene L, Lobry JR, Dufour AB, Pontier D.
 Estimating the number of contributors to forensic DNA mixtures: Does maximum likelihood 
-perform better than maximum allele count? Submitted, 2009.\cr
+perform better than maximum allele count? \emph{ J Forensic Sci}, accepted 2010.\cr
 
 Egeland T, Dalen I, Mostad PF. 
 Estimating the number of contributors to a DNA profile. \emph{Int J Legal Med} 2003, 117: 271-275 \cr
