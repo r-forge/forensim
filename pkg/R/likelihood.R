@@ -71,7 +71,7 @@ function(x=1,p, theta = 0 )
 		#ui is the matrix giving all possible  numbers of copies of allele Ai in the stain
 		#ui[,i]: number of alleles of type Ai, there are c possible types
 	    ui <- matrix(0, nrow = nrow(ri), ncol = c)
-	    ui <- ri + 1
+	    ui <- ri + 1#+1 because one is already observed
 		
 	    if (x == 0)
 		{
