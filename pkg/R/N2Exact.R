@@ -3,8 +3,8 @@ N2Exact=function(p=rep(0.25,4)){
         stop("a vector is expected for 'p'")
     }
    
-    if (sum(p)!= 1) {
-            stop("sum of allele frequencies must be 1")
+   if (sum(p)< 0.99|sum(p)>1.01) {
+            stop("sum of allele frequencies must be between 0.99 and 1.01")
         }
         if (!is.numeric(p) || any(is.na(p)) || any(p < 0) || 
             any(p > 1)) {

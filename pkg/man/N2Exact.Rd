@@ -27,7 +27,7 @@ Returns(P(N=i) for i=1,2,3,4
 }
 \author{ Thore Egeland \email{Thore.Egeland@medisin.uio.no}}
 
-}
+
 %\note{
 %The error involved for maximum allele count roule can be calculated
 %using this function since the probabilyt that the maximum is <=2 equals a product 
