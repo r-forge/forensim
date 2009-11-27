@@ -1,6 +1,6 @@
 \name{N2Exact}
 \alias{N2Exact}
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
 Calculates exact allele distribution for 2 contributors
 }
@@ -23,8 +23,7 @@ Vector of allele frequencies. Must sum to 1. Default: for uniformly distrubted a
 \value{
 Returns(P(N=i) for i=1,2,3,4
 }
-\references{
-}
+
 \author{ Thore Egeland \email{Thore.Egeland@medisin.uio.no}}
 
 
