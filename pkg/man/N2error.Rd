@@ -4,7 +4,7 @@
 Calculates exact error for maximum allele count for two markers
 }
 \description{
-The maximum allele count principle leads two wrong conclusion for 
+The maximum allele count principle leads to wrong conclusion for 
 two contributors if only a
 maximum of one or two alleles is seen. This probability of error is calculated. 
 }
@@ -13,11 +13,11 @@ N2error(dat)
 }
 \arguments{
   \item{dat}{
- \code{dat} Data frame. First column allele size, remaining columns frequencies
+ \code{dat} Data frame. First column allele size, remaining columns frequencies.
 }
 }
 \value{
-The probabilty of error is returned
+The probability of error is returned.
 }
 \author{ Thore Egeland \email{Thore.Egeland@medisin.uio.no}}
 
