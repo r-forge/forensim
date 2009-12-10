@@ -13,7 +13,7 @@ N2error(dat)
 }
 \arguments{
   \item{dat}{
- \code{dat} Data frame. First column allele size, remaining columns frequencies.
+a data frame, first column gives the alleles size, remaining columns give their frequencies
 }
 }
 \value{

@@ -16,7 +16,7 @@ N2Exact(p)
 }
 \arguments{
   \item{p}{
-Vector of allele frequencies. Must sum to 1. Default: for uniformly distrubted alleles.
+vector of allele frequencies. Must sum to 1. Default: for uniformly distrubted alleles.
 }
 }
 
