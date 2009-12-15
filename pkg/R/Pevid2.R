@@ -168,9 +168,9 @@ function(stain, freq, x=0, T = NULL, V = NULL, theta = 0 )
     else
         ui <- ri + 1
     if (nU == 0)
-        const <- factorial(2 * nU)*2^(hT+hV)
+        const <- factorial(2 * nU)
     else  
-        const <- factorial(2 * nU)*2^(hT+hV) / prod((1 - theta) + ((2 * nT + 2 * nV):(2 * nT + 2 * nV + 2 * nU - 1)) * theta) 
+        const <- factorial(2 * nU) / prod((1 - theta) + ((2 * nT + 2 * nV):(2 * nT + 2 * nV + 2 * nU - 1)) * theta) 
     results <- rep(0, nrow(ui))
     for (d in 1:nrow(ui)) { 
         prod_p <- rep(0, c)
