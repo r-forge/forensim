@@ -3,8 +3,8 @@
 LR <-
 function(stain, freq, xp=0,xd=0, Tp = NULL, Vp = NULL, Td=NULL,Vd=NULL, theta = 0 )
 {
-	LR1 <- Pevid2(stain=stain, freq=freq, x=xp, T=Tp, V=Vp, theta = 0 )
-	LR2 <- Pevid2(stain=stain, freq=freq, x=xd, T=Td, V=Vd,theta = 0 )
+	LR1 <- Pevid2(stain=stain, freq=freq, x=xp, T=Tp, V=Vp, theta)
+	LR2 <- Pevid2(stain=stain, freq=freq, x=xd, T=Td, V=Vd,theta)
 	LR <- signif(LR1/LR2,4)
 	return(LR)
   

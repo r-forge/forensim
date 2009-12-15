@@ -80,7 +80,7 @@ function(x=1,p, theta = 0 )
 		else
 		{
 		#if(2*x<c)
-		    res1 <- factorial(2 * x)/prod((1 - theta) +  ((0):(0 + 2 * x - 1)) * theta)
+		    res1 <- factorial(2 * x)/prod((1 - theta) +  (0:(2 * x - 1)) * theta)
 		} 
 		
 	    res2 <- rep(0, nrow(ui))
