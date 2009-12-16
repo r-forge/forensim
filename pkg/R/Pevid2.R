@@ -97,7 +97,7 @@ function(stain, freq, x=0, T = NULL, V = NULL, theta = 0 )
         hT <- sum(heterozygote(T) == TRUE)  
     else 
         hT <- 0  
-    # the known number of heterozygous declared noncontributors (in V)
+    # the known number of heterozygous declared non-contributors (in V)
     if (nV > 0)
         hV <- sum(heterozygote(V) == TRUE)  
     else 
@@ -172,15 +172,19 @@ function(stain, freq, x=0, T = NULL, V = NULL, theta = 0 )
     else  
         const <- factorial(2 * nU) / prod((1 - theta) + ((2 * nT + 2 * nV):(2 * nT + 2 * nV + 2 * nU - 1)) * theta) 
     results <- rep(0, nrow(ui))
-    for (d in 1:nrow(ui)) { 
+    for (d in 1:nrow(ui)) 
+	{ 
         prod_p <- rep(0, c)
-        for (i in 1:c) {
-            if (ui[d, i] == 0)
-	        prod_p[i] <- 1
-	    else 
-                prod_p[i] <- prod((1 - theta) * freq[i] + 
-                    ((ti[i] + vi[i]):(ti[i] + vi[i] + ui[d, i] -1)) * theta)  
+        for (i in 1:c) 
+		{
+            #if there are no copies of Ai (allele of type i) among the unknown contributors, then the probability pi is zero 
+			#this is different from the original formula of Curran et al., here we define the conditional profile probability as the probability of the profile
+			#under a certain hypothesis stating who gave the observed alleles, hence, Pr(stain="A"|U=0,V=0,T="A/A",H="suspect A/A gave the profile) would equal one
+			#rather then 2*p(A)*p(A) in the original formula
+ 			if (ui[d, i] == 0){prod_p[i] <- 1}
+			else{ prod_p[i] <- prod((1 - theta) * freq[i] + ((ti[i] + vi[i]):(ti[i] + vi[i] + ui[d, i] -1)) * theta) }
         }
+		
         results[d] <- prod(prod_p) / prod(factorial(ui[d, ]))
     }
     return(const * sum(results))
