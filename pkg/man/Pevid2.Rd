@@ -46,7 +46,11 @@ Pevid2(stain, freq, x, T = NULL, V = NULL, theta = 0)
 \note{
 Please note that the \code{Pevid2} function is an improved version of the \code{Pevid.gen}
 function from the forensic package by Miriam Marusiakova (which explains the 2 in the function
-name). \code{Pevid2} calls external functions in C code. 
+name). \code{Pevid2} calls external functions in C code. \cr
+%Also note that \code{Pevid.gen} function from the forensic package implements a modified version of Curran et al's formula.  
+
+Here we define the conditional profile probability as the probability of the profiles under a certain hypothesis stating who gave the observed alleles, 
+hence, Pr(stain="A"|U=0,V=0,T="A/A",H="suspect A/A gave the profile) would equal one rather than 2*p(A)*p(A) in the original formula in Curran et al.
 }
 
 
@@ -64,7 +68,7 @@ freq<-c(0.033,0.331,0.239,0.056)
 
 # Prosecution proposition: Contributors were the victim and the suspect 
 # defence proposition: Contributors were the victim and 1 unknown contributor
-# from the same subpopulationas the victim
+# from the same subpopulation as the victim
 # Evaluation of the defence proposition, in case of independence between alleles
 Pevid2(stain, freq, x=1, T = victim)
 
