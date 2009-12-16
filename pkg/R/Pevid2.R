@@ -92,17 +92,7 @@ function(stain, freq, x=0, T = NULL, V = NULL, theta = 0 )
     }
     else
         nV <- 0
-    # the known number of heterozygous declared contributors (in T)
-    if (nT > 0)
-        hT <- sum(heterozygote(T) == TRUE)  
-    else 
-        hT <- 0  
-    # the known number of heterozygous declared non-contributors (in V)
-    if (nV > 0)
-        hV <- sum(heterozygote(V) == TRUE)  
-    else 
-        hV <- 0
-    # the known number of copies of allele 'stain[i]' in T
+     # the known number of copies of allele 'stain[i]' in T
     ti <- rep(0, c)
     if (nT > 0)
 	{
