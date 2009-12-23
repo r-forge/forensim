@@ -1,8 +1,8 @@
 wrapdataL <-
-function(fil="sim.txt",plotte=T,nInMixture=1:5,tit="Maximized at number of contributors"){
+function(fil="sim.txt",plotte=TRUE,nInMixture=1:5,tit="Maximized at number of contributors"){
 mydataL=function(x,nContributors=2) log(dataL(nContributors,p=x[,4]))
 logLik=rep(NA,length(nInMixture))
-dat=read.table(file=fil,header=T)
+dat=read.table(file=fil,header=TRUE)
 dat.split=split(dat,dat[,2])
 s=0
 for (i in nInMixture){

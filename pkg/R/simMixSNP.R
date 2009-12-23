@@ -1,5 +1,5 @@
 simMixSNP <-
-function(nSNP=5,p=0.4,ncont=1,writeFile=T,outfile="sim.txt",id=1){
+function(nSNP=5,p=0.4,ncont=1,writeFile=TRUE,outfile="sim.txt",id=1){
 if(nSNP<2) stop("Error. nSNP must be  greater than 1")
 if (!is.real(p) ||length(p) >1 || p < 0 || p > 1)
   stop("Allele frequency p must be a number,0<=p<=1")
@@ -8,7 +8,7 @@ if (length(ncont) >1 || ncont<1)
 p0=p^(2*ncont)
 p1=(1-p)^(2*ncont)
 p2=1-p0-p1
-z=sample(c(0,1,2),size=nSNP,prob=c(p0,p1,p2),rep=T)
+z=sample(c(0,1,2),size=nSNP,prob=c(p0,p1,p2),rep=TRUE)
 l0=length(z[z==0])
 l1=length(z[z==1])
 l12=length(z[z==2])
@@ -29,7 +29,7 @@ if(length(index)>=1) simData=simData[-index,]
 d1=dim(simData)[1]
 simData=data.frame(No=rep(id,d1),simData)
 colnames(simData)=c("No","Marker","Allele","Frequency","Height")
-if(writeFile) write.table(simData,file=outfile,quote=F,row.names=F)
+if(writeFile) write.table(simData,file=outfile,quote=FALSE,row.names=FALSE)
 simData
 }
 
