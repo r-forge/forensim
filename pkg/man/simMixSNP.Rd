@@ -23,7 +23,7 @@ Minor allele frequency
 Number of contributors >= 1
 }
   \item{writeFile}{
-If T, output written to file
+If TRUE, output written to file
 }
   \item{outfile}{
 Name of output file

@@ -33,6 +33,6 @@ Plot (optional) and  log likelihoods
 Thore Egeland \email{Thore.Egeland@medisin.uio.no}
 }
 \examples{
-aa=simMixSNP(nSNP=5,writeFile=T,outfile="sim.txt",ncont=3) #Simulates data
-res=wrapdataL(fil="sim.txt") # Calculates and plots
+aa<-simMixSNP(nSNP=5,writeFile=TRUE,outfile="sim.txt",ncont=3) #Simulates data
+res<-wrapdataL(fil="sim.txt") # Calculates and plots
 }
