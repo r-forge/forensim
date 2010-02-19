@@ -26,7 +26,7 @@ PV(mat, prior)
 
 \value{Vector of the predictive values}
 \references{
-Haned H., P\'ene L., Sauvage F., Pontier D., The predictive value of the maximum likelihood estimator of the number of contributors
+Haned H., Pene L., Sauvage F., Pontier D., The predictive value of the maximum likelihood estimator of the number of contributors
 to a DNA mixture, submitted, 2010.
 }
 
