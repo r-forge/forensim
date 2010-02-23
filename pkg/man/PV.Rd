@@ -12,17 +12,17 @@ PV(mat, prior)
 }
 
 \arguments{
-  \item{mat}{matrix giving the estimates of the conditional probabilities Pr(\hat x=i| x=k) that the maximum likelihood estimator
+  \item{mat}{matrix giving the estimates of the conditional probabilities that the maximum likelihood estimator
    classifies a given stain as a mixture of i contributors given that there are k contributor(s) to the stain. 
-   Estimates \hat x = i must be given in columns for the x = k given in rows. 
+   Estimates i must be given in columns for each possible value of the number of contributors given in rows.  
 
 }
-  \item{prior}{ numeric vector giving the prior probabilities of encountering a mixture of i contributors. \code{prior} must be of length
-  the number of rows in \code{mat}. 
+  \item{prior}{ numeric vector giving the prior probabilities of encountering a mixture of i contributors. \code{prior} must be of 
+  length the number of rows in \code{mat}. 
   }
 
 }
-}
+
 
 \value{Vector of the predictive values}
 \references{
