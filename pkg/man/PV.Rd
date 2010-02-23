@@ -38,8 +38,9 @@ maximum likelihood estimator \code{\link{likestim}}
 
 
 \examples{
-# the following examples reproduce some of the calculations appearing in the article cited above
-# for illustrative purpose, the maximum number of contributors is set here to 5 
+# the following examples reproduce some of the calculations appearing
+# in the article cited above, for illustrative purpose, the maximum 
+#number of contributors is set here to 5 
 #matcondi: Table 2 in Haned et al. (2010)
 matcondi<-matrix(c(1,rep(0,4),0,0.998,0.005,0,0,0,0.002,0.937,0.067,0,0,0,0.058,
 0.805,0.131,rep(0,3),0.127,0.662,rep(0,3),0.001,0.207),ncol=6)
