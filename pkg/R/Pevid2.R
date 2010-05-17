@@ -30,6 +30,11 @@ function(stain, freq, x=0, T = NULL, V = NULL, theta = 0 )
         stop("'freq' must be a vector")
 	}
 	
+	if(length(theta)!=1)
+	{
+		stop("theta must be of length 1")
+	}
+	
    	if (theta >= 1 || theta < 0) 
 	{
 		stop("'theta' must be a number in [0,1[" )
