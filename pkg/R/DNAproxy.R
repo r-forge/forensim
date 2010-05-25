@@ -66,7 +66,7 @@ DNAproxy <- function (tab, x) {
             cbind.data.frame(deno = 0, num = 0)
         }
     }
-    ind <- sum(unlist(sapply(tab, myDNAproxy.loc, x)[2, ]))/sum(unlist(sapply(tab, myDNAproxy.loc, x)[1, ]))
+    ind <- sum(unlist(sapply(tab, DNAproxy.loc, x)[2, ]))/sum(unlist(sapply(tab, DNAproxy.loc, x)[1, ]))
     if (is.na(ind)) {
         ind <- 0
     }
@@ -86,8 +86,8 @@ tabDNAproxy <- function (x, y = NULL, geno, tabcsv)
     perloc <- vector("list", length(m))
     names(perloc) <- m
     if (mix) {
-        ind1 <- myDNAproxy(tabo, paste("c", x, sep = ""))
-        ind2 <- myDNAproxy(tabo, paste("c", y, sep = ""))
+        ind1 <- DNAproxy(tabo, paste("c", x, sep = ""))
+        ind2 <- DNAproxy(tabo, paste("c", y, sep = ""))
         for (M in names(tabo)) {
             Dloc <- NULL
             Hestim <- NULL
@@ -100,7 +100,7 @@ tabDNAproxy <- function (x, y = NULL, geno, tabcsv)
         }
     }
     else {
-        ind <- myDNAproxy(tabo)
+        ind <- DNAproxy(tabo)
         for (M in names(tabo)) {
             Dloc <- NULL
             Hestim <- NULL
