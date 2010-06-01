@@ -1,6 +1,6 @@
+\encoding{UTF-8}
 \name{simPCR2TK}
 \alias{simPCR2TK}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 A Tcl/Tk graphical interface for the polymorphism chain reaction simulation model
 }
@@ -15,7 +15,7 @@ simPCR2TK()
 
 \references{
 Gill P, Curran J and Elliot K. A graphical simulation model of the entire DNA process associated with the analysis of short 
-tandem repeat loci.\emph{ Nucleic Acids Research} 2005, 33(2): 632–643.
+tandem repeat loci.\emph{ Nucleic Acids Research} 2005, 33(2): 632-643.
 }
 
 \seealso{ \code{\link{simPCR2}}}  

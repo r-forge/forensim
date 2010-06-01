@@ -1,3 +1,4 @@
+\encoding{UTF-8}
 \name{simPCR2}
 \alias{simPCR2}
 \title{Polymorphism chain reaction simulation model}
@@ -44,10 +45,10 @@ A matrix with the following components:
 \references{
 
 Jeffreys AJ, Wilson V, Neumann R and Keyte J.  Amplification of human minisatellites by the polymerase chain reaction: towards
-DNA fingerprinting of single cells. \emph{Nucleic Acids Res} 1988;16: 10953–10971.\cr
+DNA fingerprinting of single cells. \emph{Nucleic Acids Res} 1988;16: 10953_10971.\cr
 
 Gill P, Curran J and Elliot K. A graphical simulation model of the entire DNA process associated with the analysis of short 
-tandem repeat loci.\emph{ Nucleic Acids Research} 2005, 33(2): 632–643.
+tandem repeat loci.\emph{ Nucleic Acids Research} 2005, 33(2): 632-643.
 }
 
 \seealso{ \code{\link{simPCR2TK}}}  
