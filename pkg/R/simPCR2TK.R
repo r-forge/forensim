@@ -17,9 +17,9 @@
 	done <- tclVar(0)
 		
 	frame1 <- tkframe(tf, relief="groove", borderwidth=4)
-	icn <- tkimage.create("photo", file=system.file("files/test.GIF", package = "forensim"))#"test.GIF")
+	#icn <- tkimage.create("photo", file=system.file("files/test.GIF", package = "forensim"))#"test.GIF")
 	#TclTklabel <- tklabel(frame1, image=icn, background="white")
-	labh <- tklabel(tf, image=icn)
+	labh <- tklabel(tf)#, image=icn)
 	#labh <- tklabel(frame1)
 	#tkbind(labh, "<Button-1>", function() 'hh')
 	tkgrid(tklabel(frame1,text="   simPCR2TK: a graphical interface for PCR simulation   ", font="courrier 22", 
