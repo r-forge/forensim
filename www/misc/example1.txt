@@ -1,0 +1,7 @@
+Area	Population	Density	Crime
+San.Francisco	2999	1210	5441
+Washington	2751	1170	4019
+Davenport	366	215	1877
+Johnstown	270	151	458
+Wilkes	340	383	613
+Lancaster	302	319	627
