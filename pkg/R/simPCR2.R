@@ -91,7 +91,13 @@ simPCR2<-function(ncells,probEx,probAlq,probPCR,cyc=28,Tdrop=2*10^7,probSperm=0.
     vecH2 <- round(log((tmpB+Tdrop)/Tdrop) * KH)
     a1<-as.integer(vecH1>50)
     a2<-as.integer(vecH2>50)
-    res <- cbind.data.frame(vecH1, a1, vecH2, a2,min(tmpA,tmpB)/max(tmpA,tmpB))
+	n1<-as.integer(tmpA > Tdrop)*tmpA
+	n2<-as.integer(tmpB>Tdrop)*tmpB
+	Hb<-min(n1,n2)/max(n1,n2)
+	if(all(is.na(Hb))){
+	Hb<-0
+	}
+    res <- cbind.data.frame(vecH1, a1, vecH2, a2,Hb)
     colnames(res) <- c("HeightA", "DropA", "HeightB", "DropB",'Hb')
     res
 }
