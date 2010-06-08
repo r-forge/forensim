@@ -199,8 +199,10 @@
 		dd <- tktoplevel()
 		frameC <- tkframe(dd, relief="flat", borderwidth=4)
 		tkwm.title(dd,"Hb distribution")
-		Myhscale <- 1.55    # Horizontal scaling
-		Myvscale <- 1.55	 # Vertical scaling
+		Myhscale <- 1    # Horizontal scaling
+		Myvscale <- 1
+
+		# Vertical scaling
 		plotHb<-function()
 		{
 			params <- par(bg="white")
