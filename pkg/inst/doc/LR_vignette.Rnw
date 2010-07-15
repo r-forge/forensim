@@ -1,0 +1,527 @@
+\documentclass[a4paper,12pt] {article}
+%\VignetteIndexEntry{forensim_exercises}
+\usepackage[latin1]{inputenc}
+\usepackage{color}
+\usepackage{graphics}
+\usepackage[pdftex]{graphicx}
+\usepackage{pdfcolmk}
+\usepackage{bibunits}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{fancyvrb}
+\usepackage{url}
+\usepackage{setspace} 
+\usepackage[all]{xy}
+\usepackage{makeidx}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{vmargin}
+\usepackage{lmodern} 
+\usepackage[pdftex,pdfborder={0 0 0}]{hyperref}
+\fancyhead{}
+\fancyfoot{}
+
+\setmarginsrb{2cm}{2cm}{2cm}{3cm}{0cm}{0cm}{3cm}{1.5cm}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+
+
+\begin{document}
+\SweaveOpts{eps = FALSE, pdf = TRUE}
+\setkeys{Gin}{width=0.65\textwidth}
+%\setkeys{Gin}{width=\textwidth}
+%\definecolor{purp}{rgb}{0.40,0.00,0.80}
+%\definecolor{purp}{rgb}{0.60,0.0,1}
+\definecolor{purp}{rgb}{0.0,0.6,0.20}
+\definecolor{Sinput}{rgb}{0,0,0.56}
+\definecolor{Soutput}{rgb}{0.56,0,0}
+\definecolor{B}{RGB}{28,28,246}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}
+{formatcom={\color{Sinput}},fontsize=\footnotesize, baselinestretch=0.45}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}
+{formatcom={\color{Soutput}},fontsize=\footnotesize, baselinestretch=0.45}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{formatcom = {\color[rgb]{0, 0, 0.56}}}
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{formatcom = {\color[rgb]{0.56, 0, 0}}}
+
+\begin{titlepage}
+\begin{center}
+% Upper part of the page
+%\includegraphics[width=0.10\textwidth]{./isfg}\\[1cm]
+% {\LARGE Copenhagen forensic genetics summer school}\\[1.5cm]
+%\textsc{\Large Practical session with the \includegraphics[width=1cm]{Rlogo}the softawre}\\[0.5cm]
+% \vspace{6cm}
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Weight of DNA evidence using the forensim package}\\[0.4cm]
+\HRule \\[1.5cm]
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{}\\
+Thore  \textsc{Egeland}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{} \\
+Hinda \textsc{Haned}
+
+\end{flushright}
+\end{minipage}
+% Bottom of the page
+\date{}
+\end{center}
+ \vspace{2cm}
+\tableofcontents
+\end{titlepage}
+
+
+
+
+
+
+\section{The forensim package: overview}
+\subsection{Available documentation}
+forensim is an \includegraphics[width=0.03\textwidth]{./Rlogo}-package hosted by \includegraphics[width=0.03\textwidth]{./Rlogo}-forge
+dedicated to facilitate the interpretation of forensic DNA mixtures. It also provides simulation tools made to mimick
+data from case work.
+
+A detailed description of forensim is given in the package tutorial, available
+from: \textcolor{B}{\url{http://forensim.r-forge.r-project.org/}}. %There is also a short tutorial
+prepared specifically for potential forensim users who are unfamilliar with \includegraphics[width=0.03\textwidth]{./Rlogo}.
+The present document serves to
+\begin{itemize}
+\item introduce the basic statistical calculations of forensim,
+\item provided excercises and solutions for a course setting,
+\item provide examples to verify correct usage and answers. This
+is mostly done by means of the solution to the mentioned excercises.
+\end{itemize}
+
+\subsection{Statistical methods. A worked example}
+Forensim provides a variety of methods dedicated to evaluating the weight of DNA evidence \cite{forensim}. 
+Below we focus on the \verb=LR= function for the calculation of likelihood ratios. 
+The \verb=LR= function  implements the general formula of 
+Curran et al. for forensic DNA mixtures interpretation \cite{hh681}. 
+\paragraph{An example}
+Consider the following genetic profiles from a rape case in Hong Kong \cite{hh655}:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\hline\
+Locus & Mixture & Victim & Suspect & Frequency\\
+\hline\
+D3S1358 & 14 &&14&0.033\\
+&15&15&&0.331\\
+&17&&17&0.239\\
+&18&18&&0.056\\
+% \hline\\
+% vWA &16& &16&0.156\\
+% &18&18&&0.160\\
+% \hline\\
+% FGA&20&20&&0.044\\
+% &24&24&&0.166\\
+% &25&&25&0.110\\
+\hline
+
+\end{tabular}
+\caption{Alleles from a DNA stain from a rape case in Hong Kong}
+\label{tab1}
+\end{table}
+
+Locus D3S1358 shows 4 distinct alleles (14, 15, 17 and 18). The number of contributors to the mixed sample is taken to be 2.
+\paragraph{Scenario 1}
+
+The following hypotheses are tested:
+\begin{itemize}
+\item Prosecution hypothesis $H_P$: Contributors were the victim and the suspect.
+\item Defence hypothesis $H_D$: Contributors were 2 unknown people.
+\end{itemize}
+
+Before we start, remember to load the package:
+
+<<load,e=T>>=
+library(forensim)
+@
+
+First, the genotypes are assigned to the victim and the suspect:
+<<LR,e=T>>=
+victim <- "15/18"
+suspect <- "14/17"
+@
+The likelihood ratio is computed using the \verb=LR= function:
+Here is a useful extract of this function's help page:
+\begin{itemize}
+\item \verb=stain=: 	a vector giving the set of (distinct) alleles present in the DNA stain
+\item \verb=freq=: vector of the corresponding allele frequencies in the global population
+\item \verb=xp=:  	the number of unknown contributors to the stain under the prosecution hypothesis Hp. Default is 0.
+\item \verb=xd=:  	the number of unknown contributors to the stain under the defence hypothesis Hd. Default is 0.
+\item \verb=Tp=:  	a vector of strings where each string contains two alleles separated by '/', corresponding to one known contributor under the prosecution hypothesis Hp. The length of the vector equals the number of known contributors. Default is NULL.
+\item \verb=Vp=: 	a vector of strings where each string contains two alleles separated by '/', corresponding to one known non-contributor under the prosecution hypothesis Hp. The length of the vector equals the number of known non-contributors. Default is NULL.
+\item \verb=Td=: 	a vector of strings where each string contains two alleles separated by '/', corresponding to one known contributor under the defence hypothesis Hd. The length of the vector equals the number of known contributors. Default is NULL.
+\item \verb=Vd=: 	a vector of strings where each string contains two alleles separated by '/', corresponding to one known non-contributor under the defence hypothesis Hd. The length of the vector equals the number of known non-contributors. Default is NULL.
+\item \verb=theta=: 	a float in [0,1[. theta is equivalent to Wright's Fst. In case of population subdivision, it allows a correction of the allele frequencies in the subpopulation of interest
+\end{itemize}
+The LR is obtained as follows
+<<LR1,e=T>>=
+LR(stain = c(14, 15, 17, 18), freq = c(0.033, 0.331, 0.239, 0.056), xp = 0, Tp = c(victim, suspect), Vp = NULL, Td = NULL, 
+Vd = c(victim, suspect), xd = 2,theta=0)
+@
+
+The mixture profile is  285 times more likely if it came from the suspect and the victim
+than if it came from two unknown unrelated individuals.\\
+Note that as long as theta=0, there is no need to be specify the non-contributing individuals, so the same figure
+is prodcued with Vd=NULL.
+
+\paragraph{Scenario 2}
+The following hypotheses are tested:\\
+Prosecution hypo4thesis $H_P$: Contributors were the victim and the suspect. \\
+Defence hypothesis $H_D$: Contributors were the victim and one unknown.
+<<LR2,e=T>>=
+LR(stain = c(14, 15, 17, 18), freq = c(0.033, 0.331, 0.239, 0.056), 
+xp = 0, Tp = c(victim, suspect), Vp = NULL, Td = victim, Vd = suspect, xd = 1,theta=0)
+@
+
+The mixture profile is 63 times more likely if it came from the suspect
+than if it came from an unrelated individual. 
+
+
+\section{Exercises}
+Some of the problems below are theoretical in the sense that
+forensim is not used, rather calculation by hand are requested.
+These excercises may be skipped for those exclusively interested
+in practising forensim. 
+
+\subsection{Excercise 1. Likelihood ratios and theta values}
+Note that in the previous examples, the \verb=theta= argument does not appear in the \verb=LR= function. This means
+that the argument is set to its default value, which is 0. 
+The problems below extend on scenario 2 of the above example by addressing $\theta$ corrections.
+\begin{enumerate}
+\item Change the value of the \verb=theta= argument from 0 to 0.03 and repeat the calculation.
+\item Calculate the LR for different values of \verb=theta= taken in the interval [0,0.03]. 
+\begin{itemize}
+\item \textit{Tip 1}: use the \verb=seq= function to create a sequence of values for the \verb=theta= argument.
+\item \textit{Tip 2}: use the  \textit{sapply} function to compute the values of the LR for different values of
+theta. To get help, type: help('sapply').
+\end{itemize}
+\item Represent the obtained results in a plot (use function \verb=plot=).
+\end{enumerate}
+
+\subsection{Excercise 2. Theoretical continuation of Excercise 1}
+\begin{enumerate}
+\item Derive the formulae corresponding to Scenarios 1 and 2 of the worked example (Hong-Kong case).
+Confirm that the figures obtanined by forensim are correct.
+\item Repeat the above problem with $\theta$-correction for scenario 2 ($\theta=0.03$).
+\end{enumerate}
+
+
+\subsection{Excercise 3. LR-calculations for mixtures} 
+The purpose of this exercise is to demonstrate various approaches to LR calculations for a mixture case. 
+The data comes from a proficiency test arranged by GEDNAP \url{http://gednap.de/}. For simplicity only
+three markers are considered. There is a mixture (stain), 
+the data is summarised in Table~\ref{tab2} and a reference sample is shown in Table~\ref{tab3}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\hline
+Locus & Allele\\
+\hline
+D3S1358 & 15\\
+D3S1358 & 16\\
+D3S1358 & 17\\
+vWA & 15\\
+vWA & 16\\
+vWA & 18\\
+FGA & 20\\
+FGA & 21\\
+FGA & 22\\
+FGA & 24\\
+FGA & 26\\
+
+\hline
+\end{tabular}
+\caption{The crime scene profile at three STR loci.  }
+\label{tab2}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\hline
+Locus & Allele\\
+\hline
+D3S1358 & 15/17\\
+vWA & 16/18\\
+FGA & 20/26\\
+% D8S1179 & 9/13\\
+% D21S11 & 30.2/31.2\\
+% D18S51 &16/16\\
+% THO1 &6/7\\
+\hline
+\end{tabular}
+\caption{The reference sample B}
+\label{tab3}
+\end{table}
+
+
+ 
+\paragraph{The hypotheses are}
+\begin{itemize}
+\item $H_P$: \textit{B} and two unknown individuals contributed to the stain
+\item $H_D$: Three unknown people contributed to the stain
+\end{itemize}
+ 
+
+Calculate the likelihood ratios to weight hypotheses $H_P$ and $H_D$ when $\theta=0$. For simplicity we assume all allele 
+frequencies to be 0.1.
+
+
+\subsection{Excercise 4. LR: standard and for drop in and out}
+This example extends on Section 4.4 of \cite{hh749}. The hypotheses are the usual ones:
+\begin{itemize}
+\item $H_P$: The DNA came from the suspect.
+\item $H_D$: The DNA came from a random man.
+\end{itemize}
+Throughout A and B denote alleles with relative frequencies $p_A=0.2$ and $p_B=0.1$, and we assume $\theta=0$.
+\begin{enumerate}
+\item We first consider a standard case with data AB for the suspect and the stain. Derive the formula 
+for the LR and use R to provide the numeric answer. 
+Confirm the above calculation using the LR function of forensim.
+\item Repeat the above problem whith data AA for suspect and the stain.
+\item Assume markers $1,2,\cdots ,5$ are as 1 above. Markers 6,7,8,9 are as for 2 above.
+Calculate the $LR$ for these 9 markers by using the formulae derived above. 
+\item For the tenth marker the suspect is A and the stain AB.
+What's the LR for this marker? What's the $LR$ based on all 10 markers?
+\item Consider the above problem once assuming that there is a probability $D$
+that an allele drops out. According to \cite{hh749}
+\begin{equation}
+LR_{10} \approx \frac{D}{(1+D)p_A^2+2p_A(1-p_A)D}
+\end{equation}
+Let $D=0.1$. Use R to find $LR_{10}$ and the LR based on all markers ($LR_{1,10})$.
+Comment on the answer.
+\item Plot $LR_{10}$ as a function of D.
+\end{enumerate}
+
+\section{Solutions to the excercises}
+\subsection{Excercise 1}
+\begin{enumerate}
+\item For a single  value, theta=0.03 we find:
+
+<<LR,e=T>>=
+LR(stain=c(14,15,17,18),freq=c(0.033,0.331,0.239,0.056),xp=0,Tp=c(victim,suspect),Vp=NULL,Td=victim,Vd=suspect,xd=1,theta=0.03)
+@
+
+
+\item Define a variable theta, taking different values in the [0,1] interval:
+<<theta correction, e=T>>=
+theta<-seq(0,0.03,by=0.001)
+theta
+@
+
+
+To replicate the calculations for different values of theta, we use the \verb=sapply= function. 
+%Search the help pages (\verb=help('sapply')=):
+
+<<sapply,e=TRUE>>=
+sapply(theta, function(i) LR(stain=c(14,15,17,18),freq=c(0.033,0.331,0.239,0.056),xp=0,Tp=c(victim,suspect),Vp=NULL,Td=victim,
+Vd=suspect,xd=1,theta=i))
+@
+The above command calculates the LR for each value \verb=i= of \verb=theta=. 
+
+\item To plot these results, we need first to save them to an object: 
+<<save LR,e=T>>=
+LRtheta<-sapply(theta, function(i) LR(stain=c(14,15,17,18),freq=c(0.033,0.331,0.239,0.056),xp=0,Tp=c(victim,suspect),
+Vp=NULL,Td=victim,Vd=suspect,xd=1,theta=i))
+@
+
+The plot is produced by
+\begin{center}
+<<plotLR,e=T,fig = T,height=6,width=6>>=
+plot(theta,LRtheta)
+@
+
+\end{center}
+\end{enumerate}
+
+\subsection{Excercise 2}
+\begin{enumerate}
+\item For scenario 1 
+\begin{equation}
+\label{eq:LR1}
+LR=\frac{1}{24p_{14}p_{15}p_{17}p_{18}}=\frac{1}{24\cdot 0.033 \cdot 0.331 \cdot 0.239 \cdot 0.056}.
+\end{equation}
+The numerator is obvious. The denominator can be 
+be obtained by realising that both individuals must be heterozygote and that there are
+6 possible combinations, each having probability $4p_{14}p_{15}p_{17}p_{18}$
+since (i) Hardy-Weinberrg Equilibrium is assumed to hold and (ii) the individuals are unrelated.
+
+This can be calculated in R as
+
+<<load,e=T>>=
+1/(24*0.033*0.331*0.239*0.056)
+@
+
+For scenario 2
+\begin{equation}
+\label{eq:LR2}
+LR=\frac{1}{2p_{14}p_{17}}
+\end{equation}
+since the suspect must have genotype 14,17.
+
+This can be calculated in R as
+<<load,e=T>>=
+1/(2*0.033*0.239)
+@
+
+\item Consider first scenario 1. Let $A=14,B=15,C=17, D=18$. Then the modification of Equation~\ref{eq:LR2} to account for $\theta$-corrections 
+becomes
+% \begin{equation}
+% LR=\frac{(1+2\theta)(1+\theta)}{24(1-\theta)^3\cdot 0.033\cdot 0.331\cdot 0.239\cdot 0.056}.
+% \end{equation}
+% This confirms the forensim value
+% <<load,e=T>>=
+% (1+2*0.03)*(1+0.03)/(24*(1-0.03)^3*0.033*0.331*0.239*0.056)
+% @
+
+
+\begin{equation}
+LR=\frac{(1+3\theta)(1+4\theta)}{2(\theta+(1-\theta)p_{14})(\theta+(1-\theta)p_{17})}.
+\end{equation}
+
+<<load,e=T>>=
+(1+3*0.03)*(1+4*0.03)/(2*(0.03+(1-0.03)*0.033)*(0.03+(1-0.03)*0.239))
+@
+This confirms the forensim value:
+<<LR2,e=T>>=
+LR(stain=c(14,15,17,18),freq=c(0.033,0.331,0.239,0.056),xp=0,Tp=c(victim,suspect),Vp=NULL,Td=victim,Vd=suspect,xd=1,theta=0.03)
+@
+\end{enumerate}
+
+\subsection{Excercise 3}
+
+First, enter the stain profile for each available locus:
+<<stains,e=T>>=
+stainD3<-c(15,16,17)
+stainv<-c(15,16,18)
+stainFGA<-c(20,21,22,24,26)
+@
+Second, enter the suspect profile for each available locus:
+
+<<suspects,e=T>>=
+suspectD3<-"15/17"
+suspectv<-"16/18"
+suspectFGA<-"20/26"
+@
+
+Last, the likelihood ratio:
+
+<<LR,e=T>>=
+LRD3<-LR(stain=stainD3,freq=rep(0.1,3),xp=2,Tp=c(suspectD3),Vp=NULL,Td=NULL,Vd=suspectD3,xd=3,theta=0)
+LRD3
+@
+<<LR2,e=T>>=
+LRDv<-LR(stain=stainv,freq=rep(0.1,3),xp=2,Tp=c(suspectv),Vp=NULL,Td=NULL,Vd=suspectv,xd=3,theta=0)
+LRDv
+@
+<<LR3,e=T>>=
+LRDFGA<-LR(stain=stainFGA,freq=rep(0.1,5),xp=2,Tp=c(suspectFGA),Vp=NULL,Td=NULL,Vd=suspectFGA,xd=3,theta=0)
+LRDFGA
+@
+The overall likelihood ratio is obtained by multiplying the above likelihood ratios: 
+<<prodLR,e=TRUE>>=
+LRD3*LRDv*LRDFGA
+@
+
+\subsection{Excercise 4}
+
+\begin{enumerate}
+\item Note first that $P(data|H_P)=1$. Next 
+\[
+P(data|H_D)=P(\mbox{culprit is AB)}=2p_Ap_B
+\]
+provided Hardy-Weinbererg Equilibrium holds.
+First some parameter values are assigned.
+<<ABdef,eval=TRUE>>=
+D <- 0.01
+pA <- 0.2
+pB <- 0.1
+@ 
+
+A direct calculation in R gives
+<<load,eval=T>>=
+1/(2*pA*pB) 
+@
+The LR function of forensim gives
+<<LR,e=TRUE>>=
+LR(stain=c("A","B"),freq=c(0.2,0.1),xp=0,Tp="A/B",Vp=NULL,Td=NULL,Vd="A/B",xd=1,theta=0)
+@
+\item A similar argument gives $LR=1/p_A^2$ which evaluates to 25. Furthermore, using forensim
+we find
+<<LR,e=TRUE>>=
+LR(stain=c("A"),freq=c(0.2),xp=0,Tp="A/A",Vp=NULL,Td=NULL,Vd="A/A",xd=1,theta=0)
+@
+\item
+<<LR,e=TRUE>>=
+25^9
+@
+
+\item The likelihood ratio is 0 for the marker and therefore also the overall LR is 0.
+\item With drop-out probability of 0.01 we find 
+<<load,e=TRUE>>=
+D/((1+D)*pA^2+2*pA*(1-pA)*D)
+@
+
+The LR based on all markers becomes
+<<load,e=TRUE>>=
+25^9*0.2293578
+@
+
+\item There are several ways to plot. Here's one:
+<<xydef,eval=false>>=
+D=seq(0,1,length=1000)
+pA=0.2
+LR1=D/((1+D)*pA^2+D*2*pA*(1-pA))
+@
+
+
+
+\begin{center}
+<<fig=T>>=
+<<xydef>>
+plot(D,LR1,type="l",xlab="Drop out probability",ylab="LR1")
+title("Stain:A.Suspect:AB.pA=0.2.\n LR as a function of drop out probability")
+@
+\end{center}
+\end{enumerate}
+
+
+
+
+
+\newpage
+\addcontentsline{toc}{section}{References}
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{biblio}
+\newpage
+
+
+\newpage
+
+
+\end{document}
+
+
+
+
+
+
+
+
