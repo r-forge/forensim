@@ -48,8 +48,7 @@ Parameter to adjust for sampling adjustment. Balding uses 2.
 Parameter to adjust for coancestry. Balding recommends values between 0.01 and 0.05.
 }
 }
-\details{
-}
+
 \value{
 Marker name, LR and numerator and denominator of LR.
 }
