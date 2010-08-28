@@ -8,7 +8,9 @@ Calculates LR allowing for drop-out and drop-in
 This function wraps up David Balding's code.
 }
 \usage{
-dropDB(dataBase, DNA, dropHetero = 0.05, alpha = 0.5, dropIn = 0.05, rel = c(0, 0)/4, maxUnknown = 1, adj = 0, fst = 0)
+dropDB(dataBase, DNA, dropHetero = 0.05, alpha = 0.5, 
+dropIn = 0.05, rel = c(0, 0)/4, maxUnknown = 1,
+ adj = 0, fst = 0)
 }
 
 \arguments{
@@ -70,8 +72,10 @@ Thore Egeland based on David Balding's code.
 \examples{
 #First output column of Table 1 in Balding and Buckleton:
 data(Bates.Database);data(Bates.DNA)
-dropDB(Bates.Database,Bates.DNA,dropHetero=0.05,alpha=0.5,dropIn=0.00,rel=c(0,0)/4,maxUnknown=1,adj=2,fst=0.02)
+dropDB(Bates.Database,Bates.DNA,dropHetero=0.05,alpha=0.5,dropIn=0.00,rel=c(0,0)/4,
+maxUnknown=1,adj=2,fst=0.02)
 #First output column of Table 3 in Balding and Buckleton:
 data(CaseY.Database);data(CaseY.DNA)
-dropDB(CaseY.Database,CaseY.DNA,dropHetero=0.5,alpha=0.5,dropIn=0.05,rel=c(0,0)/4,maxUnknown=1,adj=2,fst=0.02)
+dropDB(CaseY.Database,CaseY.DNA,dropHetero=0.5,alpha=0.5,dropIn=0.05,rel=c(0,0)/4,
+maxUnknown=1,adj=2,fst=0.02)
 }
