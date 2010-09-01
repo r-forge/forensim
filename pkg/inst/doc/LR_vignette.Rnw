@@ -72,12 +72,24 @@ Thore  \textsc{Egeland}
 \emph{} \\
 Hinda \textsc{Haned}
 
+
 \end{flushright}
 \end{minipage}
 % Bottom of the page
-\date{}
+
+\begin{minipage}{0.4\textwidth}
+\begin{center} \large
+\emph{} \\
+\vspace{6cm}
+June 2010
+
 \end{center}
- \vspace{2cm}
+\end{minipage}
+
+
+
+\end{center}
+
 \tableofcontents
 \end{titlepage}
 
