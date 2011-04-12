@@ -22,8 +22,7 @@ arker names}
     \item{\code{A4}}{a logical vector}
   }
 }
-\details{
-}
+
 \source{
 Balding DJ, Buckleton J, Interpreting low template DNA profiles,
 Forensic Science International: Genetics, 4: 1-10, 2009, doi: 10.1016/j.fsigen.2009.03.003.
