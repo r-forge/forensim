@@ -28,8 +28,7 @@ Balding DJ, Buckleton J, Interpreting low template DNA profiles,
 Forensic Science International: Genetics, 4: 1-10, 2009, doi: 10.1016/j.fsigen.2009.03.003.
 http://www.zebfontaine.eclipse.co.uk/djb.htm
 }
-\references{
-}
+
 \examples{
 data(Bates.DNA)
 }
