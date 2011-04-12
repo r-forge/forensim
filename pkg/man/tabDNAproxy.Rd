@@ -46,7 +46,7 @@ A list of length the number of analyzed loci, each component of the list is a ma
 Tvedebrink T, Eriksen PS, Mogensen HS, Morling N. Estimating the probability of allelic drop-out of STR alleles
 in forensic genetics. \emph{Forensic Science International: Genetics}, 2009, 3(4), 222-226.
 }
-\author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
+\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
 
 
 

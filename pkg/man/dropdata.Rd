@@ -1,7 +1,6 @@
 \encoding{UTF-8}
 \name{dropdata}
 \alias{dropdata}
-\docType{data}
 \title{Dropout example data}
 \description{
 \code{dropdata} gives is an extract of a series of experiments used to determine the probability of dropout

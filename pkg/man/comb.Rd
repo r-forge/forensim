@@ -23,7 +23,7 @@ A matrix of  (n+m-1)!/(m!(n-1)!) rows, and n columns, each row is  a possible co
 }
   
 
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
 
 \seealso{  \code{\link{Cmn}} for the calculation of the number of all possible combinations of m elements among n with repetitions  }
 \examples{

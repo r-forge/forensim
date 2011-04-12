@@ -1,6 +1,5 @@
 \name{strveneto}
 \alias{strveneto}
-\docType{data}
 \title{
 	Population study of three miniSTR loci in Veneto (Italy)
 }

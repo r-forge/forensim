@@ -1,6 +1,5 @@
 \encoding{UTF-8}
 \name{tabfreq}
-\docType{class}
 \alias{tabfreq-class}
 \alias{names,tabfreq-method}
 \alias{print,tabfreq-method}
@@ -39,7 +38,7 @@
 
 
 
-\author{ Hinda Haned  \email{haned@biomserv.univ-lyon1.fr} }
+\author{ Hinda Haned  \email{h.haned@nfi.minjus.nl} }
 
 
 \examples{

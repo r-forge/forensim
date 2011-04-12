@@ -62,7 +62,13 @@ http://www.zebfontaine.eclipse.co.uk/djb.htm
 \author{
 Thore Egeland based on David Balding's code.
 }
+\note{
+}
 
+
+
+\seealso{
+}
 \examples{
 #First output column of Table 1 in Balding and Buckleton:
 data(Bates.Database);data(Bates.DNA)

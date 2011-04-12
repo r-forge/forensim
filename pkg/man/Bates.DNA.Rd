@@ -1,6 +1,5 @@
 \name{Bates.DNA}
 \alias{Bates.DNA}
-\docType{data}
 \title{
 Alleles of mixture, known contributor, defendant as well as missing (drop-out) allelels.
 (Case Bates, see http://www.zebfontaine.eclipse.co.uk/djb.htm)

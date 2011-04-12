@@ -1,5 +1,4 @@
 \encoding{UTF-8}
-\docType{methods}
 \name{Accessors}
 \alias{$,simugeno-method}
 \alias{$,simumix-method}
@@ -19,7 +18,7 @@ to "@" and "@<-".\cr
   A \linkS4class{simugeno}, a \linkS4class{simumix} or a \linkS4class{tabfreq} object.
 }
 
-\author{ Hinda Haned \email{haned@biomserv.univ-lyon1.fr} }
+\author{ Hinda Haned \email{h.haned@nfi.minjus.nl} }
 
 
 

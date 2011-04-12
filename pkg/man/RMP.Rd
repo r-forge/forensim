@@ -94,7 +94,7 @@ to allow for population stratification, relatedness, database selection and
 single bands. \emph{Forensic Sci I} 1994;64:125-140.
 }
 
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
 
 
 \seealso{ \code{\link{LR}} for the evaluation of DNA evidence through likelihood ratio}

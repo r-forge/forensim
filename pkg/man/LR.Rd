@@ -72,7 +72,7 @@ Curran JM, Triggs CM, Buckleton J, Weir BS. Interpreting DNA Mixtures in Structu
 \emph{ J Forensic Sci} 1999;44(5): 987-995
 
 }
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
 
 \note{
 Please note that the \code{LR} function is based on functions initially implemented in

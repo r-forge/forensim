@@ -29,7 +29,7 @@ a character vector  giving the new population names
 a \code{\link{forensim}} object where the slots containing population-related information have been modified
 }
 
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
 
 
 

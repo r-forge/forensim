@@ -33,7 +33,7 @@ Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999
 \note{\code{dataL} function has several similarities with the \code{Pevid.gen} function 
  of the \emph{forensic} package which computes the probability of the DNA evidence, \code{dataL}
 implements a particular case of this probability. Please see \url{http://cran.r-project.org/web/packages/forensic/}}
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
 
 \seealso{\code{\link{lik.loc}} and  \code{\link{lik}} for calculating the likelihood of a given simumix object }
 \examples{

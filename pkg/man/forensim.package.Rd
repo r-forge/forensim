@@ -2,7 +2,6 @@
 \name{forensim-package}
 \alias{forensim-package}
 \alias{forensim}
-\docType{package}
 \title{The forensim package}
 
 \description{forensim is dedicated to the interpretation of forensic DNA mixtures through statistical methods.
@@ -16,7 +15,7 @@ For more information about these classes type 'class ?tabfreq', 'class ?simugeno
 
  }
 
-\author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
+\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
 
 \keyword{manip}
 \keyword{datagen}

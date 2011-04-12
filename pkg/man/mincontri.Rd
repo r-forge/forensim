@@ -20,7 +20,7 @@ mincontri(mix, loc = NULL)
 
 
 
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr} }
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl} }
 
 \seealso{\code{\link{likestim}} for the estimation of the number of contributors through likelihood maximization }
 \examples{

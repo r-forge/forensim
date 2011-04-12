@@ -1,6 +1,5 @@
 \name{Bates.Database}
 \alias{Bates.Database}
-\docType{data}
 \title{
 Allele counts for first example 
 (Table 1) of Balding and Buckleton, 2010

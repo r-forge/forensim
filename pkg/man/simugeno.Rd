@@ -1,6 +1,5 @@
 \encoding{UTF-8}
 \name{simugeno}
-\docType{class}
 \alias{simugeno-class}
 \alias{names,simugeno-method}
 \alias{print,simugeno-method}
@@ -43,7 +42,7 @@
 \code{\link{tabfreq}}}  
 
 
-\author{ Hinda Haned  \email{haned@biomserv.univ-lyon1.fr} }
+\author{ Hinda Haned  \email{h.haned@nfi.minjus.nl} }
 
 
 

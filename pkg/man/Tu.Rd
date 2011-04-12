@@ -1,7 +1,6 @@
 %\encoding{UTF-8}
 \name{Tu}
 \alias{Tu}
-\docType{data}
 \title{Allele frequencies of 15 autosomal short tandem repeats loci on Chinese Tu ethnic minority group}
 \description{
 Population genetic analysis of 15 STR loci of Chinese Tu ethnic minority group.

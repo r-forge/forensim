@@ -1,7 +1,6 @@
 \encoding{UTF-8}
 \name{strusa}
 \alias{strusa}
-\docType{data}
 \title{  Allele frequencies for 15 autosomal short tandem repeats  core loci on U.S. Caucasian, African American, and Hispanic populations.}
 \description{Allele frequencies for 15 autosomal short tandem repeats  loci on three American populations : Caucasians, African Americans and Hispanics.
 Among the 15 loci, 13 belong to the core Combined DNA Index System (CODIS) loci used by the Federal Bureau of Investigation (USA),  in forensic DNA analysis, and two 

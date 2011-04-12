@@ -1,6 +1,5 @@
 \name{CaseY.Database}
 \alias{CaseY.Database}
-\docType{data}
 \title{
 Allele counts for second example of
 (Table) 3 of Balding and Buckleton, 2010

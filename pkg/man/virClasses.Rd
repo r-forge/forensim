@@ -1,6 +1,5 @@
 \encoding{UTF-8}
 \name{virtualClasses}
-\docType{class}
 \alias{vectorOrNULL-class}
 \alias{vectorOrdataframe-class}
 \alias{matrixOrdataframe-class}
@@ -10,5 +9,5 @@
 \title{Virtual classes for forensim}
 \description{Virtual classes that are only for internal use in forensim}
 \section{Objects from the Class}{A virtual Class: programming tool, not intended for objects creation.}
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr} }
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl} }
 \keyword{classes}

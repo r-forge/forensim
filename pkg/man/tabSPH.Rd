@@ -61,7 +61,7 @@ Gill P, Puch-Solis R, Curran J. The low-template-DNA (stochastic) threshold-Its 
 analysis for national DNA databases. \emph{Forensic Science International: Genetics}, 2009, 3, 104-111
 
 }
-\author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
+\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
 
 
 

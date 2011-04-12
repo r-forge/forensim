@@ -39,7 +39,7 @@ Forensic DNA Interpretation. CRC Press 2005;217-74
 
 }
 
-\author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
+\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
 
 
 

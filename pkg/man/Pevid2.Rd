@@ -41,7 +41,7 @@ Pevid2(stain, freq, x, T = NULL, V = NULL, theta = 0)
 \emph{ J Forensic Sci} 1999;44(5): 987-995
      
  }
-\author{Hinda Haned \email{haned@biomserv.univ-lyon1.fr}}
+\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
 
 \note{
 Please note that the \code{Pevid2} function is an improved version of the \code{Pevid.gen}

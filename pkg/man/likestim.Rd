@@ -45,7 +45,7 @@ Estimating the number of contributors to a DNA profile. \emph{Int J Legal Med} 2
 Curran JM, Triggs CM, Buckleton J, Weir BS. 
 Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999, 44(5): 987-995
 }
-\author{Hinda Haned  <haned@biomserv.univ-lyon1.fr>}
+\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
 
 
 
