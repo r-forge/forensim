@@ -13,7 +13,7 @@
 	font5<-tkfont.create(family="courrier",size=13,weight="bold")#,slant="italic")
 	font6<-tkfont.create(family="times",size=13)#tkframe entries labels
 	tf <- tktoplevel()
-	tkwm.title(tf,"Hbdemo: heterozygous balance simulation")
+	tkwm.title(tf,"Hbdemo: heterozygote balance simulation")
 	
 	
 	
@@ -26,7 +26,7 @@
 	labh <- tklabel(tf)
 	#labh <- tklabel(frame1)
 	#tkbind(labh, "<Button-1>", function() 'hh')
-	tkgrid(tklabel(frame1,text="   Heterozygous balance simulator  ", font="courrier 22", 
+	tkgrid(tklabel(frame1,text="   Heterozygote balance simulator  ", font="courrier 22", 
 	foreground="darkblue"),labh)
 	#tkbind(frame1)
 	tkpack(frame1)#,padx=10)#,pady=10)
@@ -206,7 +206,7 @@
 		plotHb<-function()
 		{
 			params <- par(bg="white")
-			hist(Hbsim,col="gray",prob=TRUE,xlab="Hb",ylab="dF(x)",cex.lab=1.3,main="Heterozygous balance\n Probability density function",xlim=c(0,1))
+			hist(Hbsim,col="gray",prob=TRUE,xlab="Hb",ylab="dF(x)",cex.lab=1.3,main="Heterozygote balance\n Probability density function",xlim=c(0,1))
 			par(params)
 		}	
 
