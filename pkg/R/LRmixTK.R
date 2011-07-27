@@ -377,6 +377,7 @@ LRmixTK <-function()
 			# assign the contributors under Hp: Tp
 			if(is.data.frame(Tp.vic)) 
 			{
+			
 				Tp<-rbind.data.frame(Tp.sus, Tp.vic)
 			}
 			else{
@@ -524,7 +525,7 @@ LRmixTK <-function()
 			Dplot<-function()
 			{
 				LRres<-vector('list', length(loc0))
-				vecD<-seq(0.00001,0.90,length=20)
+				vecD<-seq(0.00001,0.99,length=10)
 				for(jj in 1:length(loc0))
 				{
 					tmp1<-rep(0,length(vecD))
