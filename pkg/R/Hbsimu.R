@@ -206,7 +206,7 @@
 		plotHb<-function()
 		{
 			params <- par(bg="white")
-			hist(Hbsim,col="gray",prob=TRUE,xlab="Hb",ylab="dF(x)",cex.lab=1.3,main="Heterozygote balance\n Probability density function",xlim=c(0,1))
+			hist(Hbsim,col="gray",prob=TRUE,xlab="Hb",ylab="f(Hb)",cex.lab=1.3,main="Heterozygote balance\n Probability density function",xlim=c(0,1))
 			par(params)
 		}	
 
