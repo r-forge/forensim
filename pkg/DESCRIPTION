@@ -5,7 +5,7 @@ Version: 2.0
 Date: 2011-07-26
 Author: Hinda Haned <h.haned@nfi.minjus.nl>
 Maintainer: Hinda Haned <h.haned@nfi.minjus.nl>
-Suggests: gdata,gtools,MASS,mvtnorm,genetics,tcltk,tkrplot
+Suggests: gdata,gtools,MASS,mvtnorm,genetics,tcltk,tcltk2,tkrplot
 Depends: methods
 Description: Statistical methods and simulation tools for the interpretation of forensic DNA mixtures
 License: GPL (>= 2)
