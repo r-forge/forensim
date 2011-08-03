@@ -125,14 +125,14 @@ LRmixTK <-function()
 						if(tclvalue(ext)=='txt')
 						{
 							tab<-read.table(tclvalue(filename),h=TRUE,as.is=TRUE,sep='\t',na.string='')
-							tab<-tab[-which(tab$Marker=='AMEL'),]
+							if(any('AMEL' %in% tab$Marker)) tab<-tab[-which(tab$Marker=='AMEL'),]
 
 							#strings as strings, avoid converting to factors
 						}
 						else
 						{
 							tab<-read.csv(tclvalue(filename),h=TRUE,as.is=TRUE,na.string='')#strings as strings, avoid converting to factors
-							tab<-tab[-which(tab$Marker=='AMEL'),]
+							if(any('AMEL' %in% tab$Marker)) tab<-tab[-which(tab$Marker=='AMEL'),]
 
 						}# rm(file
 						return(tab)
@@ -727,7 +727,10 @@ LRmixTK <-function()
 		}
 		
 		#remove the Amel Marker
-		stainFile<-stainFile[-which(stainFile$Marker=='AMEL'),]
+		if("AMEL" %in% stainFile$Marker)
+		{
+			stainFile<-stainFile[-which(stainFile$Marker=='AMEL'),]
+		}
 
 		# print(tclvalue(CSP))
 		#handling replicates
@@ -824,15 +827,16 @@ LRmixTK <-function()
 				# print(tmpProf)
 				names(tmpProf)<-NULL
 				# print(tmpProf)
-				tkgrid(tkcheckbutton(get(paste('repFrame',j,sep='')), text=locusStain[i], variable=get(paste('loc',i,sep='')),font='courrier 8'),sticky='w',columnspan=9)
+				tkgrid(tkcheckbutton(get(paste('repFrame',j,sep='')), text=locusStain[i], variable=get(paste('loc',i,sep='')),font='courrier 8'),columnspan=9)
 				
 				if(length(tmpProf)==0)#null profile
 				{
-					tkgrid(tklabel(get(paste('repFrame',j,sep='')), text=0),sticky='we', columnspan=9)
+					tkgrid(tklabel(get(paste('repFrame',j,sep='')), text=0),columnspan=9)
 				}
 				else
 				{
-					tkgrid(tklabel(get(paste('repFrame',j,sep='')), text=tmpProf),sticky='we', columnspan=9)
+					tkgrid(tklabel(get(paste('repFrame',j,sep='')), text=tmpProf),
+					columnspan=9)
 				}
 				
 			}
