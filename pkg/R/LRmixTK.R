@@ -2,9 +2,13 @@
 #GUI for LRmix
 LRmixTK <-function()
 {
+	
 	data(strusa)
 	data(ngm)
 	data(sgmNorway)
+	strusa<-get('strusa')
+	ngm<-get('ngm')
+	sgmNorway<-get('sgmNorway')
 	#------------- Begin> formatting functions
 	# function to convert tables of data, as exported from Genemapper to
 		ConvertSamp<-function(tab)
@@ -77,6 +81,7 @@ LRmixTK <-function()
 		#-------------End> formatting functions
 
 	#Analyse function 
+	infoStain<-NULL
 	analyse <-function(loc,repl, file1,file2,file3,ext1,ext2,ext3,infoStain)
 	{
 
