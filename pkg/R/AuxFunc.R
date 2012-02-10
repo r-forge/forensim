@@ -180,15 +180,16 @@ function(m,n)
 }
 
 #gives all the possible permutations of the  Cmn(m,n)  combinations , calls a n function recurs 
-comb <- function(m, n) {
-		matR <- matrix(0,nrow=Cmn(m,n),ncol=n)
-		recurs<-function(m,n,matR,nbLigne,nbCol)
-		{
-			.C('recurs',as.integer(m),as.integer(n),matR=as.integer(matR),as.integer(nbLigne),as.integer(nbCol), PACKAGE="forensim")
-		}
-		loc<-recurs(m,n,matR,Cmn(m,n),n)
-		matrix(loc$matR,ncol=n)
-	}
+comb <- function(m, n){
+nL<-round(Cmn(m,n))
+matR <- matrix(0,nrow=nL,ncol=n)
+recurs<-function(m,n,matR,nbLigne,nbCol)
+{
+.C('recurs',as.integer(m),as.integer(n),matR=as.integer(matR),as.integer(nbLigne),as.integer(nbCol), PACKAGE="forensim")
+}
+loc<-recurs(m,n,matR,nL,n)
+matrix(loc$matR,ncol=n)
+}
 
 	
 	

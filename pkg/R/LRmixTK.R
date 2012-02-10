@@ -1,53 +1,49 @@
 # Hinda, Hague, june 2011
+# Hinda, Oslo Dec 2011
 #GUI for LRmix
 LRmixTK <-function()
 {
-	
-	data(strusa)
-	data(ngm)
-	data(sgmNorway)
-	strusa<-get('strusa')
-	ngm<-get('ngm')
-	sgmNorway<-get('sgmNorway')
+	# data(strusa)
+	# data(ngm)
+	# data(sgmNorway)
+	# strusa<-get('strusa')
+	# ngm<-get('ngm')
+	# sgmNorway<-get('sgmNorway')
 	#------------- Begin> formatting functions
-	# function to convert tables of data, as exported from Genemapper to
-		ConvertSamp<-function(tab)
+	# function to convert tables of data, as exported from Genemapper to a list
+	ConvertSamp<-function(tab)
+	{
+		whichsamp<-unique(tab[,1])
+		whichmark<-unique(tab$Marker)
+
+		if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
+		replist<-vector('list',length(whichmark))
+		names(replist)<-whichmark
+		for(i in 1:length(whichmark))
 		{
-			whichsamp<-unique(tab[,1])#tclavle(sampname)# a verifier avec Corina
-			whichmark<-unique(tab$Marker)
+			reptmp<-NULL
+			for(k in whichsamp)
+			{		
+				allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
+				tmpo<-allele[which(!is.na(allele))]
+				if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
+				else{allele2<-NULL}
+			
+				list0<-list(allele2)
+				names(list0)<-k
+				reptmp<-c(reptmp, list0)
+			}
+			
 
-			if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
-			replist<-vector('list',length(whichmark))
-			names(replist)<-whichmark
-			for(i in 1:length(whichmark))
-			{
-				reptmp<-NULL
-				for(k in whichsamp)
-				{		
-					allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
-					# print(allele)
-					allele2<-as.numeric(allele[which(!is.na(allele))])
-					# print('ici')
-
-					
-					list0<-list(allele2)
-					# print(list0)
-					names(list0)<-k
-					reptmp<-c(reptmp, list0)
-				}
-				
-
-				# print(reptmp)
-				replist[[i]]<-reptmp
+			replist[[i]]<-reptmp
 		}	
 			
 			replist
-		}
-
-	ConvertSamp2 <-
-	function(tab)
+	}
+	#---convert samples into genotypes (genetics format)
+	ConvertSamp2 <-	function(tab)
 	{
-	whichsamp<-unique(tab[,1])#tclavle(sampname)# a verifier avec Corina
+	whichsamp<-unique(tab[,1])
 	whichmark<-unique(tab$Marker)
 
 	if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
@@ -59,19 +55,15 @@ LRmixTK <-function()
 		for(k in whichsamp)
 		{		
 			allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
-			# print(allele)
 			allele2<-(allele[which(!is.na(allele))])
-			# print(class(allele2))
 			a<-allele2[,1]
 			b<-allele2[,2]
 			
 			
 			list0<-list(paste(a,b,sep='/'))
-			# print(list0)
 			names(list0)<-k
 			reptmp<-c(reptmp, list0)
 		}
-		# print(reptmp)
 		replist[[i]]<-reptmp
 	}	
 		replist
@@ -85,7 +77,6 @@ LRmixTK <-function()
 	analyse <-function(loc,repl, file1,file2,file3,ext1,ext2,ext3,infoStain)
 	{
 
-		# print(file3)
 		
 		# verify that the user explored the profiles and selected the loci 
 		if(setequal(tclvalue(loc),''))
@@ -95,7 +86,6 @@ LRmixTK <-function()
 		}
 		else
 		{
-		# print(tclvalue(loc))
 		loc0<- strsplit(tclvalue(loc),' ')[[1]]
 
 		}
@@ -145,10 +135,6 @@ LRmixTK <-function()
 				
 		}
 
-		
-		
-		
-		
 		#suspect samplename to be inserted into the listbox of the contributors under Hp, or eventually the non contributors under Hd
 		
 			verifFormat<-function(tab)
@@ -159,7 +145,6 @@ LRmixTK <-function()
 				}
 				if(infoStain[2]!='Marker')
 				{
-				# print(infoStain[2])
 					tkmessageBox(message="Format error, please check your file",icon="error",type="ok")
 				}
 			}
@@ -231,28 +216,13 @@ LRmixTK <-function()
 		
 		hypoFrame1<-tkframe(secondFrame)
 		titre<-tkframe(hypoFrame1)
-		titre2<-tkframe(thirdFrame)
 
 		tkgrid(titre,pady=10)
 		tkgrid(tklabel(titre,text="Hypotheses",font='courrier 14', fg='blue'))
 		
-		tkgrid(titre2,pady=10)
-		tkgrid(tklabel(titre2,text="Allele Frequencies",font='courrier 14', fg='blue'))
-		freqFrame<-tkframe(thirdFrame,relief="groove", borderwidth=4)
-		#--- what kit to use????-----------------
-		# tkgrid(tkcheckbutton(inFrame3, text="Diploid", variable=dip,font=font6, 
-		# command=function() if (!as.logical(tclObj(dip))) tkconfigure(dip.entry, state="normal") else tkconfigure(dip.entry, state="disabled") ))
-		sgm.var<-tclVar(0)
-		sgmNorway.var<-tclVar(0)
-
-		ngm.var<-tclVar(0)
 		
-		tkgrid(tkcheckbutton(thirdFrame, text='SGM+ US Caucasian', variable=sgm.var,
-		font='courrier 8'), sticky='w')
-		tkgrid(tkcheckbutton(thirdFrame, text='SGM+ Norwegian', variable=sgmNorway.var,
-		font='courrier 8'), sticky='w')
-		tkgrid(tkcheckbutton(thirdFrame, text='NGM', variable=ngm.var,font='courrier 8'),sticky='w')
-
+		
+		
 		#--- first frame
 		hypoFrame1.tit<-tklabel(hypoFrame1,text='Contributors under Hp',font='courrier 10 bold')
 		hypoFrame11<-tkframe(secondFrame,relief='groove')
@@ -267,10 +237,8 @@ LRmixTK <-function()
 		#suspects variables
 			
 		csp<-veriFile(file1,ext1,error=TRUE,'crime scene profile')
-		# print(csp)
 		suspect<-veriFile(file2,ext2,error=TRUE,'suspect profile')
 		suspectID<-unique(suspect$SampleName)
-		# print(suspect)
 		# contributors under Hp
 
 		#victim and profiles not necesarily loaded, depends on the case
@@ -290,7 +258,6 @@ LRmixTK <-function()
 		tkgrid(hypoFrame1.tit)
 		for(i in 1:length(suspectID))
 		{
-			# print(length(suspectID))
 			# Tk entry for suspect(s) under Hp
 			tkgrid(tklabel(hypoFrame1, text=suspectID[i],font='courrier 8'),sticky='w')
 			# Tk entry for suspect(s) under Hd
@@ -331,156 +298,151 @@ LRmixTK <-function()
 			tkgrid(tklabel(probFrame,text="   Probability of Dropout   Pr(D)     ",font='courrier 10'),prD.entry,sticky="w")
 			tkgrid(tklabel(probFrame,text="   Probability of Contamination   Pr(C)     ",font='courrier 10'),prC.entry,sticky="w")
 			tkgrid(tklabel(probFrame,text="   Theta Correction (Fst)   ",font='courrier 10'),theta.entry,sticky="w")
-		
 
+			
+			
+		# function to import allele frequencies from JFS-like file format
+		# tclvalue(ext) <- strsplit(foo3[length(foo3)], "\\.")[[1]][2] 
+		
+		#function to import the file that contains the AF
+		# it will update the valueof filepath22 to its current value
+		importAF<-function(fa,pa,ex,d0)#frame, pathfile, and extension var
+		{
+			file0<-tclvalue(tkgetOpenFile(parent=fa,initialdir=tclvalue(pa),multiple="true",		filetypes="{{CSV Files} {.csv .txt}} {{Tab-delimited Files} {.tab}}"))
+		
+			if (!nchar(file0))
+			{
+				tkmessageBox(message="No file was selected!")
+			}
+			else
+			{
+				tmp<-sub('\\}',file0,replacement='')
+				tmp2<-sub('\\{',tmp,replacement='')
+				tclvalue(file0)<-tmp2
+				foo3<-strsplit(tmp2,'/')[[1]]
+				tclvalue(ex)<-strsplit(foo3[length(foo3)],'\\.')[[1]][2]
+				tclvalue(pa)<-tmp2
+				# tkinsert(caselist,0,paste(foo3[length(foo3)],sep=":"))
+			}
+		}
+		#----- frame for allele frequencies
+		
+		#-- function to read the AF
+		
+		#---------------------------------------------------------------#
 		
 		#-------- ANALYSIS OF RESULTS ---------- #
 		
 		analyse.loc<-function()
 		{
-				
+			
+
+		verifAF<-function(a,b)
+		{
+			if(tclvalue(a)=='txt')
+			freqFile<-read.table(tclvalue(b),h=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
+			else{
+			freqFile<-read.csv(tclvalue(b),h=TRUE,as.is=TRUE,na.string=' ')#strings as strings, avoid converting to factors
+			}
+			return(freqFile)
+		}
+		
+			data0<-tabfreq(verifAF(extens22,filePath22))$tab
+			
 			#----------VICTIM PROFILES  get users choice: victim
-			#default values, eventually modified by whta follows
-			Td.vic<-Tp.vic<-0
-			if(is.data.frame(victim))
+			#default values, eventually modified by what follows
+			Tp.vic<-Td.vic<-0
+			if(is.data.frame(victim))#if a file is given for the victim
 			{
-				selecVicHp<-selecVicHd<-rep(0,length(vicID))#selecExt<-rep(0,length(extraID))
+				
+				selecVicHp<-selecVicHd<-rep(0,length(vicID))#vic ID is of length the number of victims provides in the sample
 				for(j in 1:length(vicID))
 				{
 					selecVicHp[j]<-as.numeric(tclvalue(get(paste('vicHp',j,sep=''))))
 					selecVicHd[j]<-as.numeric(tclvalue(get(paste('vicHd',j,sep=''))))
 				}
-				if(length(which(selecVicHp==1))!=0)
+				if(length(which(selecVicHp==1))!=0)#checks if victim ID is selected if so then add under Hp
 				{
 					Tp.vic<-victim[victim$SampleName %in% vicID[which(selecVicHp==1)],]
 				}
-				else
-				{
-					Tp.vic<-NULL
-				}
+				# else
+				# {
+					# Tp.vic<-0
+				# }
 						
-				if(length(which(selecVicHd==1))!=0)
+				if(length(which(selecVicHd==1))!=0)# same treatement under Hd
 				{
-					Td.vic<-victim[victim$SampleName %in% vicID[which(selecVicHd==1)],]
+					Td.vic<-victim[victim$SampleName %in% vicID[which(selecVicHd==1)],]#if user selects victim, then add
 					
 				}
-				else
-				{
-					Td.vic<-NULL
-				}
+				# else#otherwise no contribution from a victim
+				# {
+					# Td.vic<-0
+				# }
 			}
-			
+			# else{victim<-0}
 			#------------EXTRA PROFILES
-			Vd.ext<-Vp<-0#default values, modified if users upload extra profiles
+			Vp<-0#default values, modified if users upload extra profiles
 			
 			#------------ SUSPECT PROFILES
 		
 			
-			Tp.sus<-Vd.sus<-suspect
+			Tp.sus<-Vd.sus<-suspect#the suspect become known non-contributor under Hd
 			
 			#-------------------------------------------
 			# assign the contributors under Hp: Tp
-			if(is.data.frame(Tp.vic)) 
+			if(is.data.frame(Tp.vic)) #if victim is providedm add to suspect
 			{
 			
 				Tp<-rbind.data.frame(Tp.sus, Tp.vic)
 			}
-			else{
-			# print('ici')
-			Tp<-Tp.sus}
+			else{#not really needed
+			Tp<-Tp.sus}#if not do nothing
 			
 			
 
 			#-------------------------------------------
 			
 			
-			#assing non-contributors under Hd: Vd
-			listDF<-list(Vd.sus,Vd.ext)
-			tmp<-NULL
-			for(d in listDF)
-			{
-				if(is.data.frame(d)) tmp<-rbind.data.frame(tmp,d)
-			}
-				
-			# if(is.null(tmp)){ Vd<-NULL}
-			# else{ Vd<-tmp}
-			# print(Vd)
+			
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
 			#contributors under Hp
+			TpFinal<-ConvertSamp(Tp[Tp$Marker %in% loc0, ])
+		
 			
-			TpFinal<-sapply(ConvertSamp2(Tp[Tp$Marker %in% loc0, ]), unlist)
-			if(is.character(TpFinal)) TpFinal <-matrix(TpFinal,ncol=length(loc0))
 			
-			if(is.data.frame(Vp))
+			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
+			if(is.data.frame(Td.vic))#if a victim is given
 			{
-				VpFinal<-sapply(ConvertSamp2(Vp[Vp$Marker %in% loc0, ]), unlist)
-				if(is.character(VpFinal)) VpFinal <-matrix(VpFinal,ncol=length(loc0))
+				TdFinal<-ConvertSamp(Td.vic[Td.vic$Marker %in% loc0, ])
+				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
 
 			}
-			else{VpFinal<-Vp}
+			else{
+			TdFinal<-Td.vic}#else its null, for code clarity only
 			
-			# if(is.data.frame(Vd))
-			# {
-			# VdFinal<-sapply(ConvertSamp2(Vd[Vd$Marker %in% loc0, ]), unlist)
-			# if(is.character(VdFinal)) VdFinal <-matrix(VdFinal,ncol=length(loc0))
-
-			# }
-			# else{VdFinal<-Vd}
-			
-			if(is.data.frame(Td.vic))
-			{
-			TdFinal<-sapply(ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ]), unlist)
-			if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
-
-			}
-			else{TdFinal<-Td.vic}
-			# print(class(TpFinal))
-			# print(ConvertSamp2(TpFinal))
 			lr0<-rep(0,length(loc0))
-			#if there are known non-contributors under Hp
-			n1<-as.numeric(tclvalue(sgm.var))
-			n2<-as.numeric(tclvalue(ngm.var))
-			n3<-as.numeric(tclvalue(sgmNorway.var))
-
-			if(n1==0 & n2==0 & n3==0)
-			{
-				stop(tkmessageBox(message="please choose the allele frequencies",icon="error",
-				type="ok"))
-			}
-			if(length(which(c(n1,n2,n3) %in% 1))>1)
-			{
-				stop(tkmessageBox(message="only one choice is possible for the  allele
-				frequencies",icon="error",type="ok"))
-			}
-			#if the user made the right correction
-			
-			if(n1==1){data0<-strusa$tab$Cauc}
-
-			if(n2==1){data0<-ngm$tab}
-			if(n3==1){data0<-sgmNorway$tab}
+			xp<-as.numeric(tclvalue(ncHp))
+			xd<-as.numeric(tclvalue(ncHd))
+			theta0<-as.numeric(tclvalue(theta))
 
 			for(jj in 1:length(loc0))
 			{
 				mark0<-loc0[jj]
 				rep0<-cspFinal[[jj]]
-				# if(is.matrix(VpFinal)){ tmpVp<-VpFinal[,jj]}
-				# else{ tmpVp<-NULL}
+				if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
+				else{ tmpTd<-0}
 				
-				if(is.matrix(TdFinal )){ tmpTd<-TdFinal[,jj]}
-				else{ tmpTd<-NULL}
-				
-				# if(is.matrix(VdFinal)){ tmpVd<-VdFinal[,jj]}
-				# else{ tmpVd<-NULL}
-			
 				#numerator Pr(E|Hp)
-				lr0[jj]<-LR2(Repliste=rep0,Tp=TpFinal[,jj],Vp=NULL,xp=as.numeric(tclvalue(ncHp)),
-				Td=tmpTd,Vd=TpFinal[,jj],xd=as.numeric(tclvalue(ncHd)), 
-				theta=as.numeric(tclvalue(theta)),prDHet=as.numeric(tclvalue(prD)),
-				prDHom=as.numeric(tclvalue(prD))*as.numeric(tclvalue(prD))*0.5,
-				prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])$LR
-				
-				
+				drop0<-as.numeric(tclvalue(prD))
+				tp<-unlist(TpFinal[jj])
+				lr0[jj]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0*drop0*0.5,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])/
+				likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0*drop0*0.5,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
+				# V does not contribute to replicate probability)
 			}
+			
+			# create a table of the results that will be exported in an Excel file
+			LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),'LR'=c(lr0,prod(lr0)))
 			
 			#display the results
 			res<-tktoplevel()
@@ -504,13 +466,11 @@ LRmixTK <-function()
 			array1[[i,1]] <- myRarray[i+1,2]
 
 			}
-			# print(myRarray)
 			#table2
 			array2[[0,0]] <- myRarray2[1,1]
 			array2[[1,0]] <- myRarray2[2,1]
 
 			#if no known non-contributors under Hp     
-			# print('length');print((loc0))
 			table1 <- tkwidget(f1,"table",variable=array1,rows=(length(loc0))+1 ,cols=2,titlerows=1,titlecols=0, colwidth=25)
 			
 			table2 <- tkwidget(f1,"table",variable=array2,rows=2,cols=1,titlerows=1,titlecols=0, colwidth=25)
@@ -527,38 +487,66 @@ LRmixTK <-function()
 			
 			# button to display the plot of the LR vs the PrD
 			plot.but<-tkbutton(f1, text="Plot LR vs PrD",fg="blue", font="courrier 10",command=function() Dplot())#,command=function() openFile())
+			excel.but<-tkbutton(f1, text="Export results",fg="blue", font="courrier 10",command=function() exportFile(LRtab))#,command=function() openFile())
+			#---export LR
+			# Export the results from the LR calculations, and let the user decide the name
+			exportFile<-function(tmp)
+			{
+				
+				ff<-tktoplevel()
+				Fframe<- tkframe(ff, relief="groove")
+				tkwm.title(ff,"Filenames")
+				tkgrid(tklabel(Fframe, text="===== Enter filename ====",font='courrier 12',foreground="darkblue"), columnspan=9)
+				filtervar<- tclVar('LRs.txt')
+				filtervar.entry <- tkentry(Fframe, textvariable=filtervar, width=12)
+				saveF.butt<-tkbutton(Fframe, text="Enter",fg="darkblue",font='courrier 8',command=				  function() functionMAJ() )
+				functionMAJ<-function(){
+				filen<-tclvalue(filtervar)
+				write.table(tmp,file=filen,row.names=FALSE)}
+				
+				tkgrid(filtervar.entry, saveF.butt)		
+				tkpack(Fframe,padx=12,pady=18,side="left")
+			}
+			
+			#--- function which draws the LR vs PrD
 			Dplot<-function()
 			{
 				LRres<-vector('list', length(loc0))
-				vecD<-seq(0.00001,0.99,length=10)
+				vecD<-seq(0.01,0.99,length=10)
+				
+					
+				
 				for(jj in 1:length(loc0))
-				{
+				{		
 					tmp1<-rep(0,length(vecD))
+
 					mark0<-loc0[jj]
 					rep0<-cspFinal[[jj]]
-					if(is.matrix(TdFinal )){ tmpTd<-TdFinal[,jj]}
-					else{ tmpTd<-NULL}
-				
+					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])} else{ tmpTd<-0}
+					tp<-unlist(TpFinal[jj])
+					# loop to evaluate different PrD probabilities in vecD
 					for(k in 1:length(vecD))
 					{				
 					#numerator Pr(E|Hp)
-						tmp1[k]<-LR2(Repliste=rep0,Tp=TpFinal[,jj],Vp=NULL,
-						xp=as.numeric(tclvalue(ncHp)),Td=tmpTd,Vd=TpFinal[,jj],
-						xd=as.numeric(tclvalue(ncHd)),theta=as.numeric(tclvalue(theta)),
-						prDHet=vecD[k],prDHom=vecD[k]*vecD[k]*0.5,prC=as.numeric(tclvalue(prC)),
-						freq=data0[[mark0]])$LR
-						
+						np<-unlist(TpFinal[jj])
+						xp<-as.numeric(tclvalue(ncHp))
+						xd<-as.numeric(tclvalue(ncHd))
+						theta0<-as.numeric(tclvalue(theta))
+						d<-vecD[k]
+						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d*d*0.5,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d*d*0.5,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
+						# V does not contribute to replicate probability)
+			
 					}	
-					#LR for locus jj
-					LRres[[jj]]<-tmp1
+						#LR for locus jj
+						LRres[[jj]]<-tmp1
 				}
 				tmp<-NULL
 				for(i in LRres){
 				tmp<-cbind(tmp,i)}
 
 				tmp<-apply(tmp,1,prod)
-				# print(tmp)
-				if('Inf' %in% range(tmp) | '-Inf' %in% range(tmp)| NaN %in% range(tmp) ){
+				if('Inf' %in% range(tmp) | '-Inf' %in% range(tmp)| NaN %in% range(tmp) )
+				{
 					
 					stop(tkmessageBox(message="infinite LR values, please change the model parameters",icon="error",type="ok"))
 				}
@@ -571,13 +559,12 @@ LRmixTK <-function()
 
 				tkwm.title(dd,"LR plot")
 				frameC<-tkframe(dd)
-				# print('ici')
 				
-				# print(LRres)
 				Dplot.loc<-function()
 				{
 					params <- par(bg="white")
-					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),pch=19,ylim=range(log(tmp,10),finite=TRUE))
+					# plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),pch=19,ylim=range(log(tmp,10),finite=TRUE))
+					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),type='l',ylim=range(log(tmp,10),finite=TRUE))
 					lines(vecD, log(tmp,10),lty=3,col='gray')
 					title('LR vs. probability of dropout', cex=1.3)
 					par(params)
@@ -588,8 +575,14 @@ LRmixTK <-function()
 					tkrreplot(img)
 				}
 				copy.but <- tkbutton(frameC,text="Copy to Clipboard",font="courrier 10",fg="darkblue",command=CopyToClip)
+				LRtab2<-LRres
+				excel.but2<-tkbutton(frameC, text="Export results",fg="blue", font="courrier 10",command=function() exportFile(LRtab2))#,command=function() openFile())
+
+				
+				
 				tkgrid(img)
-				tkgrid(copy.but)
+				tkgrid(copy.but)#,excel.but2,rowspan=10,sticky='ew')
+				# tkgrid(plot.but, excel.but,rowspan=10,sticky='ew')
 				tkpack(frameC)
 				
 			}
@@ -597,17 +590,20 @@ LRmixTK <-function()
 			
 			
 		# grid frame f1 contains the tables
-		tkgrid(plot.but,pady=25,columnspan=10)
-		tkgrid(f1)
+		tkgrid(plot.but, excel.but,rowspan=10,sticky='ew')#,columnspan=10,pady=25,columnspan=10)
+		# tkpack(plot.but, excel.but, side="left", fill="x", expand=1)
+
+		# tkgrid(excel.but,pady=25,columnspan=10)
+
+		tkgrid(f1,columnspan=10)
 		}
 
 		
 		
 			
-		go.butt<-tkbutton(bottomFrame,text='OK!', font='courrier 13',fg='blue', command= analyse.loc)#
+		go.butt<-tkbutton(bottomFrame,text='OK!', font='courrier 14 bold',fg='blue', command= analyse.loc)#
 		
 		# 
-		# print(head(Td.sus))
 
 		#----- grid and pack, analysis frame
 			tkgrid(hypoFrame1, pady=12,padx=10)
@@ -616,8 +612,20 @@ LRmixTK <-function()
 		tkgrid(ncFrame,pady=12)#,pady=10, padx=10)
 		tkgrid(probFrame,pady=12)
 		tkgrid(secondFrame,firstFrame, thirdFrame,pady=10,padx=10)#, pady=10, padx=10)
-
 		
+		
+		#-- define allele frequencies frame
+		titre2<-tkframe(firstFrame)
+		tkgrid(titre2,pady=10)
+		tkgrid(tklabel(titre2,text="   Allele frequencies  ",font='courrier 10 bold'),sticky='w')		
+		# tkgrid(tklabel(ncFrame,text="   Unknown contributors     ",font='courrier 10 bold'),sticky="w")
+
+		freqFrame<-tkframe(firstFrame,relief="groove", borderwidth=4)
+		extens22<-tclVar('')
+		filePath22<-tclVar('')
+		freq.butt<-tkbutton(firstFrame,text=' Import ', font='courrier 13',fg='black', command=function() importAF(thirdFrame,filePath22,extens22))
+		tkgrid(freq.butt)#sticky='ew')
+		tkgrid(tklabel(firstFrame,text='   '))
 		# tkgrid(listHd, pady=15 )
 		# tkgrid(listHd2,pady=10)
 		# tkgrid(freqFrame)
@@ -636,7 +644,7 @@ LRmixTK <-function()
 	#main
 	
 	
-	if(!require(forensim)) stop("package forensim is required")
+	# if(!require(forensim)) stop("package forensim is required")
 	if(!require(gdata)) stop("package gdata is required")
 	if(!require(gtools)) stop("package gtools is required")
 	if(!require(MASS)) stop("package MASS is required")
@@ -662,7 +670,6 @@ LRmixTK <-function()
 	#TclTklabel <- tklabel(frame1, image=icn, background="white")
 	done <- tclVar(0)
 	filePath<-tclVar('')
-
 	# filePath4<-tclVar('')
 	extens1<-tclVar('')
 	
@@ -690,7 +697,6 @@ LRmixTK <-function()
 			tclvalue(file0)<-tmp2
 			foo3<-strsplit(tmp2,'/')[[1]]
 			tclvalue(ext)<-strsplit(foo3[length(foo3)],'\\.')[[1]][2]
-			# print('here');print(foo3foo3[length(foo3)])
 			tkinsert(caselist,0,paste(foo3[length(foo3)],sep=":"))
 		}
 	}
@@ -737,11 +743,8 @@ LRmixTK <-function()
 			stainFile<-stainFile[-which(stainFile$Marker=='AMEL'),]
 		}
 
-		# print(tclvalue(CSP))
 		#handling replicates
-		# print(tclvalue(extens1))
 		infoStain<-names(stainFile)
-		# print(infoStain)
 		# sample Infor;ation: replicates
 		##### General verifications
 		if(infoStain[1]!='SampleName')
@@ -750,7 +753,6 @@ LRmixTK <-function()
 		}
 		if(infoStain[2]!='Marker')
 		{
-			# print(infoStain[2])
 			tkmessageBox(message="Format error, pleae refer to the reference file",icon="error",type="ok")
 		}
 		
@@ -763,7 +765,6 @@ LRmixTK <-function()
 			tkmessageBox(message=paste("There are",length(sampname),"replicates, only the four first will be used"),icon="warning",	type="ok")
 		}
 		locusStain<-as.character(unique(stainFile$Marker))
-		# print(locusStain)
 		#okprof function selects the loci: these sould be selected only for the samples
 		#and not the reference profiles
 		
@@ -786,7 +787,6 @@ LRmixTK <-function()
 
 			if(length(which(selecRep==1))==0)
 			{
-				# print(length(which(selecRep==1))==0)
 				(tkmessageBox(message="At least one replicate must be selected",icon="error",type="ok"))
 			}
 			else {
@@ -806,7 +806,6 @@ LRmixTK <-function()
 				tclvalue(locus)<-locusStain[which(selecLoci==1)]
 			}
 
-			# print(tclvalue(CSP))
 
 			tkdestroy(prof)
 			tkdestroy(tprof)
@@ -826,12 +825,9 @@ LRmixTK <-function()
 			for(i in 1:length(locusStain))
 			{
 				tmp0<-stainFile[stainFile$SampleName==sampname[j],]
-				# print(sampname[j])
 				tmp1<-tmp0[tmp0$Marker==locusStain[i],-c(1,2)]
 				tmpProf<-unlist(tmp1[which(!is.na(tmp1))])
-				# print(tmpProf)
 				names(tmpProf)<-NULL
-				# print(tmpProf)
 				tkgrid(tkcheckbutton(get(paste('repFrame',j,sep='')), text=locusStain[i], variable=get(paste('loc',i,sep='')),font='courrier 8'),columnspan=9)
 				
 				if(length(tmpProf)==0)#null profile
@@ -911,8 +907,7 @@ LRmixTK <-function()
 
 		}
 		
-		okprof.but<-tkbutton(f4, text="OK!",fg="darkblue", font="courrier 12",command=function() okprof())#,command=function() openFile())
-		# print(locus)
+		okprof.but<-tkbutton(f4, text="OK!",fg="darkblue", font="courrier 12 bold",command=function() okprof())#,command=function() openFile())
 		tkgrid(okprof.but,pady=2)
 		tkpack(f4)
    }
@@ -1053,4 +1048,3 @@ filePath2<-tclVar(''); 	extens2<-tclVar('')
 	tkgrid(main)
 
 }
-
