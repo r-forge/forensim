@@ -1,27 +1,26 @@
-\name{LR2}
-\alias{LR2}
-\title{ Likelihood ratio for DNA evidence interpretation (2): a sophistacted version of function LR()}
+\name{likEvid}
+\alias{likEvid}
+\title{ Likelihood of DNA evidence conditioned on a given hypothesis}
 
 
-\description{ LR2  Allows the calculation of likelihood ratios for a piece of DNA evidence, for any number of replicates, any number of contributors, and when drop-in and drop-out are possible.
+\description{ likEvid  allows the calculation of likelihood  for a piece of DNA evidence, for any number of replicates, any number of contributors, and when drop-in and drop-out are possible.
 }
 \usage{
-LR2(Repliste, Tp, Td, Vp, Vd, xp, xd, theta, prDHet, prDHom, prC, freq)
+likEvid(Repliste, T, V, x, theta, prDHet, prDHom, prC, freq)
 }
+
+
 \arguments{
   \item{Repliste}{list of the alleles present at a given locus for any number of replicates. If there are two replicates, showing alleles 12,13, and 14 respectively, then \code{Repliste} should be given as  list(c(12,13),14).}
   
   
-  \item{Tp}{ vector of genotypes for the known contributors under Hp. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16').}
-  \item{Td}{vector of genotypes for the known contributors under  Hd. Should be in the same format as Tp. If there are no known contributors under Hd, then set Td to NULL.}
-  
-  \item{Vp}{vector of genotypes for the known non-contributors (see References section) under Hp. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16') 
-}
-  \item{Vd}{vector of genotypes for the known non-contributors (see References section) under Hd. Should be in the same format than Vp, if empty, set to NULL.
-}
-  \item{xp}{Number of unknown individuals under Hd. Set to 0 if there are no unknown contributors.}
+  \item{T}{ vector of genotypes for the known contributors under  H. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16').}
 
-  \item{xd}{Number of unknown individuals under Hd. Set to 0 if there are no unknown contributors.}
+  
+  \item{V}{vector of genotypes for the known non-contributors (see References section) under H. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16') 
+}
+  
+  \item{x}{Number of unknown individuals under H. Set to 0 if there are no unknown contributors.}
   \item{theta}{thete correction, value must be taken in [0,1)}
 
   \item{prDHet}{
@@ -30,10 +29,6 @@ the value in prDHom is used instead. This is a bit ad hoc and an improvement is 
   \item{prDHom}{
 probability of dropout for homozygotes. See description ofr argument \code{PrDHom}.
 }
-
-
-
-
   \item{prC}{probability of drop-in applied per locus}
   \item{freq}{
   vector of the corresponding allele frequencies of the analysed locus in the target population}
@@ -65,12 +60,12 @@ library(forensim)
 data(ngm)
 #create vector of allele frequencies
 d10<-ngm$tab$D10
-# heterozygote dropout probability  (resp. homozygote) is  set to 0.2 for all contributors
-# (0.04 for homozygotes) 
-LR2(list(12,13,14),Tp=c(12,13),Td=0,Vp=0,Vd=0,xd=2,xp=1,theta=0,prDHet=c(0.2,0.2),
-prDHom=c(0.04,0.04),prC=0,freq=d10)
-
-
+#  evaluate the evidence under Hp; contributors are the suspect and one unknown, dropout rates for the 
+# suspect and the unknown are the same (0.2 for heterozygotes and 0.1 for homozygotes)
+likEvid(list(12,13,14),T=c(12,13),V=NULL,x=1,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
+#  evaluate the evidence under Hd; contributors are two unknown people, the dropout rates  for the
+# unknowns is kept the same under Hd
+likEvid(list(12,13,14),T=0,V=NULL,x=2,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
 }
 \keyword{htest}
 
