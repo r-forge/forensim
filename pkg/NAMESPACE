@@ -1,0 +1,18 @@
+# Remove the previous line if you edit this file
+useDynLib(forensim)
+# Export all names
+exportPattern(".")
+
+# Import all packages listed as Imports or Depends
+import(
+  methods,
+  gdata,
+  gtools,
+  MASS,
+  mvtnorm,
+  combinat,
+  genetics,
+  tcltk,
+  tcltk2,
+  tkrplot
+)
