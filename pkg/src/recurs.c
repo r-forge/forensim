@@ -2,11 +2,30 @@
 #include <math.h>
 #include <Rmath.h>
 
-// #define DEBUG_TOOL
-
+//#define DEBUG_TOOL
 #ifdef DEBUG_TOOL
-	FILE *file;
+	// FILE *file;
+
+	#define PRINT(_type, _x) \
+		{ \
+			fprintf(file, #_x" "_type"\r\n", _x); \
+			fflush(file); \
+		}
+		
+	#define PRINT_SET_FUNCTION(_type, _set, _lenSet) \
+		{ \
+			fprintf(file, #_set" "); \
+			int i = 0; \
+			for(i = 0; i < (_lenSet); ++i) \
+			{ \
+				fprintf(file, _type" ", _set[i]); \
+			} \
+			fprintf(file, "\r\n"); \
+			fflush(file); \
+		}
 #endif
+
+#define MALLOC(_type, _size) (_type*)malloc((_size)*sizeof(_type))
 
 double Product(double *x, int length)
 {
@@ -95,15 +114,13 @@ double FindFrequence(double value, double *alleleDouble, double *frequence, int 
 	return 1.;
 }
 
-#define MALLOC(_type, _size) (_type*)malloc((_size)*sizeof(_type))
-
 void infoRepC(double *R, int *lenR, double *Ggi, int *lenGgi, double *prDHet, int *lenHet, double *prDHom, int *lenHom, double *prC, char **allele, double *frequence, int *lenFreq, double *res)
 {
 	#ifdef DEBUG_TOOL
-		file = fopen("debug2.txt","w+b");
+		//file = fopen("debug2.txt","w+b");
 		fprintf(file, "begin debug2\r\n");
 		fflush(file);
-		if(R != NULL)
+		if(R != NULL && *lenR >= 3)
 		{
 			fprintf(file, "res = %f, R=%f\r\n", *res, *R);
 			fflush(file);
@@ -294,7 +311,7 @@ void infoRepC(double *R, int *lenR, double *Ggi, int *lenGgi, double *prDHet, in
 	
 #ifdef DEBUG_TOOL
     fprintf(file, "end debug2\r\n");
-    fclose(file);
+    //fclose(file);
 #endif
 
 	//for(i = 0; i < lenUnionRAndGgi; ++i)
@@ -423,7 +440,7 @@ void recurs_C(int r, int c, double **mat, int nbLigne, int nbCol)
 	
     free(a);
 }
- 
+
 void recurs(int *r, int *c, int *matR, int *nbLigne, int *nbCol)
 {
 // #ifdef DEBUG_TOOL
@@ -460,15 +477,103 @@ void recurs(int *r, int *c, int *matR, int *nbLigne, int *nbCol)
 // #endif
 }
 
+int combiRecurs(int _nbPairLeft, int _nbPair, char **_combinaisonTab, int _nbAllelePair, int *_allelePair, char **_alleleList)
+{
+	if(_nbPairLeft == 0)
+	{
+		return 1;
+	}
 
+#ifdef DEBUG_TOOL
+	fprintf(file, "_nbPairLeft %d _nbPair  %d\r\n", _nbPairLeft, _nbPair);
+	fflush(file);
+#endif
+	
+	int i = 0;
+	int j = 0;
+	int nb = 0;
+	for(i = 0; i < _nbAllelePair*2; i = i + 2)
+	{
+#ifdef DEBUG_TOOL
+	fprintf(file, "i %d\r\n", i);
+	fflush(file);
+#endif
 
+		nb = combiRecurs(_nbPairLeft - 1, _nbPair, _combinaisonTab, _nbAllelePair, _allelePair, _alleleList);
+		
+		for(j = 0; j < nb; ++j)
+		{
+			int id = (j*_nbPair + (_nbPair - _nbPairLeft))*2;
+			int len = strlen(_alleleList[_allelePair[i]]);
+			_combinaisonTab[id] = MALLOC(char, len + 1);
+			sprintf(_combinaisonTab[id], "%s", _alleleList[_allelePair[i]]);
+			
+			len = strlen(_alleleList[_allelePair[i + 1]]);
+			_combinaisonTab[id + 1] = MALLOC(char, len + 1);
+			sprintf(_combinaisonTab[id + 1], "%s", _alleleList[_allelePair[i + 1]]);
+		}
+		
+		_combinaisonTab = _combinaisonTab + _nbPair*nb*2;
+	}
+	
+	return nb*_nbAllelePair;
+}
 
+// _alleleList has no doublon.
+// _combinaisonTab must have the following size C^(_pairNb) with C = combinaison 2 parmi _alleleNb avec remise
+void combiB(char **_alleleList, int *_alleleNb, int *_pairNb, char **_combinaisonTab)
+{
+#ifdef DEBUG_TOOL
+	file = fopen("debug.txt", "w+b");
+	fprintf(file, "begin debug\r\n");
+	fflush(file);
+	fprintf(file, "_alleleNb %d _alleleList (%s) (%s)\r\n", *_alleleNb, _alleleList[0], _alleleList[1]);
+	fflush(file);
+	fprintf(file, "_pairNb %d\r\n", *_pairNb);
+	fflush(file);
+#endif
 
+	int i = 0;
+	int j = 0;
+
+	// create unique pair set
+	int nbAllelePair = 0;
+	for(i = 1; i <= *_alleleNb; ++i)
+	{
+		nbAllelePair = nbAllelePair + i;
+	}
+
+#ifdef DEBUG_TOOL
+	fprintf(file, "nbAllelePair %d\r\n", nbAllelePair);
+	fflush(file);
+#endif
+
+	int *allelePair = MALLOC(int, nbAllelePair*2);
+	int inc = 0;
+	for(i = 0; i < *_alleleNb; ++i)
+	{
+		for(j = i; j < *_alleleNb; ++j)
+		{
+			allelePair[inc] = i;
+			allelePair[inc + 1] = j;
+			inc = inc + 2;
+		}
+	}
+	
+	// find all permutation
+	combiRecurs(*_pairNb, *_pairNb, _combinaisonTab, nbAllelePair, allelePair, _alleleList);
+	
+	free(allelePair);
+	allelePair = NULL;
+	
+#ifdef DEBUG_TOOL
+	fprintf(file, "end debug combiB\n");
+	fclose(file);
+#endif
+}
 
 
 // product(x,y)
-
-
 void Productby(double *x, double y, int lenx)
 {
 	int j;
@@ -755,4 +860,316 @@ void PevidC(double *stain, int *lenStain, double *freq, int *lenFreq, int *x, do
     fprintf(file, "end debug\r\n");
     fclose(file);
 	#endif
+}
+
+double Pevid7(double *_uset, int _lenUset, char **_allele, double *_frequence, int _lenFreq
+			, double *_t, int _lenT, double *_v, int _lenV, double _theta)
+{
+	if(_lenT == 1)
+	{
+		_lenT = 0;
+	}
+	
+	if(_lenV == 1)
+	{
+		_lenV = 0;
+	}
+	
+	double *TuV = MALLOC(double, _lenT + _lenV + _lenUset);
+	int lenTuV = _lenT + _lenV;
+	memcpy(TuV, _t, _lenT*sizeof(double));
+	memcpy(&(TuV[_lenT]), _v, _lenV*sizeof(double));
+	
+	int i;
+	int j;
+	double prod = 1;
+	
+	for(i = 0; i < _lenUset; ++i)
+	{
+		double index = 1.;
+		if(i%2 == 0)
+		{
+			if(_uset[i] == _uset[i + 1]) // is homozygote _frequence[_uset[i]]^2
+			{
+				//index = 1.;
+			}
+			else // *_frequence[_uset[i]]*_frequence[_uset[i+1]])
+			{
+				index = 2.;
+			}
+		}
+		
+		// compute how many time we have _uset[i] in Tuv
+		// number of already observed alleles of type m
+		int m = 0;
+		for(j = 0; j < lenTuV; ++j)
+		{
+			if(_uset[i] == TuV[j])
+			{
+				m++;
+			}
+		}
+		int n = lenTuV; // number of already sampled alleles
+		
+		// find frequence
+		double freq = 0.;
+		for(j = 0; j < _lenFreq; ++j)
+		{
+			if(atof(_allele[j]) == _uset[i])
+			{
+				freq = _frequence[j];
+				break;
+			}
+		}
+		
+		double prop = (m*_theta + (1 - _theta)*freq)/(1 + (n - 1)*_theta) ;
+		
+		TuV[lenTuV] = _uset[i];
+		lenTuV++;
+		
+		prod = prod*prop*index;
+	}
+	
+	free(TuV);
+	
+	return prod;
+}
+
+double infoRepLoop(double *_repList, int _lenRepList, double *_ggi, int _lenGgi, double *_prDHet, int _lenHet
+				, double *_prDHom, int _lenHom, double _prC, char **_allele, double *_frequence, int _lenFreq)
+{
+	double prodResRep = 1.;
+	int inc = 0;
+	while(inc < _lenRepList)
+	{
+		double *CurRepliste = &(_repList[inc]);
+		int lenCurRepliste = 0;
+		while(lenCurRepliste < (_lenRepList - inc) && _repList[inc + lenCurRepliste] != 0.)
+		{
+			lenCurRepliste = lenCurRepliste + 1;
+		}
+
+#ifdef DEBUG_TOOL
+		PRINT_SET_FUNCTION("%f", CurRepliste, lenCurRepliste);
+		PRINT_SET_FUNCTION("%f", _ggi, _lenGgi);
+#endif
+		
+		double resRep;
+		//void infoRepC(double *R, int *lenR, double *Ggi, int *lenGgi, double *prDHet, int *lenHet, double *prDHom, int *lenHom, double *prC, char **allele, double *frequence, int *lenFreq, double *res)
+		infoRepC(CurRepliste, &lenCurRepliste, _ggi, &_lenGgi, _prDHet, &_lenHet, _prDHom, &_lenHom
+							, &_prC, _allele, _frequence, &_lenFreq, &resRep);
+							
+#ifdef DEBUG_TOOL
+		PRINT("%f", resRep);
+#endif
+
+		prodResRep = prodResRep*resRep;
+		
+		inc = inc + lenCurRepliste + 1;
+		if(lenCurRepliste == 0)
+		{
+			inc++;
+		}
+	}
+	
+	return prodResRep;
+}
+
+
+void evidenceC(double *Repliste, int *lenRepliste,double *T, int *lenT,double *V, int *lenV, int *x, double *theta,
+double *prDHet, int *lenHet, double *prDHom, int *lenHom, double *prC, char **allele, double *frequence, int *lenFreq, double *sortieR)
+{
+#ifdef DEBUG_TOOL
+	file = fopen("debug.txt", "w+b");
+	fprintf(file, "begin debug\r\n");
+	fflush(file);
+	PRINT_SET_FUNCTION("%f", Repliste, *lenRepliste);
+	PRINT_SET_FUNCTION("%f", T, *lenT);
+	PRINT_SET_FUNCTION("%f", V, *lenV);
+	PRINT_SET_FUNCTION("%f", prDHet, *lenHet);
+	PRINT_SET_FUNCTION("%f", prDHom, *lenHom);
+	PRINT_SET_FUNCTION("%s", allele, *lenFreq);
+	PRINT_SET_FUNCTION("%f", frequence, *lenFreq);
+#endif
+
+	int i;
+	int j;
+	
+	// we compute combination only if x different of 0
+	if(*x != 0)
+	{
+		// concat every value of Repliste with values of frequence. We remove duplicate.
+		double *Q = MALLOC(double, *lenRepliste + *lenFreq);
+		int QLen = 0;
+		
+		for(i = 0; i < *lenFreq; ++i)
+		{
+			Q[i] = atof(allele[i]);
+		}
+		QLen = *lenFreq;
+		
+		for(i = 0; i < *lenRepliste; ++i)
+		{
+			if(Repliste[i] != 0)
+			{
+				for(j = 0; j < QLen; ++j)
+				{
+					if(Repliste[i] == Q[j])
+					{
+						break;
+					}
+				}
+				
+				if(j == QLen)
+				{
+					Q[QLen] = Repliste[i];
+					QLen = QLen + 1;
+				}
+			}
+		}
+#ifdef DEBUG_TOOL
+		PRINT_SET_FUNCTION("%f", Q, QLen);
+#endif
+
+		// combinaison
+		
+		// create unique pair set
+		int nbPair = *x;
+		int alleleNb = QLen;
+		int nbAllelePair = 0;
+		for(i = 1; i <= alleleNb; ++i)
+		{
+			nbAllelePair = nbAllelePair + i;
+		}
+
+#ifdef DEBUG_TOOL
+		fprintf(file, "nbAllelePair %d\r\n", nbAllelePair);
+		fflush(file);
+#endif
+
+		int *allelePair = MALLOC(int, nbAllelePair*2);
+		int inc = 0;
+		for(i = 0; i < alleleNb; ++i)
+		{
+			for(j = i; j < alleleNb; ++j)
+			{
+				allelePair[inc] = i;
+				allelePair[inc + 1] = j;
+				inc = inc + 2;
+			}
+		}
+		
+		double *Uset;
+		int lenUset = nbPair*2;
+		double *Gg;
+		int lenGg;
+		if(*lenT != 1)
+		{
+			lenGg = lenUset + *lenT;
+			Gg = MALLOC(double, lenGg);
+			memcpy(Gg, T, (*lenT)*sizeof(double));
+			Uset = &(Gg[*lenT]);
+		}
+		else
+		{
+			lenGg = lenUset;
+			Gg = MALLOC(double, lenUset);
+			Uset = Gg;
+		}
+#ifdef DEBUG_TOOL
+		PRINT_SET_FUNCTION("%f", Gg, lenGg);
+#endif
+		
+		int *incrementForEachPair = MALLOC(int, nbPair);
+		for(i = 0; i < nbPair; ++i)
+		{
+			incrementForEachPair[i] = 0;
+		}
+		
+		double sumResGeno = 0.;
+
+#ifdef DEBUG_TOOL
+		int count = 0;
+#endif
+		do
+		{
+			for(i = 0; i < nbPair*2; i = i + 2)
+			{
+				Uset[i] = Q[allelePair[2*incrementForEachPair[i/2]]];
+				Uset[i + 1] = Q[allelePair[2*incrementForEachPair[i/2] + 1]];
+			}
+
+#ifdef DEBUG_TOOL
+		PRINT_SET_FUNCTION("%d", incrementForEachPair, nbPair);
+		PRINT_SET_FUNCTION("%f", Gg, lenGg);
+		PRINT_SET_FUNCTION("%f", Uset, lenUset);
+#endif
+		
+			// for a given genotypic combination, calculate the product of the replicates probabilities.
+			// genotype probability: Pelvis.
+			double a = Pevid7(Uset, lenUset, allele, frequence, *lenFreq, T, *lenT, V, *lenV, *theta);
+
+#ifdef DEBUG_TOOL
+		fprintf(file, "a %f\r\n", a);
+		fflush(file);
+#endif
+
+			double prodResRep = infoRepLoop(Repliste, *lenRepliste, Gg, lenGg, prDHet, *lenHet
+				, prDHom, *lenHom, *prC, allele, frequence, *lenFreq);
+
+#ifdef DEBUG_TOOL
+		fprintf(file, "prodResRep %f\r\n", prodResRep);
+		fflush(file);
+#endif
+
+			sumResGeno = sumResGeno + a*prodResRep;
+			
+			for(i = nbPair - 1; i >= 0; --i)
+			{
+				incrementForEachPair[i]++;
+				if(incrementForEachPair[i] >= nbAllelePair)
+				{
+					incrementForEachPair[i] = 0;
+					continue;
+				}
+				else
+				{
+					break;
+				}
+			}
+
+#ifdef DEBUG_TOOL
+			count++;
+#endif
+		}while(i != -1);
+
+#ifdef DEBUG_TOOL
+		fprintf(file, "count %d\r\n", count);
+		fflush(file);
+#endif
+
+		*sortieR = sumResGeno;
+		
+		free(Q);
+		Q = NULL;
+		free(allelePair);
+		allelePair = NULL;
+		free(Gg);
+		Gg = NULL;
+		free(incrementForEachPair);
+		incrementForEachPair = NULL;	
+	}
+	// if x equal 0, no need to call Pevid.
+	else
+	{
+		// if there are no unknown contributors to the sample, then just return 1 x Pr(replicate).
+		double prodResRep = infoRepLoop(Repliste, *lenRepliste, T, *lenT, prDHet, *lenHet
+			, prDHom, *lenHom, *prC, allele, frequence, *lenFreq);
+		*sortieR = prodResRep;
+	}
+	
+#ifdef DEBUG_TOOL
+	fprintf(file, "end debug evidenceC\n");
+	fclose(file);
+#endif
 }
