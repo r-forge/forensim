@@ -11,14 +11,14 @@ likEvid(Repliste, T, V, x, theta, prDHet, prDHom, prC, freq)
 
 
 \arguments{
-  \item{Repliste}{list of the alleles present at a given locus for any number of replicates. If there are two replicates, showing alleles 12,13, and 14 respectively, then \code{Repliste} should be given as  list(c(12,13),14).}
-  
-  
-  \item{T}{ vector of genotypes for the known contributors under  H. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16').}
 
+  \item{Repliste}{vector of the alleles present at a given locus for any number of replicates. Alleles from different replicates should be seperated by a 0. If there are two replicates, showing alleles 12,13, and 14 respectively, then \code{Repliste} should be given as  c(12,13,0,14).}
   
-  \item{V}{vector of genotypes for the known non-contributors (see References section) under H. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16') 
-}
+   
+  \item{T}{ vector of genotypes for the known contributors under Hp. Genotype 12/17 should be given as a vector c(12,17)
+ and genotypes 12/17,14/16, should be given as a unique vector: c(12,17,14,16).}
+
+ \item{V}{vector of genotypes for the known non-contributors (see References section) under Hp. See \code{T} for format.) }
   
   \item{x}{Number of unknown individuals under H. Set to 0 if there are no unknown contributors.}
   \item{theta}{thete correction, value must be taken in [0,1)}
@@ -60,12 +60,13 @@ library(forensim)
 data(ngm)
 #create vector of allele frequencies
 d10<-ngm$tab$D10
-#  evaluate the evidence under Hp; contributors are the suspect and one unknown, dropout rates for the 
-# suspect and the unknown are the same (0.2 for heterozygotes and 0.1 for homozygotes)
-likEvid(list(12,13,14),T=c(12,13),V=NULL,x=1,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
-#  evaluate the evidence under Hd; contributors are two unknown people, the dropout rates  for the
-# unknowns is kept the same under Hd
-likEvid(list(12,13,14),T=0,V=NULL,x=2,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
+# evaluate the evidence under Hp; contributors are the suspect and one unknown,
+# dropout probabilities for the suspect and the unknown are the same: 0.2 for heterozygotes,
+# and 0.1 for homozygotes.
+likEvid(Repliste=c(12,13,14),T=c(12,13),V=NULL,x=1,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
+#  evaluate the evidence under Hd; contributors are two unknown people, the dropout
+# probabilities for the unknowns is kept the same under Hd
+likEvid(Repliste=c(12,13,14),T=0,V=NULL,x=2,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
 }
 \keyword{htest}
 

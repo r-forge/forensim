@@ -9,13 +9,14 @@
 LR2(Repliste, Tp, Td, Vp, Vd, xp, xd, theta, prDHet, prDHom, prC, freq)
 }
 \arguments{
-  \item{Repliste}{list of the alleles present at a given locus for any number of replicates. If there are two replicates, showing alleles 12,13, and 14 respectively, then \code{Repliste} should be given as  list(c(12,13),14).}
+  \item{Repliste}{vector of the alleles present at a given locus for any number of replicates. Alleles from different replicates should be seperated by a 0. If there are two replicates, showing alleles 12,13, and 14 respectively, then \code{Repliste} should be given as  c(12,13,0,14).}
   
-  
-  \item{Tp}{ vector of genotypes for the known contributors under Hp. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16').}
+   
+  \item{Tp}{ vector of genotypes for the known contributors under Hp. Genotype 12/17 should be given as a vector c(12,17)
+ and genotypes 12/17,14/16, should be given as a unique vector: c(12,17,14,16).}
   \item{Td}{vector of genotypes for the known contributors under  Hd. Should be in the same format as Tp. If there are no known contributors under Hd, then set Td to NULL.}
   
-  \item{Vp}{vector of genotypes for the known non-contributors (see References section) under Hp. Should be given in the genetics format, i.e., genotype 1217 should be given as '12/17' (character), and genotypes 1217,1416, should be given as a vector: c('12/17','14/16') 
+  \item{Vp}{vector of genotypes for the known non-contributors (see References section) under Hp. See \code{Tp} for format.) 
 }
   \item{Vd}{vector of genotypes for the known non-contributors (see References section) under Hd. Should be in the same format than Vp, if empty, set to NULL.
 }
@@ -65,9 +66,9 @@ library(forensim)
 data(ngm)
 #create vector of allele frequencies
 d10<-ngm$tab$D10
-# heterozygote dropout probability  (resp. homozygote) is  set to 0.2 for all contributors
-# (0.04 for homozygotes) 
-LR2(list(12,13,14),Tp=c(12,13),Td=0,Vp=0,Vd=0,xd=2,xp=1,theta=0,prDHet=c(0.2,0.2),
+# heterozygote dropout probability (resp. homozygote) is set to 0.2 for all
+# contributors (0.04 for homozygotes) 
+LR2(Repliste=c(12,13,14),Tp=c(12,13),Td=0,Vp=0,Vd=0,xd=2,xp=1,theta=0,prDHet=c(0.2,0.2),
 prDHom=c(0.04,0.04),prC=0,freq=d10)
 
 
