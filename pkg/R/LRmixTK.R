@@ -1,5 +1,6 @@
 # Hinda, Hague, june 2011
 # Hinda, Oslo Dec 2011
+# Hinda, Hague, Feb 2012
 #GUI for LRmix
 LRmixTK <-function()
 {
@@ -13,25 +14,34 @@ LRmixTK <-function()
 	# function to convert tables of data, as exported from Genemapper to a list
 	ConvertSamp<-function(tab)
 	{
+		# sample names (ex. suspect or replicate names)
 		whichsamp<-unique(tab[,1])
+		# get marker names
 		whichmark<-unique(tab$Marker)
-
+		#remove AMEL from the data
 		if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
+		# intialize 
 		replist<-vector('list',length(whichmark))
+		# initialize 
+		repVec<-vector('list',length(whichmark))
+
 		names(replist)<-whichmark
 		for(i in 1:length(whichmark))
 		{
 			reptmp<-NULL
 			for(k in whichsamp)
 			{		
-				allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
+				# get the alleles for a given marker, for all samples
+				allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]# get only the alleles, so unsekect columns 1 & 2
+				# only select alleles, no NASs (empty cells)
 				tmpo<-allele[which(!is.na(allele))]
 				if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
-				else{allele2<-NULL}
-			
-				list0<-list(allele2)
-				names(list0)<-k
-				reptmp<-c(reptmp, list0)
+				else{allele2<-0}
+				# allele 2 is the vector of alleles at marker i and sample k
+				# list0<-list(allele2)
+				# names(list0)<-k
+				# print(allele2)
+				reptmp<-c(reptmp, allele2,0)
 			}
 			
 
@@ -40,36 +50,46 @@ LRmixTK <-function()
 			
 			replist
 	}
-	#---convert samples into genotypes (genetics format)
-	ConvertSamp2 <-	function(tab)
-	{
-	whichsamp<-unique(tab[,1])
-	whichmark<-unique(tab$Marker)
+	
+	# fromatting function for reference profiles
+	ConvertSamp2<-function(tab)
+	{	
+		# sample names (ex. suspect or replicate names)
+		whichsamp<-unique(tab[,1])
+		# get marker names
+		whichmark<-unique(tab$Marker)
+		#remove AMEL from the data
+		if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
+		# intialize 
+		replist<-vector('list',length(whichmark))
+		# initialize 
+		repVec<-vector('list',length(whichmark))
 
-	if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
-	replist<-vector('list',length(whichmark))
-	names(replist)<-whichmark
-	for(i in 1:length(whichmark))
-	{
-		reptmp<-NULL
-		for(k in whichsamp)
-		{		
-			allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
-			allele2<-(allele[which(!is.na(allele))])
-			a<-allele2[,1]
-			b<-allele2[,2]
+		names(replist)<-whichmark
+		for(i in 1:length(whichmark))
+		{
+			reptmp<-NULL
+			for(k in whichsamp)# exemple victm 1, victim 2, victim 3 etc
+			{		
+				# get the alleles for a given marker, for all samples
+				allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]# get only the alleles, so unsekect columns 1 & 2
+				# only select alleles, no NASs (empty cells)
+				tmpo<-allele[which(!is.na(allele))]
+				if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
+				else{allele2<-0}
+				# allele 2 is the vector of alleles at marker i and sample k
+				# list0<-list(allele2)
+				# names(list0)<-k
+				# print(allele2)
+				reptmp<-c(reptmp, allele2)
+			}
 			
+
+			replist[[i]]<-reptmp
+		}	
 			
-			list0<-list(paste(a,b,sep='/'))
-			names(list0)<-k
-			reptmp<-c(reptmp, list0)
-		}
-		replist[[i]]<-reptmp
-	}	
-		replist
+			replist
 	}
-
-
 		#-------------End> formatting functions
 
 	#Analyse function 
@@ -102,7 +122,7 @@ LRmixTK <-function()
 		repl0<- strsplit(tclvalue(repl),' ')[[1]]
 
 		}
-		#check wether the user uploaded the files for the sample and the refrenecs profiles
+		# function to check wether the user uploaded the files for the sample and the refrences profiles
 		veriFile<-function(filename,ext,error=TRUE,txt='')
 		{
 				
@@ -141,11 +161,11 @@ LRmixTK <-function()
 			{
 				if(infoStain[1]!='SampleName')
 				{
-					tkmessageBox(message="Format error, pleae check your file",icon="error",type="ok")
+					tkmessageBox(message="Format error; first column must be SampleName",icon="error",type="ok")
 				}
 				if(infoStain[2]!='Marker')
 				{
-					tkmessageBox(message="Format error, please check your file",icon="error",type="ok")
+					tkmessageBox(message="Format error; second colum must be Marker",icon="error",type="ok")
 				}
 			}
 			
@@ -158,8 +178,8 @@ LRmixTK <-function()
 			# }
 		#suspect
 		if(!require(tcltk)) stop("package tcltk is required")
-		if(!require(tcltk2)) stop("package tcltk2 is required")
-		if(!require(tkrplot)) stop("package tkrplot is required")
+		if(!require(tcltk2)) stop("package tcltk2 is required, please install it")
+		if(!require(tkrplot)) stop("package tkrplot is required, please install it")
 		tclRequire("Tktable")
 		font0 <- tkfont.create(family="courrier",size=35,weight="bold",slant="italic")
 		font1<-tkfont.create(family="times",size=14,weight="bold")#,slant="italic")
@@ -178,7 +198,7 @@ LRmixTK <-function()
 		tkwm.title(main,"Analyse the profiles")
 
 	#readFile button
-			# nameInput <- tclvalue(tkgetOpenFile(parent=msmain,initialdir=tclvalue(path),multiple="true",
+		# nameInput <- tclvalue(tkgetOpenFile(parent=msmain,initialdir=tclvalue(path),multiple="true",
 		firstFrame<-tkframe(main, relief="groove", borderwidth=4)
 		tkgrid(tklabel(firstFrame,text='Parameters',font='courrier 14', fg='blue'))
 		
@@ -272,14 +292,15 @@ LRmixTK <-function()
 		# }
 		tkgrid(hypoFrame2)
 		
-		if(is.data.frame(victim)){
-		for(i in 1:length(vicID))
+		if(is.data.frame(victim))
 		{
-				tkgrid(tkcheckbutton(hypoFrame1, text=vicID[i], variable=get(paste('vicHp',i,sep='')),font='courrier 8'),sticky='w')
-		
-				tkgrid(tkcheckbutton(hypoFrame2, text=vicID[i], variable=get(paste('vicHd',i,sep='')),font='courrier 8'),sticky='w')
-						
-		}
+			for(i in 1:length(vicID))
+			{
+					tkgrid(tkcheckbutton(hypoFrame1, text=vicID[i], variable=get(paste('vicHp',i,sep='')),font='courrier 8'),sticky='w')
+			
+					tkgrid(tkcheckbutton(hypoFrame2, text=vicID[i], variable=get(paste('vicHd',i,sep='')),font='courrier 8'),sticky='w')
+							
+			}
 		}	
 		
 		
@@ -296,7 +317,7 @@ LRmixTK <-function()
 			# merde=tkbutton(main)
 			tkgrid(tklabel(probFrame,text="   Pr(D), Pr(C), theta     ",font='courrier 10 bold'))#,sticky="w")
 			tkgrid(tklabel(probFrame,text="   Probability of Dropout   Pr(D)     ",font='courrier 10'),prD.entry,sticky="w")
-			tkgrid(tklabel(probFrame,text="   Probability of Contamination   Pr(C)     ",font='courrier 10'),prC.entry,sticky="w")
+			tkgrid(tklabel(probFrame,text="   Probability of drop-in   Pr(C)     ",font='courrier 10'),prC.entry,sticky="w")
 			tkgrid(tklabel(probFrame,text="   Theta Correction (Fst)   ",font='courrier 10'),theta.entry,sticky="w")
 
 			
@@ -337,15 +358,15 @@ LRmixTK <-function()
 		{
 			
 
-		verifAF<-function(a,b)
-		{
-			if(tclvalue(a)=='txt')
-			freqFile<-read.table(tclvalue(b),h=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
-			else{
-			freqFile<-read.csv(tclvalue(b),h=TRUE,as.is=TRUE,na.string=' ')#strings as strings, avoid converting to factors
+			verifAF<-function(a,b)
+			{
+				if(tclvalue(a)=='txt')
+				freqFile<-read.table(tclvalue(b),h=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
+				else{
+				freqFile<-read.csv(tclvalue(b),h=TRUE,as.is=TRUE,na.string=' ')#strings as strings, avoid converting to factors
+				}
+				return(freqFile)
 			}
-			return(freqFile)
-		}
 		
 			data0<-tabfreq(verifAF(extens22,filePath22))$tab
 			
@@ -365,33 +386,27 @@ LRmixTK <-function()
 				{
 					Tp.vic<-victim[victim$SampleName %in% vicID[which(selecVicHp==1)],]
 				}
-				# else
-				# {
-					# Tp.vic<-0
-				# }
-						
+				
 				if(length(which(selecVicHd==1))!=0)# same treatement under Hd
 				{
 					Td.vic<-victim[victim$SampleName %in% vicID[which(selecVicHd==1)],]#if user selects victim, then add
 					
 				}
-				# else#otherwise no contribution from a victim
-				# {
-					# Td.vic<-0
-				# }
+				# else#otherwise no contribution from a victim, and Td.vic is not modified
+				
 			}
 			# else{victim<-0}
-			#------------EXTRA PROFILES
+			#------------EXTRA PROFILES: known non-contributors
 			Vp<-0#default values, modified if users upload extra profiles
 			
 			#------------ SUSPECT PROFILES
 		
 			
-			Tp.sus<-Vd.sus<-suspect#the suspect become known non-contributor under Hd
-			
+			Tp.sus<-Vd.sus<-suspect#the suspect become known non-contributor under Hd (always)
+			# these are dataframes
 			#-------------------------------------------
 			# assign the contributors under Hp: Tp
-			if(is.data.frame(Tp.vic)) #if victim is providedm add to suspect
+			if(is.data.frame(Tp.vic)) #if victim is provided add to suspect
 			{
 			
 				Tp<-rbind.data.frame(Tp.sus, Tp.vic)
@@ -404,40 +419,44 @@ LRmixTK <-function()
 			#-------------------------------------------
 			
 			
-			
+			# get the profiles of the sample for the loci and the replicates selected by the user
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
 			#contributors under Hp
-			TpFinal<-ConvertSamp(Tp[Tp$Marker %in% loc0, ])
-		
-			
+			TpFinal<-ConvertSamp2(Tp[Tp$Marker %in% loc0, ])
+			VdFinal<-ConvertSamp2(Tp.sus[Tp.sus$Marker %in% loc0,])
+			print(VdFinal)
 			
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
 			if(is.data.frame(Td.vic))#if a victim is given
 			{
-				TdFinal<-ConvertSamp(Td.vic[Td.vic$Marker %in% loc0, ])
+				TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])
 				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
 
 			}
 			else{
 			TdFinal<-Td.vic}#else its null, for code clarity only
-			
+			#get the values form the GUI
 			lr0<-rep(0,length(loc0))
 			xp<-as.numeric(tclvalue(ncHp))
 			xd<-as.numeric(tclvalue(ncHd))
 			theta0<-as.numeric(tclvalue(theta))
-
+			#for each locus
 			for(jj in 1:length(loc0))
 			{
 				mark0<-loc0[jj]
 				rep0<-cspFinal[[jj]]
+				# print(rep0)
+			
 				if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
 				else{ tmpTd<-0}
 				
 				#numerator Pr(E|Hp)
 				drop0<-as.numeric(tclvalue(prD))
 				tp<-unlist(TpFinal[jj])
+				vd<-unlist(VdFinal[jj])
+					# print(tp)
 				lr0[jj]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0*drop0*0.5,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])/
-				likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0*drop0*0.5,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
+				likEvid(Repliste=rep0,T=tmpTd,V=vd,x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0*drop0*0.5,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
 				# V does not contribute to replicate probability)
 			}
 			
@@ -490,14 +509,14 @@ LRmixTK <-function()
 			excel.but<-tkbutton(f1, text="Export results",fg="blue", font="courrier 10",command=function() exportFile(LRtab))#,command=function() openFile())
 			#---export LR
 			# Export the results from the LR calculations, and let the user decide the name
-			exportFile<-function(tmp)
+			exportFile<-function(tmp,nameF='LRs.txt')
 			{
 				
 				ff<-tktoplevel()
 				Fframe<- tkframe(ff, relief="groove")
 				tkwm.title(ff,"Filenames")
 				tkgrid(tklabel(Fframe, text="===== Enter filename ====",font='courrier 12',foreground="darkblue"), columnspan=9)
-				filtervar<- tclVar('LRs.txt')
+				filtervar<- tclVar(nameF)
 				filtervar.entry <- tkentry(Fframe, textvariable=filtervar, width=12)
 				saveF.butt<-tkbutton(Fframe, text="Enter",fg="darkblue",font='courrier 8',command=				  function() functionMAJ() )
 				functionMAJ<-function(){
@@ -512,7 +531,7 @@ LRmixTK <-function()
 			Dplot<-function()
 			{
 				LRres<-vector('list', length(loc0))
-				vecD<-seq(0.01,0.99,length=10)
+				vecD<-seq(0.01,0.99,length=20)
 				
 					
 				
@@ -524,6 +543,8 @@ LRmixTK <-function()
 					rep0<-cspFinal[[jj]]
 					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])} else{ tmpTd<-0}
 					tp<-unlist(TpFinal[jj])
+					vd<-unlist(VdFinal[jj])
+
 					# loop to evaluate different PrD probabilities in vecD
 					for(k in 1:length(vecD))
 					{				
@@ -533,12 +554,12 @@ LRmixTK <-function()
 						xd<-as.numeric(tclvalue(ncHd))
 						theta0<-as.numeric(tclvalue(theta))
 						d<-vecD[k]
-						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d*d*0.5,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d*d*0.5,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
+						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d*d*0.5,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=vd,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d*d*0.5,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
 						# V does not contribute to replicate probability)
 			
 					}	
 						#LR for locus jj
-						LRres[[jj]]<-tmp1
+						LRres[[jj]]<-signif(tmp1,3)
 				}
 				tmp<-NULL
 				for(i in LRres){
@@ -575,15 +596,23 @@ LRmixTK <-function()
 					tkrreplot(img)
 				}
 				copy.but <- tkbutton(frameC,text="Copy to Clipboard",font="courrier 10",fg="darkblue",command=CopyToClip)
-				LRtab2<-LRres
-				excel.but2<-tkbutton(frameC, text="Export results",fg="blue", font="courrier 10",command=function() exportFile(LRtab2))#,command=function() openFile())
+				
+				LRtab2<-as.data.frame(sapply(LRres,rbind))
+				
+				colnames(LRtab2)<-loc0
+				# rownames(LRtab2)<-vecD
+				
+				# prodLR<-
+				LRtab3<-cbind('PrD'=vecD,LRtab2,'prodLR'=signif(apply(LRtab2,1,prod),3))
+				excel.but2<-tkbutton(frameC, text="Export results",fg="darkblue", font="courrier 10",command=function() exportFile(LRtab3,'LRplot.txt'))#,command=function() openFile())
 
 				
 				
-				tkgrid(img)
-				tkgrid(copy.but)#,excel.but2,rowspan=10,sticky='ew')
+				tkgrid(img,sticky='ew')
+				tkgrid(copy.but)
+				tkgrid(excel.but2)#,sticky='ew')
 				# tkgrid(plot.but, excel.but,rowspan=10,sticky='ew')
-				tkpack(frameC)
+				tkgrid(frameC)
 				
 			}
 			
