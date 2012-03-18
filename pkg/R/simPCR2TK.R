@@ -317,7 +317,7 @@
 				else
 				{	
 					s<-1:nrow(tmp)#select the rows to include in the calculation
-					tmp2<-tmp[sample(s,dataselec.verif(),rep=FALSE),]#sample data 
+					tmp2<-tmp[sample(s,dataselec.verif(),replace=FALSE),]#sample data 
 					tab1<-tmp2[,c(2,3)]
 					colnames(tab1)<-c('Dropout','PHeights')
 					tab2<-tmp2[,c(4,1)]

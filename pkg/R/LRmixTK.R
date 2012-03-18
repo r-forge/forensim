@@ -139,14 +139,14 @@ LRmixTK <-function()
 					{
 						if(tclvalue(ext)=='txt')
 						{
-							tab<-read.table(tclvalue(filename),h=TRUE,as.is=TRUE,sep='\t',na.string='')
+							tab<-read.table(tclvalue(filename),header=TRUE,as.is=TRUE,sep='\t',na.strings='')
 							if(any('AMEL' %in% tab$Marker)) tab<-tab[-which(tab$Marker=='AMEL'),]
 
 							#strings as strings, avoid converting to factors
 						}
 						else
 						{
-							tab<-read.csv(tclvalue(filename),h=TRUE,as.is=TRUE,na.string='')#strings as strings, avoid converting to factors
+							tab<-read.csv(tclvalue(filename),header=TRUE,as.is=TRUE,na.strings='')#strings as strings, avoid converting to factors
 							if(any('AMEL' %in% tab$Marker)) tab<-tab[-which(tab$Marker=='AMEL'),]
 
 						}# rm(file
@@ -172,9 +172,9 @@ LRmixTK <-function()
 			
 			# CSP
 			# if(tclvalue(extens1)=='txt')
-			# stainFile<-read.table(tclvalue(filePath),h=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
+			# stainFile<-read.table(tclvalue(filePath),header=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
 			# else{
-			# stainFile<-read.csv(tclvalue(filePath),h=TRUE,as.is=TRUE,na.string='')#strings as strings, avoid converting to factors
+			# stainFile<-read.csv(tclvalue(filePath),header=TRUE,as.is=TRUE,na.string='')#strings as strings, avoid converting to factors
 			# }
 		#suspect
 		if(!require(tcltk)) stop("package tcltk is required")
@@ -361,9 +361,9 @@ LRmixTK <-function()
 			verifAF<-function(a,b)
 			{
 				if(tclvalue(a)=='txt')
-				freqFile<-read.table(tclvalue(b),h=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
+				freqFile<-read.table(tclvalue(b),header=TRUE,as.is=TRUE,sep='\t',na.strings='')#strings as strings, avoid converting to factors
 				else{
-				freqFile<-read.csv(tclvalue(b),h=TRUE,as.is=TRUE,na.string=' ')#strings as strings, avoid converting to factors
+				freqFile<-read.csv(tclvalue(b),header=TRUE,as.is=TRUE,na.strings=' ')#strings as strings, avoid converting to factors
 				}
 				return(freqFile)
 			}
@@ -760,10 +760,10 @@ LRmixTK <-function()
 		
 
 		if(tclvalue(extens1)=='txt')
-		stainFile<-read.table(tclvalue(filePath),h=TRUE,as.is=TRUE,sep='\t',na.string='')#strings as strings, avoid converting to factors
+		stainFile<-read.table(tclvalue(filePath),header=TRUE,as.is=TRUE,sep='\t',na.strings='')#strings as strings, avoid converting to factors
 
 		else{
-		stainFile<-read.csv(tclvalue(filePath),h=TRUE,as.is=TRUE,na.string='')#strings as strings, avoid converting to factors
+		stainFile<-read.csv(tclvalue(filePath),header=TRUE,as.is=TRUE,na.strings='')#strings as strings, avoid converting to factors
 		}
 		
 		#remove the Amel Marker

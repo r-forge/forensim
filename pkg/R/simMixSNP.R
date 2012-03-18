@@ -8,7 +8,7 @@ if (length(ncont) >1 || ncont<1)
 p0=p^(2*ncont)
 p1=(1-p)^(2*ncont)
 p2=1-p0-p1
-z=sample(c(0,1,2),size=nSNP,prob=c(p0,p1,p2),rep=TRUE)
+z=sample(c(0,1,2),size=nSNP,prob=c(p0,p1,p2),replace=TRUE)
 l0=length(z[z==0])
 l1=length(z[z==1])
 l12=length(z[z==2])
