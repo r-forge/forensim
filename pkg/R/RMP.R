@@ -29,7 +29,7 @@ function(suspect=NULL, filename=NULL, freq, k = c(1, 0, 0), theta = 0,refpop=NUL
 	
 	if(is.null(suspect) & !is.null(filename))
 	
-		tab <- read.table(filename,h=TRUE)
+		tab <- read.table(filename,header=TRUE)
 	
 	if(!is.matrix(tab) & !is.data.frame(tab))
 		stop(cat("data in filename", " must be a matrix or a data frame"))
