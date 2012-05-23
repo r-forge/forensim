@@ -5,14 +5,8 @@ exportPattern(".")
 
 # Import all packages listed as Imports or Depends
 import(
-  methods,
-  gdata,
-  gtools,
-  MASS,
-  mvtnorm,
-  combinat,
-  genetics,
-  tcltk,
-  tcltk2,
+methods,
+tcltk,
+   tcltk2,
   tkrplot
 )
