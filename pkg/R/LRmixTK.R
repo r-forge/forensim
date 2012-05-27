@@ -5,7 +5,7 @@
 # with Help from Oyvind Bleka
 # source('tippetSim.R')
 set.seed(123456)
-LRmixTK <-function()
+LRmixTK2 <-function()
 {
 	if(!require(tcltk)) stop("package tcltk is required")
 	if(!require(tcltk2)) stop("package tcltk2 is required")
@@ -721,8 +721,10 @@ LRmixTK <-function()
 				{
 					params <- par(bg="white")
 					# plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),pch=19,ylim=range(log(tmp,10),finite=TRUE))
-					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),type='l',ylim=range(log(tmp,10),finite=TRUE))
-					lines(vecD, log(tmp,10),lty=3,col='gray')
+					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=3,xaxt='n')
+					axis(1,at=c(0.01,0.2,0.4,0.6,0.8,0.99))
+					
+					# lines(vecD, log(tmp,10),lty=3,col='gray')
 					grid()
 					title('LR vs. probability of dropout', cex=1.3)
 					par(params)
