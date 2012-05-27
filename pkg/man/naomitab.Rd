@@ -27,7 +27,7 @@ been removed.
  given allele   are read in rows for  different loci. 
   When a given allele is not observed, the value is  coded NA (originally coded  "-" in the journal).
 }
-\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
+\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
 
 \seealso{ \code{\link{tabfreq}} }
 

@@ -18,7 +18,7 @@ Cmn(m, n)
 \note{Cmn was implemented as an auxiliary function for the \code{\link{dataL}} function which computes the
 likelihood of the observed alleles in a mixed DNA stain conditional on the number of contributors.}
  
-\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
+\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
 
 
 \seealso{ \code{\link{comb}} for all possible combinations of m elements among n with repetitions}

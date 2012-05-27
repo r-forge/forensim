@@ -46,7 +46,7 @@ each individual has a probability of  1/N to be selected.}
 }
 
 
-\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
+\author{Hinda Haned \email{h.haned@nfi.minvenj.nl}}
 \examples{
 data(Tu)
 tab<-simugeno(tabfreq(Tu),n=1200)

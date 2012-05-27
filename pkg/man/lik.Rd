@@ -47,7 +47,7 @@ Curran JM, Triggs CM, Buckleton J, Weir BS. Interpreting DNA Mixtures in Structu
 
 
 }
-\author{Hinda Haned  <h.haned@nfi.minjus.nl>}
+\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
 
 
 

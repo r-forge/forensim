@@ -42,7 +42,7 @@
 \code{\link{tabfreq}}}  
 
 
-\author{ Hinda Haned  \email{h.haned@nfi.minjus.nl} }
+\author{ Hinda Haned  \email{h.haned@nfi.minvenj.nl} }
 
 
 

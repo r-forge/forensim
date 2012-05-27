@@ -33,7 +33,7 @@ along with informations about the individuals poulations and the loci used to si
 
 \seealso{ \code{\linkS4class{simugeno}}, \code{\link{as.simumix}}, \code{\link{is.simumix}}, \code{\link{simugeno}} and  \code{\link{tabfreq}}}  
 
-\author{ Hinda Haned  \email{h.haned@nfi.minjus.nl} }
+\author{ Hinda Haned  \email{h.haned@nfi.minvenj.nl} }
 
 \examples{
 

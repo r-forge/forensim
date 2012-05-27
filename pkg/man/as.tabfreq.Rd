@@ -42,7 +42,7 @@ is.tabfreq(x)
 }
 
 
-\author{Hinda Haned \email{h.haned@nfi.minjus.nl}}
+\author{Hinda Haned \email{h.haned@nfi.minvenj.nl}}
 \examples{
 data(Tu)
 tabfreq(Tu,pop.names=factor("Tu"))
