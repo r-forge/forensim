@@ -6,7 +6,7 @@
 \description{LR  Allows the calculation of likelihood ratios for a piece of DNA evidence, for any number of replicates, any number of contributors, and when drop-in and drop-out are possible.
 }
 \usage{
-LR2(Repliste, Tp, Td, Vp, Vd, xp, xd, theta, prDHet, prDHom, prC, freq)
+LR(Repliste, Tp, Td, Vp, Vd, xp, xd, theta, prDHet, prDHom, prC, freq)
 }
 \arguments{
   \item{Repliste}{vector of the alleles present at a given locus for any number of replicates. Alleles from different replicates should be seperated by a 0. If there are two replicates, showing alleles 12,13, and 14 respectively, then \code{Repliste} should be given as  c(12,13,0,14).}
