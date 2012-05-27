@@ -5,7 +5,7 @@
 # with Help from Oyvind Bleka
 # source('tippetSim.R')
 set.seed(123456)
-LRmixTK2 <-function()
+LRmixTK <-function()
 {
 	if(!require(tcltk)) stop("package tcltk is required")
 	if(!require(tcltk2)) stop("package tcltk2 is required")
