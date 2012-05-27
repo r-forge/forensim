@@ -181,7 +181,7 @@ likEvid<-function(Repliste,T,V,x,theta,prDHet,prDHom,prC,freq)
 }
 
 
-LR2<-function(Repliste,Tp,Td,Vp,Vd,xp,xd,theta,prDHet,prDHom,prC,freq){
+LR<-function(Repliste,Tp,Td,Vp,Vd,xp,xd,theta,prDHet,prDHom,prC,freq){
 
 num<-likEvid(Repliste,T=Tp,V=Vp,x=xp,theta,prDHet,prDHom,prC,freq)
 deno<-likEvid(Repliste,T=Td,V=Vd,x=xd,theta,prDHet,prDHom,prC,freq)
