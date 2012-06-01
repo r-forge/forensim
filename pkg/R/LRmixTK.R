@@ -4,7 +4,6 @@
 #GUI for LRmix
 # with Help from Oyvind Bleka
 # source('tippetSim.R')
-set.seed(123456)
 LRmixTK <-function()
 {
 	if(!require(tcltk)) stop("package tcltk is required")
@@ -391,7 +390,7 @@ LRmixTK <-function()
 			# init. list for the storage of LRs for each simulated profile
 			listTab<-vector('list',M)
 			print('========= Tippet plots ============')
-
+			
 			for(mm in 1:M)
 			{
 				cat(paste(100*mm/M,'%',sep=''), 'completed','\n')
@@ -417,19 +416,23 @@ LRmixTK <-function()
 				
 				listTab[[mm]]<-prod(lr0)
 			}
+			
 			print('===================================')
 		#--- function which draws the LR vs PrD
-			
+			# print('=========Tippet percentiles========')
+	
 			distriLR<-log(unlist(listTab), 10) 
 			# # plot the empirical cumultaive distribution of the log10  LR, using function ecdf 
 			# plot(ecdf(log(distriLR,10)),xlab='log10 LR')
-			# qvals = c(0.01,0.05,0.5,0.95,0.99)
-			# quantiles = quantile(log(distriLR,10),qvals)
-			# minmax = range(log(distriLR,10))
-			# tab = cbind(c("min",as.character(qvals),"max"),round(c(minmax[1],quantiles,minmax[2]),4))
-			# colnames(tab) = c("quantile","value")
-			# write.table(tab,paste("LRdistrQuantiles",M,".txt",sep=""),row.names=FALSE)
-				
+			qvals <- c(0.01,0.05,0.5,0.95,0.99)
+			quantiles<-quantile(distriLR,qvals)
+			minmax <-range(distriLR)
+			tab<-cbind(c("min",as.character(qvals),"max"),round(c(minmax[1],quantiles,minmax[2]),4))
+			colnames(tab) <- c("quantile","value")
+			write.table(tab,paste("LRdistrQuantiles",M,".txt",sep=""),row.names=FALSE)
+			tkmessageBox(message=paste('Tippet plot percentiles saved to',
+			paste("LRdistrQuantiles",M,".txt",sep="")), icon='info',type='ok')	
+			
 			if('Inf' %in% range(distriLR) | NaN %in% range(distriLR) )
 			{
 				stop(tkmessageBox(message="infinite LR values, please change the model parameters",icon="error",type="ok"))
@@ -444,7 +447,7 @@ LRmixTK <-function()
 			{
 				# tkconfigure(dd,cursor="watch")
 				params <- par(bg="white")
-				plot(ecdf(distriLR),xlab='log10 LR',main='Emprical distributon function')
+				plot(ecdf(distriLR),xlab='log10 LR',main='Empirical distribution function')
 				grid()
 				par(params)
 			}
@@ -547,20 +550,35 @@ LRmixTK <-function()
 			if(is.data.frame(Tp.vic)) #if victim is providedm add to suspect
 			{
 			
+				indVic<-1
 				Tp<-rbind.data.frame(Tp.sus, Tp.vic)
 			}
 			else{#not really needed
-			Tp<-Tp.sus}#if not do nothing
-			
-			
+			Tp<-Tp.sus
+			indVic<-0
+			}#if not do nothing
+		
+			# if(indicVic=0) 
 
 			#-------------------------------------------
 			
 			
 			
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
+			nbAll<-rep(0,length(repl0))
+			for(mm in 1:length(nbAll))
+			{
+				repmm<-repl0[mm]
+				nbAll[mm]<-sum(sapply(cspFinal,function(k) length(unique(k[[repmm]]))))
+			}
+			# nbAll<-sum(sapply(cspFinal,function(k) length(unique(k))))
+			nbAll.mean<-round(mean(nbAll))
+			# locosimuHp<-function(d=vecD,contri=TpFinal,x=xp,freq=data0,nrep=100,nbAll=nbAll.mean)
+
 			#contributors under Hp
 			TpFinal<-ConvertSamp(Tp[Tp$Marker %in% loc0, ])
+			
+
 			VdFinal<-ConvertSamp(Vd.sus[Vd.sus$Marker %in% loc0, ])
 			
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
@@ -572,7 +590,7 @@ LRmixTK <-function()
 			}
 			else{
 			TdFinal<-Td.vic}#else its null, for code clarity only
-			
+			tdfinal<-TdFinal
 			lr0<-rep(0,length(loc0))
 			names(lr0)<-loc0
 			xp<-as.numeric(tclvalue(ncHp))
@@ -595,7 +613,7 @@ LRmixTK <-function()
 			}
 			
 			# create a table of the results that will be exported in an Excel file
-			LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),'LR'=c(lr0,prod(lr0)))
+			LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),'LR'=c(signif(lr0,3),signif(prod(lr0),3)))
 			
 			#display the results
 			res<-tktoplevel()
@@ -660,17 +678,347 @@ LRmixTK <-function()
 				tkgrid(filtervar.entry, saveF.butt)		
 				tkpack(Fframe,padx=12,pady=18,side="left")
 			}
-			
+			exportFile2<-function(tmp,r0,r1)
+			{
+				options(warn=-1)
+				ff<-tktoplevel()
+				Fframe<- tkframe(ff, relief="groove")
+				tkwm.title(ff,"Filenames")
+				tkgrid(tklabel(Fframe, text="===== Enter filename ====",font='courrier 12',foreground="darkblue"), columnspan=9)
+				filtervar<- tclVar('sensitivity.txt')
+				filtervar.entry <- tkentry(Fframe, textvariable=filtervar, width=12)
+				saveF.butt<-tkbutton(Fframe, text="Enter",fg="darkblue",font='courrier 8',command=				  function() functionMAJ() )
+				functionMAJ<-function(){
+				filen<-tclvalue(filtervar)
+				write.table(tmp,file=filen,row.names=FALSE)
+				write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table('--------- drop-out ranges: under Hp------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table(paste('5% percentile',r0[1],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table(paste('95% percentile',r0[2],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table('--------- drop-out ranges: under Hd------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table(paste('5% percentile',r1[1],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table(paste('95% percentile',r1[2],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+
+				}
+				
+				tkgrid(filtervar.entry, saveF.butt)		
+				tkpack(Fframe,padx=12,pady=18,side="left")
+			}
+			# function which displays hep for sensitivity analysis
+			infoSP<-function()
+			{
+				tkmessageBox(message="The plot displays the sensitivity analysis of the LRs to variations of the drop-out probability.\nThe same drop-out probability is applied to all contributors under Hp and under Hd.\nThe red arrow report the ranges of the probabilities of drop-out, estimated via the\n Monte-Carlo simulation procedure described in Gill et al (Forensic Sci. Int. 2007). ",icon="info",type="ok")
+
+			}
 			#--- function which draws the LR vs PrD
+			#--- new from 3.1: ranges of drop-put are also reported
 			Dplot<-function()
 			{
 				LRres<-vector('list', length(loc0))
-				vecD<-seq(0.01,0.99,length=20)
+				vecD<-signif(seq(0.01,0.99,length=50),2)
 				# vecD<-seq(0.01,1,by=0.02)
+				# Hinda, Delft May 28th 2012
+# simulates the number of alleles x in the whole profile, for a range of PrD values
+#-- under Hd
+				locosimuHd<-function(d=vecD,prC=cc,contri=TdFinal,x=xd,freq=data0,nrep=100,nb=nbAll.mean,locnames=loc0)
+				{
+					
+					# there may be no known contributors under Hd
+					# print('1')
+					if(!setequal(contri,0))
+					{
+						# print('1')
+						locosimuHd.loc<-function(d,contri,x,freq)
+						{
+							#-- get the names of TpFinal to get the contributors
+							
+							index<-names(contri[[1]])
+							# print(2)
+							for(i in 1:length(index)){assign(paste("contri",i,sep=''),
+							sapply(contri,function(ee) ee[[index[i]]]))}
+							#-------------- if x=0, no uknown contributors
+							if(x==0)
+							{
+								locvec<-vector('list',length=length(locnames))
+								names(locvec)<-locnames
+								for(l in (locnames))
+								{
+									z<-NULL
+									for(rr in 1:length(d))
+									{
+										# rth drop-out value
+										
+										# sample from runif, in order to select the alleles that will drop-out
+										# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
+										#loop to go through all potential contributors under H
+										z1<-NULL
+										for(i in 1:length(index))#ith contributor
+										{
+											if(runif(1) <= d[rr]){
+												A<-NULL #remove allele from data
+											}
+											else{ A<-get(paste('contri',i,sep=''))[1,l]}
+											if(runif(1) <= d[rr]) B<-NULL#remove allele from data
+											else{B<-get(paste('contri',i,sep=''))[2,l]}
+											z1<-c(z1,c(A,B))
+										}
+										#z1 contains the alleles of the all the contrubutors at locus l
+										# add drop-in
+										if(prC==0)
+										{ 
+											z<-c(z,length(unique(z1)))
+										}
+										else
+										{
+											udin<-runif(1)
+											cc<-NULL
+											if(udin<=prC){ cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
+											z<-c(z,length(unique(c(z1,cc))))
+										}
+										# now treat unknown contr
+									}
+									locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+								}
+								# print(locvec)
+								tmp0<-apply(sapply(locvec,rbind),1,sum)
+								tmp0
+							}
+							else# if there are unknown contributors
+							{
+								locvec<-vector('list',length=length(locnames))
+								names(locvec)<-locnames
+								for(l in (locnames))
+								{
+									z<-NULL
+									for(rr in 1:length(d))
+									{
+										# rth drop-out value
+										# sample from runif, in order to select the alleles that will drop-out
+										# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
+										#loop to go trhourgh 
+										z1<-NULL
+										for(i in 1:length(index))#ith contributor
+										{
+											#first allele of contri i
+											# second allele of contri i
+											if(runif(1) <= d[rr]){
+												A<-NULL #remove allele from data
+											}
+											else{ A<-get(paste('contri',i,sep=''))[1,l]}
+											# print(A)
+											if(runif(1) <= d[rr]) B<-NULL#remove allele from data
+											else{B<-get(paste('contri',i,sep=''))[2,l]}
+											z1<-c(z1,length(unique(c(A,B))))
+										}
+										
+										# now treat unknown contr
+										z2<-NULL
+										for(a in 1:x)#ith contributor
+										{
+											X<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
+											Y<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
+											if(runif(1) <= d[rr]) X<-NULL #remove allele from data
+											if(runif(1) <= d[rr]) Y<-NULL#remove allele from data
+											z2<-c(z2,X,Y)
+										}
+										if(prC==0){z<-c(z,length(unique(z1)),length(unique(z2)))}
+										else
+										{
+											cc<-NULL
+											din<-runif(1)
+											if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
+											z<-c(z,length(unique(c(z1,z2,cc))))
+										}
 
+									}
+									locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+								}
+								tmp0<-apply(sapply(locvec,rbind),1,sum)
+								tmp0
+							}
+						# if there are no unknown contributors
+						
+						}	
+					}		
+					else#if there are no known contri under Hd, then re-define the local locosimuHd function 
+					{
+					
+						locosimuHd.loc<-function(d,contri,x,freq)
+						{
+							#-- get the names of TpFinal to get the contributors
+							#-------------- if x=0, no uknown contributors
+							locvec<-vector('list',length=locnames)
+							names(locvec)<-locnames
+							for(l in locnames)
+							{
+								z<-NULL
+								for(rr in 1:length(d))
+								{
+									z2<-NULL
+									for(i in 1:x)#ith contributor
+									{
+										X<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
+										Y<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
+										if(runif(1)<= d[rr]) X<-NULL #remove allele from data
+										if(runif(1) <= d[rr]) Y<-NULL#remove allele from data
+										z2<-c(z2,X,Y)
+									}
+									if(prC==0){z<-c(z,length(unique(z2)))}
+									else
+									{
+										cc<-NULL
+										din<-runif(1)
+										if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
+										z<-c(z,length(unique(c(z2,cc))))
+									}
+
+								}
+								locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+							}
+							tmp0<-apply(sapply(locvec,rbind),1,sum)
+							tmp0
+						}
+					
+					}
+					
+					tmp1<-replicate(nrep,locosimuHd.loc(d,contri,x,freq))
+					#dropvec=dropMat(d2,d3)
+					tabHd<-d[which(tmp1==nb,arr.ind=TRUE)[,1]]
+					signif(quantile(tabHd,c(5,95)/100,type=1),2)
+				}
+	
+				# Hinda, Delft May 28th 2012
+				# simulates the number of alleles x in the whole profile, for a range of PrD values
+				locosimuHp<-function(d=vecD,prC=cc,contri=TpFinal,x=xp,freq=data0,nrep=100,nb=nbAll.mean)
+				{
+					# function that yields the distribution of alleles from the 
+					locosimuHp.loc<-function(d,contri,x,freq)
+					{
+						locnames<-names(contri)
+						#-- get the names of TpFinal to get the contributors
+						index<-names(contri[[1]])
+						for(i in 1:length(index)){assign(paste("contri",i,sep=''),
+						sapply(contri,function(ee) ee[[index[i]]]))}
+						#-------------- if x=0, no uknown contributors
+						if(x==0)
+						{
+							locvec<-vector('list',length=length(locnames))
+							names(locvec)<-locnames
+							for(l in (locnames))
+							{
+								z<-NULL
+								for(rr in 1:length(d))
+								{
+									# rth drop-out value
+									
+								
+									# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
+									#loop to go through all potential contributors under H
+									z1<-NULL
+									for(i in 1:length(index))#ith contributor
+									{
+										if(runif(1) <= d[rr]){
+											A<-NULL #remove allele from data
+										}
+										else{ A<-get(paste('contri',i,sep=''))[1,l]}
+										if(runif(1) <= d[rr]) B<-NULL#remove allele from data
+										else{B<-get(paste('contri',i,sep=''))[2,l]}
+										z1<-c(z1,c(A,B))
+									}
+									#z1 contains the alleles of the all the contrubutors at locus l
+									# add drop-in
+									if(prC==0)
+									{ 
+										z<-c(z,length(unique(z1)))
+									}
+									else
+									{
+										udin<-runif(1)
+										cc<-NULL
+										if(udin<=prC){ cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
+										z<-c(z,length(unique(c(z1,cc))))
+									}
+									# now treat unknown contr
+								}
+								locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+							}
+							# print(locvec)
+							tmp0<-apply(sapply(locvec,rbind),1,sum)
+							tmp0
+						}
+						else# if there are unknown contributors
+						{
+							locvec<-vector('list',length=length(locnames))
+							names(locvec)<-locnames
+							for(l in (locnames))
+							{
+								z<-NULL
+								for(rr in 1:length(d))
+								{
+									# rth drop-out value
+									# sample from runif, in order to select the alleles that will drop-out
+									# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
+									#loop to go trhourgh 
+									z1<-NULL
+									for(i in 1:length(index))#ith contributor
+									{
+										#first allele of contri i
+										# second allele of contri i
+										if(runif(1) <= d[rr]){
+											A<-NULL #remove allele from data
+										}
+										else{ A<-get(paste('contri',i,sep=''))[1,l]}
+										# print(A)
+										if(runif(1) <= d[rr]) B<-NULL#remove allele from data
+										else{B<-get(paste('contri',i,sep=''))[2,l]}
+										z1<-c(z1,length(unique(c(A,B))))
+									}
+									
+									# now treat unknown contr
+									z2<-NULL
+									for(i in 1:x)#ith contributor
+									{
+										X<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
+										Y<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
+										if(runif(1) <= d[rr]) X<-NULL #remove allele from data
+										if(runif(1) <= d[rr]) Y<-NULL#remove allele from data
+										z2<-c(z2,X,Y)
+									}
+									if(prC==0){z<-c(z,length(unique(z1)),length(unique(z2)))}
+									else
+									{
+										cc<-NULL
+										din<-runif(1)
+										if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
+										z<-c(z,length(unique(c(z1,z2,cc))))
+									}
+
+								}
+								locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+							}
+							tmp0<-apply(sapply(locvec,rbind),1,sum)
+							tmp0
+						}
+						# if there are no unknown contributors
+						
+					}	
+					
+					
+					tmp1<-replicate(nrep,locosimuHp.loc(d,contri,x,freq))
+					#dropvec=dropMat(d2,d3)
+					tabHp<-d[which(tmp1==nb,arr.ind=TRUE)[,1]]
+					signif(quantile(tabHp,c(5,95)/100,type=1),2)
+				}
+				cc<-as.numeric(tclvalue(prC))
+
+				r0<-locosimuHp(d=vecD,prC=cc,contri=TpFinal,freq=data0,x=xp,nrep=100,nb=nbAll.mean)
+				r1<-locosimuHd(d=vecD,prC=cc,contri=TdFinal,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
+				ranges0<-range(r0,r1)
 				print('=========Sensitivity analysis============')
-
-				
+				xp<-as.numeric(tclvalue(ncHp))
+				xd<-as.numeric(tclvalue(ncHd))
+				theta0<-as.numeric(tclvalue(theta))
 				for(jj in 1:length(loc0))
 				{		
 					cat(paste(round(jj*100/length(loc0)),'%',sep=''),'completed','\n')
@@ -682,14 +1030,9 @@ LRmixTK <-function()
 					# loop to evaluate different PrD probabilities in vecD
 					for(k in 1:length(vecD))
 					{
-						
-					#numerator Pr(E|Hp)
-						np<-unlist(TpFinal[jj])
-						xp<-as.numeric(tclvalue(ncHp))
-						xd<-as.numeric(tclvalue(ncHd))
-						theta0<-as.numeric(tclvalue(theta))
+						#numerator Pr(E|Hp)
 						d<-vecD[k]
-						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d^2,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d^2,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[mark0]])# V does not contribute to replicate probability
+						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d^2,length(tp)/2 + xp),prC=cc,freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d^2,length(tmpTd)/2 + xd),prC=cc, freq=data0[[mark0]])# V does not contribute to replicate probability
 						# V does not contribute to replicate probability)
 			
 					}	
@@ -721,30 +1064,51 @@ LRmixTK <-function()
 				{
 					params <- par(bg="white")
 					# plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),pch=19,ylim=range(log(tmp,10),finite=TRUE))
-					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=3,xaxt='n')
-					axis(1,at=c(0.01,0.2,0.4,0.6,0.8,0.99))
+					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=1,xaxt='n')
+					axis(1,at=c(0.01,0.1,0.2,0.4,0.6,0.8,0.99))
+					# segments(ranges0[1],vecD)
+					# quantiles function uses an algorithm that can yield intermediate values of d that are not in vecD, since limited numbers ar explored in [0.01,0.99], we need to make sure that the segments reported in the plot are accurate
+					
+					if(!any(is.na(ranges0)))#first chech that the estimation worked properly given the contributors chosen by the user
+					{
+						minLR<-min(log(tmp,10))
+						if(minLR>0) minLR<-0 else minLR<- minLR-15
+						x0<-log(tmp[which(vecD==ranges0[1])],10)
+						y0<-log(tmp[which(vecD==ranges0[2])],10)
+							
+						arrows(ranges0[1],minLR,ranges0[1],x0,col='red',lwd=2)
+						arrows(ranges0[2],minLR,ranges0[2],y0,col='red',lwd=2)
+						
+					}
+					else
+					{
+						tkmessageBox(message=paste('Ranges of drop-out could not be determined with the chosen LR parameters.\n Please check that the hypothesised contributors are sufficient to explain the', nbAll.mean, 'observed alleles',sep=' '),icon='info')
+					}
 					
 					# lines(vecD, log(tmp,10),lty=3,col='gray')
 					grid()
 					title('LR vs. probability of dropout', cex=1.3)
 					par(params)
 				}
+				
 				img <- tkrplot(frameC,fun= Dplot.loc,hscale=Myhscale,vscale=Myvscale)
 				CopyToClip <- function()
 				{
 					tkrreplot(img)
 				}
 				copy.but <- tkbutton(frameC,text="Copy to Clipboard",font="courrier 10",fg="darkblue",command=CopyToClip)
-				LRtab2<-LRres
-				excel.but2<-tkbutton(frameC, text="Export results",fg="blue", font="courrier 10",command=function() exportFile(LRtab2))#,command=function() openFile())
-
+				export.but <- tkbutton(frameC,text="Export results",font="courrier 10",fg="darkblue",command=CopyToClip)
 				
-				
+				LRtab2<-signif(cbind.data.frame(vecD,log(tmp,10)),4)
+				colnames(LRtab2)<-c('PrD','log10LR')
+				excel.but2<-tkbutton(frameC, text="Export results",fg="darkblue", font="courrier 10",command=function() exportFile2(LRtab2,r0,r1))#,command=function() openFile())
+				info.but<-tkbutton(frameC, text="Info?",fg="darkblue", font="courrier 10",command=function() infoSP())
 				tkgrid(img)
-				tkgrid(copy.but)#,excel.but2,rowspan=10,sticky='ew')
+				tkgrid(copy.but)
+				tkgrid(excel.but2,columnspan=13)
+				tkgrid(info.but,columnspan=13)
 				# tkgrid(plot.but, excel.but,rowspan=10,sticky='ew')
 				tkpack(frameC)
-				
 			}
 			
 			
