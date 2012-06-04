@@ -309,7 +309,7 @@ LRmixTK <-function()
 			# create the table of random men
 			data1<-tabfreq(verifAF(extens22,filePath22))
 			data0<-data1$tab
-
+			# print('data0');print(data0)
 			#extens22 and filePath22 are updated by importfreq, these are local variables to analyse() function
 			
 			#----------VICTIM PROFILES  get users choice: victim
@@ -542,7 +542,7 @@ LRmixTK <-function()
 			
 			#------------ SUSPECT PROFILES
 		
-			
+			# print(suspect)
 			Tp.sus<-suspect#the suspect become known non-contributor under Hd
 			Vd.sus<-suspect
 			#-------------------------------------------
@@ -599,9 +599,12 @@ LRmixTK <-function()
 
 			for(jj in loc0)
 			{
+				# print(jj)
 				rep0<-cspFinal[[jj]]
+				# print(data0[[jj]])
 				if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
 				else{ tmpTd<-0}
+				# print(rep0)
 				#numerator Pr(E|Hp)
 				drop0<-as.numeric(tclvalue(prD))
 				tp<-unlist(TpFinal[[jj]])
@@ -719,183 +722,16 @@ LRmixTK <-function()
 				vecD<-signif(seq(0.01,0.99,length=50),2)
 				# vecD<-seq(0.01,1,by=0.02)
 				# Hinda, Delft May 28th 2012
-# simulates the number of alleles x in the whole profile, for a range of PrD values
-#-- under Hd
-				locosimuHd<-function(d=vecD,prC=cc,contri=TdFinal,x=xd,freq=data0,nrep=100,nb=nbAll.mean,locnames=loc0)
-				{
-					
-					# there may be no known contributors under Hd
-					# print('1')
-					if(!setequal(contri,0))
-					{
-						# print('1')
-						locosimuHd.loc<-function(d,contri,x,freq)
-						{
-							#-- get the names of TpFinal to get the contributors
-							
-							index<-names(contri[[1]])
-							# print(2)
-							for(i in 1:length(index)){assign(paste("contri",i,sep=''),
-							sapply(contri,function(ee) ee[[index[i]]]))}
-							#-------------- if x=0, no uknown contributors
-							if(x==0)
-							{
-								locvec<-vector('list',length=length(locnames))
-								names(locvec)<-locnames
-								for(l in (locnames))
-								{
-									z<-NULL
-									for(rr in 1:length(d))
-									{
-										# rth drop-out value
-										
-										# sample from runif, in order to select the alleles that will drop-out
-										# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
-										#loop to go through all potential contributors under H
-										z1<-NULL
-										for(i in 1:length(index))#ith contributor
-										{
-											if(runif(1) <= d[rr]){
-												A<-NULL #remove allele from data
-											}
-											else{ A<-get(paste('contri',i,sep=''))[1,l]}
-											if(runif(1) <= d[rr]) B<-NULL#remove allele from data
-											else{B<-get(paste('contri',i,sep=''))[2,l]}
-											z1<-c(z1,c(A,B))
-										}
-										#z1 contains the alleles of the all the contrubutors at locus l
-										# add drop-in
-										if(prC==0)
-										{ 
-											z<-c(z,length(unique(z1)))
-										}
-										else
-										{
-											udin<-runif(1)
-											cc<-NULL
-											if(udin<=prC){ cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
-											z<-c(z,length(unique(c(z1,cc))))
-										}
-										# now treat unknown contr
-									}
-									locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
-								}
-								# print(locvec)
-								tmp0<-apply(sapply(locvec,rbind),1,sum)
-								tmp0
-							}
-							else# if there are unknown contributors
-							{
-								locvec<-vector('list',length=length(locnames))
-								names(locvec)<-locnames
-								for(l in (locnames))
-								{
-									z<-NULL
-									for(rr in 1:length(d))
-									{
-										# rth drop-out value
-										# sample from runif, in order to select the alleles that will drop-out
-										# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
-										#loop to go trhourgh 
-										z1<-NULL
-										for(i in 1:length(index))#ith contributor
-										{
-											#first allele of contri i
-											# second allele of contri i
-											if(runif(1) <= d[rr]){
-												A<-NULL #remove allele from data
-											}
-											else{ A<-get(paste('contri',i,sep=''))[1,l]}
-											# print(A)
-											if(runif(1) <= d[rr]) B<-NULL#remove allele from data
-											else{B<-get(paste('contri',i,sep=''))[2,l]}
-											z1<-c(z1,length(unique(c(A,B))))
-										}
-										
-										# now treat unknown contr
-										z2<-NULL
-										for(a in 1:x)#ith contributor
-										{
-											X<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
-											Y<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
-											if(runif(1) <= d[rr]) X<-NULL #remove allele from data
-											if(runif(1) <= d[rr]) Y<-NULL#remove allele from data
-											z2<-c(z2,X,Y)
-										}
-										if(prC==0){z<-c(z,length(unique(z1)),length(unique(z2)))}
-										else
-										{
-											cc<-NULL
-											din<-runif(1)
-											if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
-											z<-c(z,length(unique(c(z1,z2,cc))))
-										}
-
-									}
-									locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
-								}
-								tmp0<-apply(sapply(locvec,rbind),1,sum)
-								tmp0
-							}
-						# if there are no unknown contributors
-						
-						}	
-					}		
-					else#if there are no known contri under Hd, then re-define the local locosimuHd function 
-					{
-					
-						locosimuHd.loc<-function(d,contri,x,freq)
-						{
-							#-- get the names of TpFinal to get the contributors
-							#-------------- if x=0, no uknown contributors
-							locvec<-vector('list',length=locnames)
-							names(locvec)<-locnames
-							for(l in locnames)
-							{
-								z<-NULL
-								for(rr in 1:length(d))
-								{
-									z2<-NULL
-									for(i in 1:x)#ith contributor
-									{
-										X<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
-										Y<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
-										if(runif(1)<= d[rr]) X<-NULL #remove allele from data
-										if(runif(1) <= d[rr]) Y<-NULL#remove allele from data
-										z2<-c(z2,X,Y)
-									}
-									if(prC==0){z<-c(z,length(unique(z2)))}
-									else
-									{
-										cc<-NULL
-										din<-runif(1)
-										if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
-										z<-c(z,length(unique(c(z2,cc))))
-									}
-
-								}
-								locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
-							}
-							tmp0<-apply(sapply(locvec,rbind),1,sum)
-							tmp0
-						}
-					
-					}
-					
-					tmp1<-replicate(nrep,locosimuHd.loc(d,contri,x,freq))
-					#dropvec=dropMat(d2,d3)
-					tabHd<-d[which(tmp1==nb,arr.ind=TRUE)[,1]]
-					signif(quantile(tabHd,c(5,95)/100,type=1),2)
-				}
-	
-				# Hinda, Delft May 28th 2012
 				# simulates the number of alleles x in the whole profile, for a range of PrD values
-				locosimuHp<-function(d=vecD,prC=cc,contri=TpFinal,x=xp,freq=data0,nrep=100,nb=nbAll.mean)
+				#-- under Hd
+				locosimu<-function(d=vecD,prC=cc,contri=TdFinal,x=xd,freq=data0,nrep=100,nb=nbAll.mean,locnames=loc0)
 				{
-					# function that yields the distribution of alleles from the 
-					locosimuHp.loc<-function(d,contri,x,freq)
+
+				# there may be no known contributors under Hd
+				if(!setequal(contri,0))
+				{
+					locosimu.loc<-function(d,contri,x,freq)
 					{
-						locnames<-names(contri)
 						#-- get the names of TpFinal to get the contributors
 						index<-names(contri[[1]])
 						for(i in 1:length(index)){assign(paste("contri",i,sep=''),
@@ -905,115 +741,187 @@ LRmixTK <-function()
 						{
 							locvec<-vector('list',length=length(locnames))
 							names(locvec)<-locnames
+							locvec2<-locvec
 							for(l in (locnames))
 							{
 								z<-NULL
-								for(rr in 1:length(d))
+								for(rr in 1:length(d))# rth drop-out value
 								{
-									# rth drop-out value
-									
-								
+									# sample from runif, in order to select the alleles that will drop-out
 									# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
 									#loop to go through all potential contributors under H
-									z1<-NULL
+									z0<-NULL
 									for(i in 1:length(index))#ith contributor
 									{
 										if(runif(1) <= d[rr]){
-											A<-NULL #remove allele from data
+											a1<-NULL #remove allele from data
 										}
-										else{ A<-get(paste('contri',i,sep=''))[1,l]}
-										if(runif(1) <= d[rr]) B<-NULL#remove allele from data
-										else{B<-get(paste('contri',i,sep=''))[2,l]}
-										z1<-c(z1,c(A,B))
+										else{
+											a1<-get(paste('contri',i,sep=''))[1,l]}
+										
+										if(runif(1) <= d[rr]){ a2<-NULL}#remove allele from data
+										else{a2<-get(paste('contri',i,sep=''))[2,l]}
+										z0<-c(z0,a1,a2)#list of alleles
+										# z1<-c(z1,length(unique(c(a1,a2))))
 									}
 									#z1 contains the alleles of the all the contrubutors at locus l
 									# add drop-in
-									if(prC==0)
-									{ 
-										z<-c(z,length(unique(z1)))
-									}
-									else
+									cc<-NULL
+									if(prC!=0)
 									{
-										udin<-runif(1)
 										cc<-NULL
-										if(udin<=prC){ cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
-										z<-c(z,length(unique(c(z1,cc))))
+										if(runif(1)<=prC){ cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
 									}
+									z<-c(z,length(unique(c(z0,cc))))
 									# now treat unknown contr
 								}
-								locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+								locvec[[l]]<-z#sum the #of alleles among the unknown and the 
+
 							}
-							# print(locvec)
 							tmp0<-apply(sapply(locvec,rbind),1,sum)
-							tmp0
+							return(tmp0)
 						}
-						else# if there are unknown contributors
+						
+						# if there are unknown contributors
+						#----------------------------------------------------#
+						if(x!=0)
 						{
 							locvec<-vector('list',length=length(locnames))
 							names(locvec)<-locnames
+							locvec2=locvec
 							for(l in (locnames))
 							{
-								z<-NULL
+								zz<-NULL
 								for(rr in 1:length(d))
 								{
 									# rth drop-out value
 									# sample from runif, in order to select the alleles that will drop-out
 									# we don't know in advance the user choice and the number of contributors, so we need to make the code flexible
 									#loop to go trhourgh 
-									z1<-NULL
+									zz1<-NULL
 									for(i in 1:length(index))#ith contributor
 									{
 										#first allele of contri i
 										# second allele of contri i
-										if(runif(1) <= d[rr]){
-											A<-NULL #remove allele from data
+										# print(i)
+										A<-NULL
+										B<-NULL
+										if(runif(1) >= d[rr])
+										{
+											A<-get(paste('contri',i,sep=''))[1,l] #remove allele from data
+											# print('A');print(class(A))
 										}
-										else{ A<-get(paste('contri',i,sep=''))[1,l]}
-										# print(A)
-										if(runif(1) <= d[rr]) B<-NULL#remove allele from data
-										else{B<-get(paste('contri',i,sep=''))[2,l]}
-										z1<-c(z1,length(unique(c(A,B))))
+										if(runif(1) >= d[rr])
+										{
+											B<-get(paste('contri',i,sep=''))[2,l] #remove allele from data
+											# print('B');print(B)
+										}
+										
+										zz1<-c(zz1,(c(A,B)))
 									}
-									
 									# now treat unknown contr
-									z2<-NULL
-									for(i in 1:x)#ith contributor
+									zz2<-NULL
+									# print('b')
+									for(a in 1:x)#ith contributor
 									{
-										X<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
-										Y<-sample(names(freq[[l]]),1,prob=freq[[l]])#first allele of uknown i
-										if(runif(1) <= d[rr]) X<-NULL #remove allele from data
-										if(runif(1) <= d[rr]) Y<-NULL#remove allele from data
-										z2<-c(z2,X,Y)
+										# print('here')
+										
+										x1<-NULL
+										x2<-NULL
+										if(runif(1) >= d[rr]){ x1<-sample(names(freq[[l]]),1,prob=freq[[l]])} #remove allele from data
+										if(runif(1) >= d[rr]) {x2<-sample(names(freq[[l]]),1,prob=freq[[l]])}#remove allele from data
+										zz2<-c(zz2,c(x1,x2))
 									}
-									if(prC==0){z<-c(z,length(unique(z1)),length(unique(z2)))}
+									# print(z2)
+									cc<-NULL
+									if(prC!=0){
+										din<-runif(1)
+										if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
+									}
+									zz<-c(zz,length(unique(c(zz1,zz2,cc))))
+
+								}
+								locvec[[l]]<-zz#sum the #of alleles among the unknown and the 
+								# knwon contributors
+								# locvec2[[l]]<-hh
+							}
+							locus2<-locvec
+
+							tmp0<-apply(sapply(locvec,rbind),1,sum)
+							return(tmp0)
+						}
+
+
+				}}
+				#--- now if no profiled individuals under Hd
+				else
+				{
+					locosimu.loc<-function(d,contri,x,freq)
+					{
+						#-- get the names of TpFinal to get the contributors
+						
+						
+						#-------------- if x=0, no uknown contributors
+						if(x==0)
+						{
+							stop('at least one contributor must be stated under Hd')
+						}
+						
+						# if there are unknown contributors
+						
+						if(x!=0)
+						{
+							locvec<-vector('list',length=length(locnames))
+							names(locvec)<-locnames
+							for(l in (locnames))
+							{
+								zz<-NULL
+								for(rr in 1:length(d))
+								{
+									# now treat unknown contr
+									yy1<-NULL
+									# print('b')
+									for(a in 1:x)#ith contributor
+									{
+										# print('here')
+										
+										x1<-NULL
+										x2<-NULL
+										if(runif(1) >= d[rr]){ x1<-sample(names(freq[[l]]),1,prob=freq[[l]])} #remove allele from data
+										if(runif(1) >= d[rr]) {x2<-sample(names(freq[[l]]),1,prob=freq[[l]])}#remove allele from data
+										yy1<-c(yy1,x1,x2)
+									}
+									# print(z2)
+									if(prC==0){zz<-c(zz,(length(unique(yy1))))}
 									else
 									{
 										cc<-NULL
 										din<-runif(1)
 										if(din<=prC){cc<-sample(names(freq[[l]]),1,prob=freq[[l]])}
-										z<-c(z,length(unique(c(z1,z2,cc))))
+										zz<-c(zz,(length(unique(c(yy1,cc)))))
 									}
 
 								}
-								locvec[[l]]<-z#sum the #of alleles among the unknown and the knwon contributors
+								locvec[[l]]<-zz#sum the #of alleles among the unknown and the knwon contributors
 							}
+							locus2<-locvec
 							tmp0<-apply(sapply(locvec,rbind),1,sum)
-							tmp0
+							return(tmp0)
 						}
-						# if there are no unknown contributors
-						
-					}	
-					
-					
-					tmp1<-replicate(nrep,locosimuHp.loc(d,contri,x,freq))
-					#dropvec=dropMat(d2,d3)
-					tabHp<-d[which(tmp1==nb,arr.ind=TRUE)[,1]]
-					signif(quantile(tabHp,c(5,95)/100,type=1),2)
-				}
-				cc<-as.numeric(tclvalue(prC))
 
-				r0<-locosimuHp(d=vecD,prC=cc,contri=TpFinal,freq=data0,x=xp,nrep=100,nb=nbAll.mean)
-				r1<-locosimuHd(d=vecD,prC=cc,contri=TdFinal,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
+
+				}}
+				tmp2<-replicate(nrep,locosimu.loc(d,contri,x,freq))
+				tabHd<-d[which(tmp2==nb,arr.ind=TRUE)[,1]]
+				signif(quantile(tabHd,c(5,95)/100,type=1,na.rm=TRUE),2)
+				}
+				
+				cc<-as.numeric(tclvalue(prC))
+				print('-- determination of PrD ranges in progress --')
+				r0<-locosimu(d=vecD,prC=cc,contri=TpFinal,freq=data0,x=xp,nrep=100,nb=nbAll.mean,locnames=loc0)
+				r1<-locosimu(d=vecD,prC=cc,contri=TdFinal,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
+				print('---------------------------------------------')
+
 				ranges0<-range(r0,r1)
 				print('=========Sensitivity analysis============')
 				xp<-as.numeric(tclvalue(ncHp))
