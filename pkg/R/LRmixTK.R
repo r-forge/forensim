@@ -471,7 +471,7 @@ LRmixTK <-function()
 		#---------prob of dropout and dropoin
 		prD<-tclVar(0.10)
 		prC<-tclVar(0.05)
-		theta<-tclVar(0.02)
+		theta<-tclVar(0)
 		#distribution
 		prD.entry<-tkentry(probFrame,textvariable=prD,width=4,highlightthickness=1,relief="solid",justify="center")
 		prC.entry<-tkentry(probFrame,textvariable=prC,width=4,highlightthickness=1,relief="solid",justify="center")
@@ -917,13 +917,13 @@ LRmixTK <-function()
 				}
 				
 				cc<-as.numeric(tclvalue(prC))
-				print('-- determination of PrD ranges in progress --')
+				print('-- Determination of PrD ranges in progress --')
 				r0<-locosimu(d=vecD,prC=cc,contri=TpFinal,freq=data0,x=xp,nrep=100,nb=nbAll.mean,locnames=loc0)
 				r1<-locosimu(d=vecD,prC=cc,contri=TdFinal,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
-				print('---------------------------------------------')
+				print('-----------------  Done  --------------------')
 
 				ranges0<-range(r0,r1)
-				print('=========Sensitivity analysis============')
+				print('======== Sensitivity analysis ===========')
 				xp<-as.numeric(tclvalue(ncHp))
 				xd<-as.numeric(tclvalue(ncHd))
 				theta0<-as.numeric(tclvalue(theta))
@@ -947,7 +947,7 @@ LRmixTK <-function()
 						#LR for locus jj
 						LRres[[jj]]<-tmp1
 				}
-				print('=========================================')
+				print('================  Done   ================')
 				tmp<-NULL
 				for(i in LRres){
 				tmp<-cbind(tmp,i)}

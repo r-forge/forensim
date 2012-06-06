@@ -98,10 +98,7 @@ likEvid<-function(Repliste,T,V,x,theta,prDHet,prDHom,prC,freq)
 ##---if the Q designation is shutdown
 	
 	#vector of frequencies for the unkown genotypes: Pr(Uj|T,V)
-	# print('ici')
-	# print(stain);print(freq);print(T);print(V);print(x);print(theta)
-	# cat('alrep:',alrep,'\n')
-	a<-Pevid6(stain=Q ,freq=freq[as.character(Q)],T=TRUE,V=V,x=x,theta=theta)
+	a<-Pevid6(stain=Q ,freq=freq[as.character(Q)],T=T,V=V,x=x,theta=theta)
 	 # print(a);
 	for(i in 1:d){Uset[[i]]<-rep(names(which(mat[i,]!=0)),mat[i,which(mat[i,]!=0)])}
 	# print(Uset)
