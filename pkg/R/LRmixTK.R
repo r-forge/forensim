@@ -23,7 +23,7 @@ LRmixTK <-function()
 		if(tclvalue(a)=='txt')
 		freqFile<-read.table(tclvalue(b),header=TRUE,as.is=TRUE,sep='\t',na.strings='')#strings as strings, avoid converting to factors
 		else{
-		freqFile<-read.csv(tclvalue(b),header=TRUE,as.is=TRUE,na.strings=' ')#strings as strings, avoid converting to factors
+		freqFile<-read.csv(tclvalue(b),header=TRUE,as.is=TRUE,na.strings='')#strings as strings, avoid converting to factors
 		}
 		return(freqFile)
 	}
