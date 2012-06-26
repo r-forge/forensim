@@ -3,7 +3,6 @@
 # Hinda, Hague May 2012
 #GUI for LRmix
 # with Help from Oyvind Bleka
-# source('tippetSim.R')
 LRmixTK <-function()
 {
 	if(!require(tcltk)) stop("package tcltk is required")
@@ -249,13 +248,13 @@ LRmixTK <-function()
 		}
 		}	
 		
-	#--------- Tippet plots ------------------#
+	#--------- Robustness plots ------------------#
       #Simulation subframe:
         thirdFrame <- tkframe(main, relief = "groove", borderwidth = 4)
         simFrame1 <- tkframe(thirdFrame)
         titre <- tkframe(simFrame1)
         tkgrid(titre, pady = 10)
-        tkgrid(tklabel(titre, text = "Tippet plots", font = "courrier 14", fg = "blue"))
+        tkgrid(tklabel(titre, text = "Robustness plots", font = "courrier 14", fg = "blue"))
         simFrame11 <- tkframe(thirdFrame, relief = "groove")
         tkgrid(simFrame1, padx = 10)
         #init. checkbuttons: suspects need not to be checked, they have to be given
@@ -389,7 +388,7 @@ LRmixTK <-function()
 			theta0<-as.numeric(tclvalue(theta))
 			# init. list for the storage of LRs for each simulated profile
 			listTab<-vector('list',M)
-			print('========= Tippet plots ============')
+			print('========= Robustness plots ============')
 			
 			for(mm in 1:M)
 			{
@@ -419,8 +418,6 @@ LRmixTK <-function()
 			
 			print('===================================')
 		#--- function which draws the LR vs PrD
-			# print('=========Tippet percentiles========')
-	
 			distriLR<-log(unlist(listTab), 10) 
 			# # plot the empirical cumultaive distribution of the log10  LR, using function ecdf 
 			# plot(ecdf(log(distriLR,10)),xlab='log10 LR')
@@ -430,7 +427,7 @@ LRmixTK <-function()
 			tab<-cbind(c("min",as.character(qvals),"max"),round(c(minmax[1],quantiles,minmax[2]),4))
 			colnames(tab) <- c("quantile","value")
 			write.table(tab,paste("LRdistrQuantiles",M,".txt",sep=""),row.names=FALSE)
-			tkmessageBox(message=paste('Tippet plot percentiles saved to',
+			tkmessageBox(message=paste('Robustness plot percentiles saved to',
 			paste("LRdistrQuantiles",M,".txt",sep="")), icon='info',type='ok')	
 			
 			if('Inf' %in% range(distriLR) | NaN %in% range(distriLR) )
@@ -441,7 +438,7 @@ LRmixTK <-function()
 			Myvscale <- 1
 			dd <- tktoplevel()
 			frameC<-tkframe(dd)
-			tkwm.title(dd,"Tippet plot")
+			tkwm.title(dd,"Robustness plot")
 
 			Dplot.loc<-function()
 			{
