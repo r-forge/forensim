@@ -2,7 +2,7 @@ Package: forensim
 Type: Package
 Title: Statistical tools for the interpretation of forensic DNA
         mixtures
-Version: 3.1
+Version: 3.2
 Date: 2011-05-22
 Author: Hinda Haned <h.haned@nfi.minvenj.nl>
 Maintainer: Hinda Haned <h.haned@nfi.minvenj.nl>
