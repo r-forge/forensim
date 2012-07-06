@@ -248,13 +248,13 @@ LRmixTK <-function()
 		}
 		}	
 		
-	#--------- Robustness plots ------------------#
+	#--------- Performance plots ------------------#
       #Simulation subframe:
         thirdFrame <- tkframe(main, relief = "groove", borderwidth = 4)
         simFrame1 <- tkframe(thirdFrame)
         titre <- tkframe(simFrame1)
         tkgrid(titre, pady = 10)
-        tkgrid(tklabel(titre, text = "Robustness plots", font = "courrier 14", fg = "blue"))
+        tkgrid(tklabel(titre, text = "Performance test", font = "courrier 14", fg = "blue"))
         simFrame11 <- tkframe(thirdFrame, relief = "groove")
         tkgrid(simFrame1, padx = 10)
         #init. checkbuttons: suspects need not to be checked, they have to be given
@@ -388,7 +388,7 @@ LRmixTK <-function()
 			theta0<-as.numeric(tclvalue(theta))
 			# init. list for the storage of LRs for each simulated profile
 			listTab<-vector('list',M)
-			print('========= Robustness plots ============')
+			print('========= Performance plot ============')
 			
 			for(mm in 1:M)
 			{
@@ -427,7 +427,7 @@ LRmixTK <-function()
 			tab<-cbind(c("min",as.character(qvals),"max"),round(c(minmax[1],quantiles,minmax[2]),4))
 			colnames(tab) <- c("quantile","value")
 			write.table(tab,paste("LRdistrQuantiles",M,".txt",sep=""),row.names=FALSE)
-			tkmessageBox(message=paste('Robustness plot percentiles saved to',
+			tkmessageBox(message=paste('Performance test percentiles saved to',
 			paste("LRdistrQuantiles",M,".txt",sep="")), icon='info',type='ok')	
 			
 			if('Inf' %in% range(distriLR) | NaN %in% range(distriLR) )
@@ -438,7 +438,7 @@ LRmixTK <-function()
 			Myvscale <- 1
 			dd <- tktoplevel()
 			frameC<-tkframe(dd)
-			tkwm.title(dd,"Robustness plot")
+			tkwm.title(dd,"Performance plot")
 
 			Dplot.loc<-function()
 			{
