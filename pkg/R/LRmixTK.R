@@ -498,6 +498,7 @@ LRmixTK <-function()
 		analyse.loc<-function()
 		{
 			data0<-tabfreq(verifAF(extens22,filePath22))$tab
+			# write.table('hinda',file='logFile.txt')
 			#extens22 and filePath22 are updated by importfreq, these are local variables to analyse() function
 			
 			#----------VICTIM PROFILES  get users choice: victim
