@@ -98,6 +98,11 @@ likEvid<-function(Repliste,T,V,x,theta,prDHet,prDHom,prC,freq)
 ##---if the Q designation is shutdown
 	
 	#vector of frequencies for the unkown genotypes: Pr(Uj|T,V)
+	rare<-Q[which(!Q %in% names(freq),arr.ind=TRUE)]
+	if(length(rare)!=0){
+	freq[as.character(rare)]<-1/(2*2085)
+	print(paste('WARNING: allele',rare,'has been added to the database with frequency',1/(2*2085),sep=' '))}
+	# print(rare)
 	a<-Pevid6(stain=Q ,freq=freq[as.character(Q)],T=T,V=V,x=x,theta=theta)
 	 # print(a);
 	for(i in 1:d){Uset[[i]]<-rep(names(which(mat[i,]!=0)),mat[i,which(mat[i,]!=0)])}
@@ -178,7 +183,7 @@ likEvid<-function(Repliste,T,V,x,theta,prDHet,prDHom,prC,freq)
 }
 
 
-LR<-function(Repliste,Tp,Td,Vp,Vd,xp,xd,theta,prDHet,prDHom,prC,freq){
+LR32<-function(Repliste,Tp,Td,Vp,Vd,xp,xd,theta,prDHet,prDHom,prC,freq){
 
 num<-likEvid(Repliste,T=Tp,V=Vp,x=xp,theta,prDHet,prDHom,prC,freq)
 deno<-likEvid(Repliste,T=Td,V=Vd,x=xd,theta,prDHet,prDHom,prC,freq)
