@@ -352,7 +352,7 @@ LRmixTK <-function()
 			#the suspect become known non-contributor under Hd, under Hp, suspects that are still evaluated
 			Tp.sus<-suspect[suspect$SampleName %in% suspectID[which(id.tmp==0)],]
 			# other potential suspects who are contributors under Hp, if the matrix is empty (nrow=0), then the ConvertSamp will yield a NULL, there is always one contributor under Hp, if unique suspect + no victims, that will be the random man, so tp!=NULL
-			# the replaced suspec becomes contributor under Hd
+			# the replaced suspect becomes contributor under Hd
 			Vd.sus<-suspect[suspect$SampleName %in% suspectID[which(id.tmp!=0)],]
 
 			# print(suspectTippet)
@@ -417,7 +417,7 @@ LRmixTK <-function()
 			}
 			
 			print('===================================')
-		#--- function which draws the LR vs PrD
+		#--- sensitivity analysis
 			distriLR<-log(unlist(listTab), 10) 
 			# # plot the empirical cumultaive distribution of the log10  LR, using function ecdf 
 			# plot(ecdf(log(distriLR,10)),xlab='log10 LR')
@@ -659,6 +659,7 @@ LRmixTK <-function()
 			
 			# button to display the plot of the LR vs the PrD
 			plot.but<-tkbutton(f1, text="Plot LR vs PrD",fg="blue", font="courrier 10",command=function() Dplot())#,command=function() openFile())
+			#button for the fisrt phase of the analysis: point estimate
 			excel.but<-tkbutton(f1, text="Export results",fg="blue", font="courrier 10",command=function() exportFile(LRtab))#,command=function() openFile())
 			#---export LR
 			# Export the results from the LR calculations, and let the user decide the name
@@ -672,9 +673,56 @@ LRmixTK <-function()
 				filtervar<- tclVar('LRs.txt')
 				filtervar.entry <- tkentry(Fframe, textvariable=filtervar, width=12)
 				saveF.butt<-tkbutton(Fframe, text="Enter",fg="darkblue",font='courrier 8',command=				  function() functionMAJ() )
+				
+				
+				
 				functionMAJ<-function(){
 				filen<-tclvalue(filtervar)
-				write.table(tmp,file=filen,row.names=FALSE)}
+				# write.table('____________________________________________________',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# print(paste('analysis',"Rplot%03d.pdf",sep=''))
+				write.table('===== Log file: likelihood ratios per locus =====',file=filen,append=FALSE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('===== Input files =====',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# print(class(tclvalue(filePath3)))
+				aaaa1<-paste('SAMPLE FILE:',(tclvalue(filePath)),sep='\n')
+				aaaa2<-paste('SUSPECT FILE:',(tclvalue(filePath2)),sep='\n')
+				aaaa3<-paste('VICTIM FILE:',(tclvalue(filePath3)),sep='\n')
+				aaaa4<-paste('SELECTED LOCI:',tclvalue(locus), sep='\n')
+				aaaa5<-paste('SELECTED REPLICATES:',tclvalue(repl), sep='\n')
+				# options(warn=-1)
+				# write.table(x=header,sep=',',file=fileName)
+				write.table(aaaa1,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa2,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa3,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa4,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa5,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+				write.table('========= User parameters==========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('Drop-out value:',tclvalue(prD),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('Drop-in value:',tclvalue(prC),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# theta
+				write.table(paste('Theta value:',tclvalue(theta),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# xp under Hp
+				write.table(paste('Unknowns under Hp:',xp,sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# xd under Hd
+				write.table(paste('Unknowns under Hd:',xd,sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				
+
+				#-----------------------------------------------------#
+				# LRs	
+				# write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table('=========== Log 10 LRs. vs. d ===========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(tmp,file=filen,row.names=FALSE,append=TRUE,quote=FALSE)
+				# write.table('____________________________________________________',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+				}
 				
 				tkgrid(filtervar.entry, saveF.butt)		
 				tkpack(Fframe,padx=12,pady=18,side="left")
@@ -688,18 +736,66 @@ LRmixTK <-function()
 				tkgrid(tklabel(Fframe, text="===== Enter filename ====",font='courrier 12',foreground="darkblue"), columnspan=9)
 				filtervar<- tclVar('sensitivity.txt')
 				filtervar.entry <- tkentry(Fframe, textvariable=filtervar, width=12)
-				saveF.butt<-tkbutton(Fframe, text="Enter",fg="darkblue",font='courrier 8',command=				  function() functionMAJ() )
+				saveF.butt<-tkbutton(Fframe, text="Enter",fg="darkblue",font='courrier 8',command=function() functionMAJ() )
+				# function called when exporting, function of tclvalue (updated for each run)
 				functionMAJ<-function(){
+				# get the file chosen by the user
 				filen<-tclvalue(filtervar)
-				write.table(tmp,file=filen,row.names=FALSE)
-				write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table('--------- drop-out ranges: under Hp------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table(paste('5% percentile',r0[1],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table(paste('95% percentile',r0[2],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table('--------- drop-out ranges: under Hd------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table(paste('5% percentile',r1[1],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table(paste('95% percentile',r1[2],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+			    # files
+				# write.table('____________________________________________________',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('===== Log file: Sensitivity analysis =====',file=filen,append=FALSE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+				write.table('===== Input files =====',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# print(class(tclvalue(filePath3)))
+				
+				aaaa1<-paste('SAMPLE FILE:',(tclvalue(filePath)),sep='\n')
+				aaaa2<-paste('SUSPECT FILE:',(tclvalue(filePath2)),sep='\n')
+				aaaa3<-paste('VICTIM FILE:',(tclvalue(filePath3)),sep='\n')
+				aaaa4<-paste('SELECTED LOCI:',tclvalue(locus), sep='\n')
+				aaaa5<-paste('SELECTED REPLICATES:',tclvalue(repl), sep='\n')
+				# options(warn=-1)
+				# write.table(x=header,sep=',',file=fileName)
+				write.table(aaaa1,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa2,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa3,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa4,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(aaaa5,file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+				write.table('========= User parameters==========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('Drop-in value:',tclvalue(prC),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# theta
+				write.table(paste('Theta value:',tclvalue(theta),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# xp under Hp
+				write.table(paste('Unknowns under Hp:',xp,sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# xd under Hd
+				write.table(paste('Unknowns under Hd:',xd,sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				#------------------- drop-out ranges
+				#-----------------------------------------------------#
+				write.table('========== drop-out ranges: under Hp ===========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('5% percentile',r0[1],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('95% percentile',r0[2],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+				write.table('=========== drop-out ranges: under Hd ============',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('5% percentile',r1[1],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(paste('95% percentile',r1[2],sep=" "),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				# write.table('____________________________________________________',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				#-----------------------------------------------------#
+				# LRs	
+				# write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table('=========== Log 10 LRs. vs. d ===========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				write.table(tmp,file=filen,row.names=FALSE,append=TRUE,quote=FALSE)
+				# write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+	
 
 				}
 				
@@ -933,12 +1029,13 @@ LRmixTK <-function()
 					rep0<-cspFinal[[jj]]
 					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])} else{ tmpTd<-0}
 					tp<-unlist(TpFinal[jj])
+					tv<-unlist(VdFinal[[jj]])
 					# loop to evaluate different PrD probabilities in vecD
 					for(k in 1:length(vecD))
 					{
 						#numerator Pr(E|Hp)
 						d<-vecD[k]
-						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d^2,length(tp)/2 + xp),prC=cc,freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=tp,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d^2,length(tmpTd)/2 + xd),prC=cc, freq=data0[[mark0]])# V does not contribute to replicate probability
+						tmp1[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d^2,length(tp)/2 + xp),prC=cc,freq=data0[[mark0]])/likEvid(Repliste=rep0,T=tmpTd,V=tv,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d^2,length(tmpTd)/2 + xd),prC=cc, freq=data0[[mark0]])# V does not contribute to replicate probability
 						# V does not contribute to replicate probability)
 			
 					}	
@@ -1002,15 +1099,23 @@ LRmixTK <-function()
 				{
 					tkrreplot(img)
 				}
+				
+				# CopyToLog<-function()
+				# {
+				
+				# }
+				# log.but <- tkbutton(frameC,text="Generate log file",font="courrier 10",fg="darkblue",command=CopyToLog)
+				
 				copy.but <- tkbutton(frameC,text="Copy to Clipboard",font="courrier 10",fg="darkblue",command=CopyToClip)
-				export.but <- tkbutton(frameC,text="Export results",font="courrier 10",fg="darkblue",command=CopyToClip)
+				# export.but <- tkbutton(frameC,text="Export results",font="courrier 10",fg="darkblue",command=CopyToClip)
 				
 				LRtab2<-signif(cbind.data.frame(vecD,log(tmp,10)),4)
 				colnames(LRtab2)<-c('PrD','log10LR')
-				excel.but2<-tkbutton(frameC, text="Export results",fg="darkblue", font="courrier 10",command=function() exportFile2(LRtab2,r0,r1))#,command=function() openFile())
+				excel.but2<-tkbutton(frameC, text="Export Log File",fg="darkblue", font="courrier 10",command=function() exportFile2(LRtab2,r0,r1))#,command=function() openFile())
 				info.but<-tkbutton(frameC, text="Info?",fg="darkblue", font="courrier 10",command=function() infoSP())
 				tkgrid(img)
 				tkgrid(copy.but)
+				# tkgrid(log.but)
 				tkgrid(excel.but2,columnspan=13)
 				tkgrid(info.but,columnspan=13)
 				# tkgrid(plot.but, excel.but,rowspan=10,sticky='ew')
