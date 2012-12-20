@@ -308,7 +308,6 @@ LRmixTK <-function()
 			# create the table of random men
 			data1<-tabfreq(verifAF(extens22,filePath22))
 			data0<-data1$tab
-			# print('data0');print(data0)
 			#extens22 and filePath22 are updated by importfreq, these are local variables to analyse() function
 			
 			#----------VICTIM PROFILES  get users choice: victim
@@ -333,7 +332,6 @@ LRmixTK <-function()
 				# {
 					# Tp.vic<-0
 				# }
-						
 				if(length(which(selecVicHd==1))!=0)# same treatement under Hd
 				{
 					Td.vic<-victim[victim$SampleName %in% vicID[which(selecVicHd==1)],]#if user selects victim, then add
@@ -355,7 +353,6 @@ LRmixTK <-function()
 			# the replaced suspect becomes contributor under Hd
 			Vd.sus<-suspect[suspect$SampleName %in% suspectID[which(id.tmp!=0)],]
 
-			# print(suspectTippet)
 			#-------------------------------------------
 			# assign the contributors under Hp: Tp
 			if(is.data.frame(Tp.vic)) #if victim is providedm add to suspect
@@ -398,8 +395,6 @@ LRmixTK <-function()
 				for(jj in loc0)
 				{
 					rep0<-cspFinal[[jj]]
-					# print(class(rep0))
-					# print(rep0)
 					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
 					else{ tmpTd<-0}
 					#numerator Pr(E|Hp)
@@ -498,7 +493,6 @@ LRmixTK <-function()
 		analyse.loc<-function()
 		{
 			data0<-tabfreq(verifAF(extens22,filePath22))$tab
-			# write.table('hinda',file='logFile.txt')
 			#extens22 and filePath22 are updated by importfreq, these are local variables to analyse() function
 			
 			#----------VICTIM PROFILES  get users choice: victim
@@ -540,7 +534,6 @@ LRmixTK <-function()
 			
 			#------------ SUSPECT PROFILES
 		
-			# print(suspect)
 			Tp.sus<-suspect#the suspect become known non-contributor under Hd
 			Vd.sus<-suspect
 			#-------------------------------------------
@@ -548,16 +541,16 @@ LRmixTK <-function()
 			if(is.data.frame(Tp.vic)) #if victim is providedm add to suspect
 			{
 			
-				indVic<-1
+				indVicHp<-unique(Tp.vic$SampleName)
+
 				Tp<-rbind.data.frame(Tp.sus, Tp.vic)
 			}
 			else{#not really needed
 			Tp<-Tp.sus
-			indVic<-0
+			indVicHp<-NULL
 			}#if not do nothing
 		
-			# if(indicVic=0) 
-
+			
 			#-------------------------------------------
 			
 			
@@ -582,11 +575,13 @@ LRmixTK <-function()
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
 			if(is.data.frame(Td.vic))#if a victim is given
 			{
+				indVicHd<-unique(Td.vic$SampleName)
 				TdFinal<-ConvertSamp(Td.vic[Td.vic$Marker %in% loc0, ])
 				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
 
 			}
 			else{
+			indVicHd<-NULL
 			TdFinal<-Td.vic}#else its null, for code clarity only
 			tdfinal<-TdFinal
 			locus.hp<-rep(0,length(loc0))
@@ -616,9 +611,14 @@ LRmixTK <-function()
 			}
 			
 			# create a table of the results that will be exported in an Excel file
-			# print(locus.hp)
-			LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),'Pr(E|Hp)'=signif(c(locus.hp,prod(locus.hp)),4),'Pr(E|Hd)'=signif(c(locus.hd,prod(locus.hd)),4), 'LR'=signif(c(locus.hp/locus.hd,prod(locus.hp/locus.hd)),4), 'log(LR)'=signif(c(log10(locus.hp/locus.hd),log10(prod(locus.hp/locus.hd))),4))
-			
+LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),
+'Pr(E|Hp)'=signif(c(locus.hp,prod(locus.hp)),4),
+'Pr(E|Hd)'=signif(c(locus.hd,prod(locus.hd)),4), 
+'LR'=signif(c(locus.hp/locus.hd,prod(locus.hp/locus.hd)),4),
+'log(LR)'=signif(c(log10(locus.hp/locus.hd),log10(prod(locus.hp/locus.hd))),4))
+
+
+	
 			#display the results
 			res<-tktoplevel()
 			tkwm.title(res,"LRmix: Results            ")
@@ -681,10 +681,8 @@ LRmixTK <-function()
 				functionMAJ<-function(){
 				filen<-tclvalue(filtervar)
 				# write.table('____________________________________________________',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
-				# print(paste('analysis',"Rplot%03d.pdf",sep=''))
 				write.table('======= Log file: LRs per locus ==========',file=filen,append=FALSE,row.names=FALSE,col.names=FALSE,quote=FALSE)
 				write.table('============= Input files ================',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
-				# print(class(tclvalue(filePath3)))
 				aaaa1<-paste('SAMPLE FILE:',(tclvalue(filePath)),sep='\n')
 				aaaa2<-paste('SUSPECT FILE:',(tclvalue(filePath2)),sep='\n')
 				aaaa3<-paste('VICTIM FILE:',(tclvalue(filePath3)),sep='\n')
@@ -718,9 +716,23 @@ LRmixTK <-function()
 				
 
 				#-----------------------------------------------------#
-				# LRs	
-				# write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
-				write.table('=========== Log 10 LRs. vs. d ===========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+write.table('=============== Hypotheses ===============',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+if(!is.null(indVicHp)){
+write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)','+',paste(indVicHp,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+else{write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+
+if(!is.null(indVicHd)){
+write.table(paste('Under Hd:',xd,'unknown(s)','+',paste(indVicHd,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+else{write.table(paste('Under Hd:',xd,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+
+
+
+write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				
+# write.table('-----------------------------------------',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE)
+				write.table('=========== Log10(LR) vs. Pr(D) ===========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
 				write.table(tmp,file=filen,row.names=FALSE,append=TRUE,quote=FALSE)
 				# write.table('____________________________________________________',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
 
@@ -748,7 +760,6 @@ LRmixTK <-function()
 				write.table('===== Log file: Sensitivity analysis =====',file=filen,append=FALSE,row.names=FALSE,col.names=FALSE,quote=FALSE)
 
 				write.table('============= Input files ================',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
-				# print(class(tclvalue(filePath3)))
 				
 				aaaa1<-paste('SAMPLE FILE:',(tclvalue(filePath)),sep='\n')
 				aaaa2<-paste('SUSPECT FILE:',(tclvalue(filePath2)),sep='\n')
@@ -779,6 +790,22 @@ LRmixTK <-function()
 				# xd under Hd
 				write.table(paste('Unknowns under Hd:',xd,sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
 				write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+				#---- Hypotheses
+write.table('=============== Hypotheses ===============',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+
+if(!is.null(indVicHp)){
+write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)','+',paste(indVicHp,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+else{write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+
+if(!is.null(indVicHd)){
+write.table(paste('Under Hd:',xd,'unknown(s)','+',paste(indVicHd,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+else{write.table(paste('Under Hd:',xd,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+
+
+
+write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
+	
+	
 				#------------------- drop-out ranges
 				#-----------------------------------------------------#
 				write.table('======== Drop-out ranges: under Hp ========',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
@@ -815,6 +842,8 @@ LRmixTK <-function()
 			Dplot<-function()
 			{
 				LRres<-vector('list', length(loc0))
+				Hdres<-vector('list',length(loc0))
+				Hpres<-vector('list',length(loc0))
 				vecD<-signif(seq(0.01,0.99,length=50),2)
 				# vecD<-seq(0.01,1,by=0.02)
 				# Hinda, Delft May 28th 2012
@@ -899,28 +928,23 @@ LRmixTK <-function()
 									{
 										#first allele of contri i
 										# second allele of contri i
-										# print(i)
 										A<-NULL
 										B<-NULL
 										if(runif(1) >= d[rr])
 										{
 											A<-get(paste('contri',i,sep=''))[1,l] #remove allele from data
-											# print('A');print(class(A))
 										}
 										if(runif(1) >= d[rr])
 										{
 											B<-get(paste('contri',i,sep=''))[2,l] #remove allele from data
-											# print('B');print(B)
 										}
 										
 										zz1<-c(zz1,(c(A,B)))
 									}
 									# now treat unknown contr
 									zz2<-NULL
-									# print('b')
 									for(a in 1:x)#ith contributor
 									{
-										# print('here')
 										
 										x1<-NULL
 										x2<-NULL
@@ -928,7 +952,6 @@ LRmixTK <-function()
 										if(runif(1) >= d[rr]) {x2<-sample(names(freq[[l]]),1,prob=freq[[l]])}#remove allele from data
 										zz2<-c(zz2,c(x1,x2))
 									}
-									# print(z2)
 									cc<-NULL
 									if(prC!=0){
 										din<-runif(1)
@@ -976,10 +999,8 @@ LRmixTK <-function()
 								{
 									# now treat unknown contr
 									yy1<-NULL
-									# print('b')
 									for(a in 1:x)#ith contributor
 									{
-										# print('here')
 										
 										x1<-NULL
 										x2<-NULL
@@ -987,7 +1008,6 @@ LRmixTK <-function()
 										if(runif(1) >= d[rr]) {x2<-sample(names(freq[[l]]),1,prob=freq[[l]])}#remove allele from data
 										yy1<-c(yy1,x1,x2)
 									}
-									# print(z2)
 									if(prC==0){zz<-c(zz,(length(unique(yy1))))}
 									else
 									{
@@ -1045,6 +1065,8 @@ LRmixTK <-function()
 					}	
 						#LR for locus jj
 						LRres[[jj]]<-tmp.hp/tmp.hd
+						Hdres[[jj]]<-tmp.hd
+						Hpres[[jj]]<-tmp.hp
 				}
 				print('================  Done   ================')
 				tmp<-NULL
@@ -1071,7 +1093,7 @@ LRmixTK <-function()
 				{
 					params <- par(bg="white")
 					# plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),pch=19,ylim=range(log(tmp,10),finite=TRUE))
-					plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=1,xaxt='n')
+					plot(vecD,log(tmp,10),ylab=expression(log[10](LR),xlab=expression(Pr(D)),cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=1,xaxt='n')
 					axis(1,at=c(0.01,0.1,0.2,0.4,0.6,0.8,0.99))
 					# segments(ranges0[1],vecD)
 					# quantiles function uses an algorithm that can yield intermediate values of d that are not in vecD, since limited numbers ar explored in [0.01,0.99], we need to make sure that the segments reported in the plot are accurate
@@ -1112,9 +1134,13 @@ LRmixTK <-function()
 				
 				copy.but <- tkbutton(frameC,text="Copy to Clipboard",font="courrier 10",fg="darkblue",command=CopyToClip)
 				# export.but <- tkbutton(frameC,text="Export results",font="courrier 10",fg="darkblue",command=CopyToClip)
-				
-				LRtab2<-signif(cbind.data.frame(vecD,tmp.hp,tmp.hd,tmp.hp/tmp.hd,log10(tmp.hp/tmp.hp)),4)
-				colnames(LRtab2)<-c('PrD','Pr(E|Hp)','Pr(E|Hd)','LR','log10(LR)')
+#				
+likHp<-apply(sapply(Hpres,rbind),1,prod)#get the prodcut of the likelihoods among loci for all Drop values
+likHd<-apply(sapply(Hdres,rbind),1,prod)
+
+LRtab2<-signif(cbind.data.frame(vecD,likHp,likHd,likHp/likHd,log10(likHp/likHd)),4)
+colnames(LRtab2)<-c('PrD','Pr(E|Hp)','Pr(E|Hd)','LR','log10(LR)')
+
 				excel.but2<-tkbutton(frameC, text="Export Log File",fg="darkblue", font="courrier 10",command=function() exportFile2(LRtab2,r0,r1))#,command=function() openFile())
 				info.but<-tkbutton(frameC, text="Info?",fg="darkblue", font="courrier 10",command=function() infoSP())
 				tkgrid(img)
