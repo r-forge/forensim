@@ -1139,7 +1139,7 @@ likHp<-apply(sapply(Hpres,rbind),1,prod)#get the prodcut of the likelihoods amon
 likHd<-apply(sapply(Hdres,rbind),1,prod)
 
 LRtab2<-signif(cbind.data.frame(vecD,likHp,likHd,likHp/likHd,log10(likHp/likHd)),4)
-colnames(LRtab2)<-c('PrD','Pr(E|Hp)','Pr(E|Hd)','LR','log10(LR)')
+colnames(LRtab2)<-c('Pr(D)','Pr(E|Hp)','Pr(E|Hd)','LR','log10(LR)')
 
 				excel.but2<-tkbutton(frameC, text="Export Log File",fg="darkblue", font="courrier 10",command=function() exportFile2(LRtab2,r0,r1))#,command=function() openFile())
 				info.but<-tkbutton(frameC, text="Info?",fg="darkblue", font="courrier 10",command=function() infoSP())
