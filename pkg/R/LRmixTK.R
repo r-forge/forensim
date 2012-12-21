@@ -1093,7 +1093,7 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 				{
 					params <- par(bg="white")
 					# plot(vecD,log(tmp,10),ylab='log10 LR',xlab='Probability of Dropout',cex.lab=1.3,xlim=c(0,1),pch=19,ylim=range(log(tmp,10),finite=TRUE))
-					plot(vecD,log(tmp,10),ylab=expression(log[10](LR),xlab=expression(Pr(D)),cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=1,xaxt='n')
+					plot(vecD,log(tmp,10),ylab=expression(log[10](LR)),xlab=expression(Pr(D)),cex.lab=1.3,xlim=c(0.01,0.99),type='l',ylim=range(log(tmp,10),finite=TRUE),lty=1,xaxt='n')
 					axis(1,at=c(0.01,0.1,0.2,0.4,0.6,0.8,0.99))
 					# segments(ranges0[1],vecD)
 					# quantiles function uses an algorithm that can yield intermediate values of d that are not in vecD, since limited numbers ar explored in [0.01,0.99], we need to make sure that the segments reported in the plot are accurate
