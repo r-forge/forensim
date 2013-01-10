@@ -1,7 +1,7 @@
 simMixSNP <-
 function(nSNP=5,p=0.4,ncont=1,writeFile=TRUE,outfile="sim.txt",id=1){
 if(nSNP<2) stop("Error. nSNP must be  greater than 1")
-if (!is.real(p) ||length(p) >1 || p < 0 || p > 1)
+if (!is.double(p) ||length(p) >1 || p < 0 || p > 1)
   stop("Allele frequency p must be a number,0<=p<=1")
 if (length(ncont) >1 || ncont<1)
    stop("The number of contributors ncont must be a positive integer")
