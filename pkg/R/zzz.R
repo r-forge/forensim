@@ -1,6 +1,6 @@
 
-.First.lib <-function (lib, pkg) {
-library.dynam("forensim", pkg, lib)
+.onAttach <- function(libname, pkgname){
+pkg.version <- packageDescription("forensim", fields = "Version")
 m0<-"## forensim 3.2.1 is loaded ###"
-packageStartupMessage(m0)
+  packageStartupMessage(m0)
 }
