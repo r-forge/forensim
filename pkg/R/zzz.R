@@ -1,6 +1,7 @@
 
 .onAttach <- function(libname, pkgname){
-pkg.version <- packageDescription("forensim", fields = "Version")
-m0<-"## forensim 3.2.1 is loaded ###"
+pkgversion <- packageDescription("forensim", fields = "Version")
+m0<-paste("## forensim ",pkgversion," is loaded ###")
   packageStartupMessage(m0)
 }
+
