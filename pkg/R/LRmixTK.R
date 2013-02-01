@@ -47,6 +47,7 @@ LRmixTK <-function()
 				for(k in whichsamp)
 				{		
 					allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
+					# print(allele)
 					tmpo<-allele[which(!is.na(allele))]
 					if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
 					else{allele2<-NULL}
@@ -205,6 +206,7 @@ LRmixTK <-function()
 			
 		csp<-veriFile(file1,ext1,error=TRUE,'crime scene profile')
 		suspect<-veriFile(file2,ext2,error=TRUE,'suspect profile')
+		# print(suspect)
 		suspectID<-unique(suspect$SampleName)
 		# contributors under Hp
 
@@ -712,11 +714,12 @@ LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),
 
 				#-----------------------------------------------------#
 
+				
 write.table('=============== Hypotheses ===============',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
-
+# print('ici');print(suspectID)
 if(!is.null(indVicHp)){
-write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)','+',paste(indVicHp,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
-else{write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+write.table(paste('Under Hp:', paste(suspectID,collapse=' + '), '+',xp,'unknown(s)','+',paste(indVicHp,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+else{write.table(paste('Under Hp:', paste(suspectID,collapse=' + '), '+',xp,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
 
 if(!is.null(indVicHd)){
 write.table(paste('Under Hd:',xd,'unknown(s)','+',paste(indVicHd,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
@@ -788,9 +791,10 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 				#---- Hypotheses
 write.table('=============== Hypotheses ===============',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)
 
+
 if(!is.null(indVicHp)){
-write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)','+',paste(indVicHp,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
-else{write.table(paste('Under Hp:', 'Suspect', '+',xp,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+write.table(paste('Under Hp:', paste(suspectID,collapse=' + '), '+',xp,'unknown(s)','+',paste(indVicHp,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
+else{write.table(paste('Under Hp:', paste(suspectID,collapse=' + '), '+',xp,'unknown(s)',sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
 
 if(!is.null(indVicHd)){
 write.table(paste('Under Hd:',xd,'unknown(s)','+',paste(indVicHd,collapse=' + '),sep=' '),file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FALSE)}
