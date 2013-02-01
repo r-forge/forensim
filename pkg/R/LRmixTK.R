@@ -3,6 +3,7 @@
 # Hinda, Hague May 2012
 #GUI for LRmix
 # with Help from Oyvind Bleka
+#patch 3.2.1 (NFI) # 17/01/2013
 LRmixTK <-function()
 {
 	if(!require(tcltk)) stop("package tcltk is required")
@@ -402,8 +403,8 @@ LRmixTK <-function()
 					randoman<-as.numeric(strsplit(simugeno(tab=data1,n=1,which.loc=jj)$tab.geno,'/')[[1]])
 					tp<-c(unlist(TpFinal[[jj]]), randoman)
 					Vd<-unlist(VdFinal[[jj]])
-					lr0[jj]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0^2,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])/
-					likEvid(Repliste=rep0,T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0^2,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
+					lr0[jj]<-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0^2,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])/
+					likEvid(Repliste=(rep0),T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0^2,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
 					# V does not contribute to replicate probability)
 				}
 				
@@ -595,21 +596,15 @@ LRmixTK <-function()
 
 			for(jj in loc0)
 			{
-				# print(jj)
 				rep0<-cspFinal[[jj]]
-				# print(data0[[jj]])
 				if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
 				else{ tmpTd<-0}
-				# print(rep0)
 				#numerator Pr(E|Hp)
 				drop0<-as.numeric(tclvalue(prD))
 				tp<-unlist(TpFinal[[jj]])
-				# print(tp)
-				# print('here')
-				locus.hp[jj]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0^2,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])
-				locus.hd[jj]<-likEvid(Repliste=rep0,T=tmpTd,V=unlist(VdFinal[[jj]]),x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0^2,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
+				locus.hp[jj]<-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0^2,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])
+				locus.hd[jj]<-likEvid(Repliste=(rep0),T=tmpTd,V=unlist(VdFinal[[jj]]),x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0^2,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
 			}
-			
 			# create a table of the results that will be exported in an Excel file
 LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),
 'Pr(E|Hp)'=signif(c(locus.hp,prod(locus.hp)),4),
@@ -841,9 +836,7 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 			#--- new from 3.1: ranges of drop-put are also reported
 			Dplot<-function()
 			{
-				LRres<-vector('list', length(loc0))
-				Hdres<-vector('list',length(loc0))
-				Hpres<-vector('list',length(loc0))
+				
 				vecD<-signif(seq(0.01,0.99,length=50),2)
 				# vecD<-seq(0.01,1,by=0.02)
 				# Hinda, Delft May 28th 2012
@@ -1043,31 +1036,50 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 				xp<-as.numeric(tclvalue(ncHp))
 				xd<-as.numeric(tclvalue(ncHd))
 				theta0<-as.numeric(tclvalue(theta))
-				for(jj in 1:length(loc0))
+				
+				
+				LRres<-vector('list', length(loc0))
+				Hdres<-vector('list',length(loc0))
+				Hpres<-vector('list',length(loc0))
+				names(Hpres)<-loc0
+				names(Hdres)<-loc0
+				names(LRres)<-loc0
+				
+				for(jjj in (loc0))
 				{		
-					cat(paste(round(jj*100/length(loc0)),'%',sep=''),'completed','\n')
-					tmp.hp<-rep(0,length(vecD))
-					tmp.hd<-rep(0,length(vecD))
-					mark0<-loc0[jj]
-					rep0<-cspFinal[[jj]]
-					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])} else{ tmpTd<-0}
-					tp<-unlist(TpFinal[jj])
-					tv<-unlist(VdFinal[[jj]])
+					# cat(paste(round(jjj*100/length(loc0)),'%',sep=''),'completed','\n')
+					mark0<-jjj
+					print(mark0)
+					rep0<-cspFinal[[jjj]]
+					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jjj])} else{ tmpTd<-0}
+				
+					tp<-unlist(TpFinal[jjj])
+					tv<-unlist(VdFinal[[jjj]])
 					# loop to evaluate different PrD probabilities in vecD
-					for(k in 1:length(vecD))
+					tmp.hp<-NULL
+					tmp.hd<-NULL
+						 
+						
+						# print(data0[[mark0]])		
+					for(kkk in 1:length(vecD))
 					{
+						
 						#numerator Pr(E|Hp)
-						d<-vecD[k]
-						tmp.hp[k]<-likEvid(Repliste=rep0,T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d^2,length(tp)/2 + xp),prC=cc,freq=data0[[mark0]])
-						tmp.hd[k]<-likEvid(Repliste=rep0,T=tmpTd,V=tv,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d^2,length(tmpTd)/2 + xd),prC=cc, freq=data0[[mark0]])# V does not contribute to replicate probability
+						d<-vecD[kkk]
+						# print(rep(d,length(tp)/2 + xp))
+						tmp.hp<-c(tmp.hp,likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(d,length(tp)/2 + xp),prDHom=rep(d^2,length(tp)/2 + xp),prC=cc,freq=data0[[mark0]]))
+						
+									
+						tmp.hd<-c(tmp.hd,likEvid(Repliste=(rep0),T=tmpTd,V=tv,x=xd,theta=theta0,prDHet=rep(d,length(tmpTd)/2 + xd),prDHom=rep(d^2,length(tmpTd)/2 + xd),prC=cc, freq=data0[[mark0]]))# V does not contribute to replicate probability
 						# V does not contribute to replicate probability)
 			
 					}	
-						#LR for locus jj
-						LRres[[jj]]<-tmp.hp/tmp.hd
-						Hdres[[jj]]<-tmp.hd
-						Hpres[[jj]]<-tmp.hp
+						
+						LRres[[jjj]]<-tmp.hp/tmp.hd
+						Hdres[[jjj]]<-tmp.hd
+						Hpres[[jjj]]<-tmp.hp
 				}
+				
 				print('================  Done   ================')
 				tmp<-NULL
 				for(i in LRres){
