@@ -598,6 +598,7 @@ LRmixTK <-function()
 
 			for(jj in loc0)
 			{
+				print(jj)
 				rep0<-cspFinal[[jj]]
 				if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
 				else{ tmpTd<-0}
