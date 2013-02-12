@@ -31,13 +31,13 @@ LRmixTK <-function()
 	#------------- Begin< formatting functions
 
 	# function to convert tables of data, as exported from Genemapper to a list
-	ConvertSamp<-function(tab)
+		#------------- Begin> formatting functions
+	# function to convert tables of data, as exported from Genemapper to a list
+	ConvertSamp.old<-function(tab)
 	{
-		
-		if(nrow(tab)!=0)
-		{
 			whichsamp<-unique(tab[,1])
 			whichmark<-unique(tab$Marker)
+
 			if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
 			replist<-vector('list',length(whichmark))
 			names(replist)<-whichmark
@@ -58,13 +58,90 @@ LRmixTK <-function()
 				}
 				
 
+				# print(reptmp)
 				replist[[i]]<-reptmp
-			}	
-				
-				replist
-		}
-		else{return(NULL)}
-	}	
+		}	
+			
+			replist
+	}
+	ConvertSamp<-function(tab)
+	{
+		# sample names (ex. suspect or replicate names)
+		whichsamp<-unique(tab[,1])
+		# get marker names
+		whichmark<-unique(tab$Marker)
+		#remove AMEL from the data
+		if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
+		# intialize 
+		replist<-vector('list',length(whichmark))
+		# initialize 
+		repVec<-vector('list',length(whichmark))
+
+		names(replist)<-whichmark
+		for(i in 1:length(whichmark))
+		{
+			reptmp<-NULL
+			for(k in whichsamp)
+			{		
+				# get the alleles for a given marker, for all samples
+				allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]# get only the alleles, so unsekect columns 1 & 2
+				# only select alleles, no NASs (empty cells)
+				tmpo<-allele[which(!is.na(allele))]
+				if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
+				else{allele2<-0}
+				# allele 2 is the vector of alleles at marker i and sample k
+				# list0<-list(allele2)
+				# names(list0)<-k
+				# print(allele2)
+				reptmp<-c(reptmp, allele2,0)
+			}
+			
+
+			replist[[i]]<-reptmp
+		}	
+			
+			replist
+	}
+	
+	# fromatting function for reference profiles
+	ConvertSamp2<-function(tab)
+	{	
+		# sample names (ex. suspect or replicate names)
+		whichsamp<-unique(tab[,1])
+		# get marker names
+		whichmark<-unique(tab$Marker)
+		#remove AMEL from the data
+		if(any('AMEL' %in% whichmark)) whichmark<-whichmark[-which(whichmark=='AMEL')]
+		# intialize 
+		replist<-vector('list',length(whichmark))
+		# initialize 
+		repVec<-vector('list',length(whichmark))
+
+		names(replist)<-whichmark
+		for(i in 1:length(whichmark))
+		{
+			reptmp<-NULL
+			for(k in whichsamp)# exemple victm 1, victim 2, victim 3 etc
+			{		
+				# get the alleles for a given marker, for all samples
+				allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]# get only the alleles, so unsekect columns 1 & 2
+				# only select alleles, no NASs (empty cells)
+				tmpo<-allele[which(!is.na(allele))]
+				if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
+				else{allele2<-0}
+				# allele 2 is the vector of alleles at marker i and sample k
+				# list0<-list(allele2)
+				# names(list0)<-k
+				# print(allele2)
+				reptmp<-c(reptmp, allele2)
+			}
+			
+
+			replist[[i]]<-reptmp
+		}	
+			
+			replist
+	}
 	#-------------End> formatting functions
 
 	#Analyse function 
@@ -99,6 +176,7 @@ LRmixTK <-function()
 			repl0<- strsplit(tclvalue(repl),' ')[[1]]
 
 		}
+		# print(repl0)
 		#check wether the user uploaded the files for the sample and the refrenecs profiles
 		veriFile<-function(filename,ext,error=TRUE,txt='')
 		{
@@ -152,7 +230,7 @@ LRmixTK <-function()
 		frame.tit<-tkframe(main2,relief="groove", borderwidth=4)
 		tkgrid(frame.tit)
 		tkgrid(tklabel(frame.tit,text="LR calculation", font="courrier 22", 	foreground="darkblue"),sticky='n')
-		tkwm.title(main,"Analyse the profiles")
+		tkwm.title(main,paste('Analyse the profiles, forensim v.',versionNum,sep=''))
 
 	#readFile button
 		firstFrame<-tkframe(main, relief="groove", borderwidth=4)
@@ -369,14 +447,15 @@ LRmixTK <-function()
 
 			#-------------------------------------------
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
+			# print(cspFinal)
 			#contributors under Hp
-			TpFinal<-ConvertSamp(Tp[Tp$Marker %in% loc0, ])
-			VdFinal<-ConvertSamp(Vd.sus[Vd.sus$Marker %in% loc0, ])
+			TpFinal<-ConvertSamp2(Tp[Tp$Marker %in% loc0, ])
+			VdFinal<-ConvertSamp2(Vd.sus[Vd.sus$Marker %in% loc0, ])
 
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
 			if(is.data.frame(Td.vic))#if a victim is given
 			{
-				TdFinal<-ConvertSamp(Td.vic[Td.vic$Marker %in% loc0, ])
+				TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])
 				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
 			}
 			else{
@@ -436,7 +515,8 @@ LRmixTK <-function()
 			Myvscale <- 1
 			dd <- tktoplevel()
 			frameC<-tkframe(dd)
-			tkwm.title(dd,"Performance plot")
+			tkwm.title(dd,paste('Performance plot, forensim v.',versionNum,sep=''))
+			# tkwm.title(res,paste('LRmix: Results, forensim v.',versionNum,sep=''))
 
 			Dplot.loc<-function()
 			{
@@ -559,27 +639,35 @@ LRmixTK <-function()
 			
 			
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
+			cspFinal2<-ConvertSamp.old(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
+
+			# print('ici')
+			# print(cspFinal)
+			# Z<<-cspFinal
 			nbAll<-rep(0,length(repl0))
 			for(mm in 1:length(nbAll))
 			{
 				repmm<-repl0[mm]
-				nbAll[mm]<-sum(sapply(cspFinal,function(k) length(unique(k[[repmm]]))))
+				nbAll[mm]<-sum(sapply(cspFinal2,function(k) length(unique(k[[repmm]]))))
 			}
 			# nbAll<-sum(sapply(cspFinal,function(k) length(unique(k))))
 			nbAll.mean<-round(mean(nbAll))
 			# locosimuHp<-function(d=vecD,contri=TpFinal,x=xp,freq=data0,nrep=100,nbAll=nbAll.mean)
 
 			#contributors under Hp
-			TpFinal<-ConvertSamp(Tp[Tp$Marker %in% loc0, ])
-			
+			TpFinal<-ConvertSamp2(Tp[Tp$Marker %in% loc0, ])
+			TpFinal2<-ConvertSamp.old(Tp[Tp$Marker %in% loc0, ])
 
-			VdFinal<-ConvertSamp(Vd.sus[Vd.sus$Marker %in% loc0, ])
-			
+
+			VdFinal<-ConvertSamp2(Vd.sus[Vd.sus$Marker %in% loc0, ])
+			VdFinal2<-ConvertSamp.old(Vd.sus[Vd.sus$Marker %in% loc0, ])
+
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
 			if(is.data.frame(Td.vic))#if a victim is given
 			{
 				indVicHd<-unique(Td.vic$SampleName)
-				TdFinal<-ConvertSamp(Td.vic[Td.vic$Marker %in% loc0, ])
+				TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])
+				TdFinal2<-ConvertSamp.old(Td.vic[Td.vic$Marker %in% loc0, ])
 				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
 
 			}
@@ -619,7 +707,7 @@ LRtab<-cbind.data.frame('Locus'=c(loc0,'product'),
 	
 			#display the results
 			res<-tktoplevel()
-			tkwm.title(res,"LRmix: Results            ")
+			tkwm.title(res,paste('LRmix: Results, forensim v.',versionNum,sep=''))
 
 			f1<-tkframe(res)
 			tkgrid(tklabel(f1,text="   Results     ",font='courrier 14', foreground="blue"),sticky="w")
@@ -842,12 +930,12 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 			Dplot<-function()
 			{
 				
-				vecD<-signif(seq(0.01,0.99,length=50),2)
+				vecD<-signif(seq(0.01,0.99,length=20),2)
 				# vecD<-seq(0.01,1,by=0.02)
 				# Hinda, Delft May 28th 2012
 				# simulates the number of alleles x in the whole profile, for a range of PrD values
 				#-- under Hd
-				locosimu<-function(d=vecD,prC=cc,contri=TdFinal,x=xd,freq=data0,nrep=100,nb=nbAll.mean,locnames=loc0)
+				locosimu<-function(d=vecD,prC=cc,contri=TdFinal2,x=xd,freq=data0,nrep=100,nb=nbAll.mean,locnames=loc0)
 				{
 
 				# there may be no known contributors under Hd
@@ -1032,8 +1120,8 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 				
 				cc<-as.numeric(tclvalue(prC))
 				print('-- Determination of PrD ranges in progress --')
-				r0<-locosimu(d=vecD,prC=cc,contri=TpFinal,freq=data0,x=xp,nrep=100,nb=nbAll.mean,locnames=loc0)
-				r1<-locosimu(d=vecD,prC=cc,contri=TdFinal,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
+				r0<-locosimu(d=vecD,prC=cc,contri=TpFinal2,freq=data0,x=xp,nrep=100,nb=nbAll.mean,locnames=loc0)
+				r1<-locosimu(d=vecD,prC=cc,contri=TdFinal2,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
 				print('-----------------  Done  --------------------')
 
 				ranges0<-range(r0,r1)
@@ -1103,7 +1191,7 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 				dd <- tktoplevel()
 				# tkconfigure(dd,cursor="watch")
 
-				tkwm.title(dd,"LR plot")
+				tkwm.title(dd,paste('LR plot, forensim v.',versionNum,sep=''))
 				frameC<-tkframe(dd)
 				
 				Dplot.loc<-function()
@@ -1206,7 +1294,8 @@ colnames(LRtab2)<-c('Pr(D)','Pr(E|Hp)','Pr(E|Hd)','LR','log10(LR)')
 	}
 	
 	tf <- tktoplevel()
-	tkwm.title(tf,"LRmix: Likelihood Ratio Calculator")
+	versionNum<-'4.0'#sessionInfo()$otherPkgs$forensim$Version
+	tkwm.title(tf,paste('LRmix: Likelihood Ratio Calculator',', forensim v.', versionNum,sep=''))
 	# icn <- tkimage.create("photo", file=system.file("files/test.GIF", package = "forensim"))#"test.GIF")
 	#TclTklabel <- tklabel(frame1, image=icn, background="white")
 	done <- tclVar(0)
