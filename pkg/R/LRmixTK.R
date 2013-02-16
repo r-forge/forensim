@@ -673,7 +673,9 @@ LRmixTK <-function()
 			}
 			else{
 			indVicHd<-NULL
-			TdFinal<-Td.vic}#else its null, for code clarity only
+			TdFinal<-Td.vic
+			TdFinal2<-Td.vic
+			}#else its null, for code clarity only
 			tdfinal<-TdFinal
 			locus.hp<-rep(0,length(loc0))
 			locus.hd<-rep(0,length(loc0))
