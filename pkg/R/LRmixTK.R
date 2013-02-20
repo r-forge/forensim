@@ -4,6 +4,7 @@
 #GUI for LRmix
 # with Help from Oyvind Bleka
 #patch 3.2.1 (NFI) # 17/01/2013
+# patch 4.1, Delft
 LRmixTK <-function()
 {
 	if(!require(tcltk)) stop("package tcltk is required")
@@ -47,7 +48,6 @@ LRmixTK <-function()
 				for(k in whichsamp)
 				{		
 					allele<-tab[tab$Marker==whichmark[i] & tab$SampleName==k,-c(1,2)]
-					# print(allele)
 					tmpo<-allele[which(!is.na(allele))]
 					if(length(tmpo)!=0) allele2<-as.numeric(tmpo)
 					else{allele2<-NULL}
@@ -58,7 +58,6 @@ LRmixTK <-function()
 				}
 				
 
-				# print(reptmp)
 				replist[[i]]<-reptmp
 		}	
 			
@@ -92,7 +91,6 @@ LRmixTK <-function()
 				# allele 2 is the vector of alleles at marker i and sample k
 				# list0<-list(allele2)
 				# names(list0)<-k
-				# print(allele2)
 				reptmp<-c(reptmp, allele2,0)
 			}
 			
@@ -132,7 +130,6 @@ LRmixTK <-function()
 				# allele 2 is the vector of alleles at marker i and sample k
 				# list0<-list(allele2)
 				# names(list0)<-k
-				# print(allele2)
 				reptmp<-c(reptmp, allele2)
 			}
 			
@@ -176,7 +173,6 @@ LRmixTK <-function()
 			repl0<- strsplit(tclvalue(repl),' ')[[1]]
 
 		}
-		# print(repl0)
 		#check wether the user uploaded the files for the sample and the refrenecs profiles
 		veriFile<-function(filename,ext,error=TRUE,txt='')
 		{
@@ -284,7 +280,6 @@ LRmixTK <-function()
 			
 		csp<-veriFile(file1,ext1,error=TRUE,'crime scene profile')
 		suspect<-veriFile(file2,ext2,error=TRUE,'suspect profile')
-		# print(suspect)
 		suspectID<-unique(suspect$SampleName)
 		# contributors under Hp
 
@@ -358,9 +353,6 @@ LRmixTK <-function()
         simval <- tclVar(100)
         simval.entry <- tkentry(simFrame1, textvariable = simval, width = 4, highlightthickness = 1, relief = "solid", justify = "center")
 		tkgrid(tklabel(simFrame1, text = "number of iterations", font = "courrier 10"), simval.entry, sticky = "w")
-		#event function for simulation
-		# source('analyse.sim6.R')
-		# xxx  
 		# here put function simulation
 		sim.loc<-function()
 		{
@@ -447,15 +439,20 @@ LRmixTK <-function()
 
 			#-------------------------------------------
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
-			# print(cspFinal)
-			#contributors under Hp
-			TpFinal<-ConvertSamp2(Tp[Tp$Marker %in% loc0, ])
+			TpFinal<-NULL#and changed if applicable
+			if(is.data.frame(Tp)){
+			if(nrow(Tp)!=0) {
+			TpFinal<-ConvertSamp2(Tp[Tp$Marker %in% loc0, ])}
+			}
+			
 			VdFinal<-ConvertSamp2(Vd.sus[Vd.sus$Marker %in% loc0, ])
+		
 
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
-			if(is.data.frame(Td.vic))#if a victim is given
+			if(is.data.frame(Td.vic) )#if a victim is given
 			{
-				TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])
+				if(nrow(Td.vic)!=0){
+				TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])}
 				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
 			}
 			else{
@@ -482,10 +479,11 @@ LRmixTK <-function()
 					#numerator Pr(E|Hp)
 					drop0<-as.numeric(tclvalue(prD))
 					randoman<-as.numeric(strsplit(simugeno(tab=data1,n=1,which.loc=jj)$tab.geno,'/')[[1]])
-					tp<-c(unlist(TpFinal[[jj]]), randoman)
+					if(!is.null(TpFinal)){tp<-c(unlist(TpFinal[[jj]]), randoman)}
+					else{tp<-randoman}
 					Vd<-unlist(VdFinal[[jj]])
-					lr0[jj]<-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,length(tp)/2 + xp),prDHom=rep(drop0^2,length(tp)/2 + xp),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])/
-					likEvid(Repliste=(rep0),T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,length(tmpTd)/2 + xd),prDHom=rep(drop0^2,length(tmpTd)/2 + xd),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
+					lr0[jj]<-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])/
+					likEvid(Repliste=(rep0),T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
 					# V does not contribute to replicate probability)
 				}
 				
@@ -640,10 +638,6 @@ LRmixTK <-function()
 			
 			cspFinal<-ConvertSamp(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
 			cspFinal2<-ConvertSamp.old(csp[csp$Marker %in% loc0 & csp$SampleName %in% repl0, ])
-
-			# print('ici')
-			# print(cspFinal)
-			# Z<<-cspFinal
 			nbAll<-rep(0,length(repl0))
 			for(mm in 1:length(nbAll))
 			{
@@ -663,13 +657,14 @@ LRmixTK <-function()
 			VdFinal2<-ConvertSamp.old(Vd.sus[Vd.sus$Marker %in% loc0, ])
 
 			# ------ select subset with the markers in loc0, difficulty for the victim is that it is no necessarily --------- #
-			if(is.data.frame(Td.vic))#if a victim is given
+			if(is.data.frame(Td.vic)   )#if a victim is given
 			{
-				indVicHd<-unique(Td.vic$SampleName)
-				TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])
-				TdFinal2<-ConvertSamp.old(Td.vic[Td.vic$Marker %in% loc0, ])
-				# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
-
+				if(nrow(Td.vic)!=0){
+					indVicHd<-unique(Td.vic$SampleName)
+					TdFinal<-ConvertSamp2(Td.vic[Td.vic$Marker %in% loc0, ])
+					TdFinal2<-ConvertSamp.old(Td.vic[Td.vic$Marker %in% loc0, ])
+					# if(is.character(TdFinal)) TdFinal <-matrix(TdFinal,ncol=length(loc0))
+				}
 			}
 			else{
 			indVicHd<-NULL
@@ -1124,6 +1119,7 @@ write.table('\n',file=filen,append=TRUE,row.names=FALSE,col.names=FALSE,quote=FA
 				print('-- Determination of PrD ranges in progress --')
 				r0<-locosimu(d=vecD,prC=cc,contri=TpFinal2,freq=data0,x=xp,nrep=100,nb=nbAll.mean,locnames=loc0)
 				r1<-locosimu(d=vecD,prC=cc,contri=TdFinal2,freq=data0,x=xd,nrep=100,nb=nbAll.mean,locnames=loc0)
+
 				print('-----------------  Done  --------------------')
 
 				ranges0<-range(r0,r1)
