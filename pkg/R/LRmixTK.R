@@ -462,38 +462,44 @@ LRmixTK <-function()
 			xp<-as.numeric(tclvalue(ncHp))
 			xd<-as.numeric(tclvalue(ncHd))
 			theta0<-as.numeric(tclvalue(theta))
-			# init. list for the storage of LRs for each simulated profile
-			listTab<-vector('list',M)
+			# init. vector for the storage of LRs for each simulated profile
+			lr0<-rep(1,M)
 			print('========= Performance plot ============')
-			
-			for(mm in 1:M)
-			{
-				cat(paste(100*mm/M,'%',sep=''), 'completed','\n')
-				lr0<-rep(0,length(loc0))
-				names(lr0)<-loc0
-				for(jj in loc0)
-				{
-					rep0<-cspFinal[[jj]]
-					if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
-					else{ tmpTd<-0}
-					#numerator Pr(E|Hp)
-					drop0<-as.numeric(tclvalue(prD))
-					randoman<-as.numeric(strsplit(simugeno(tab=data1,n=1,which.loc=jj)$tab.geno,'/')[[1]])
-					if(!is.null(TpFinal)){tp<-c(unlist(TpFinal[[jj]]), randoman)}
-					else{tp<-randoman}
-					Vd<-unlist(VdFinal[[jj]])
-					lr0[jj]<-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]])/
-					likEvid(Repliste=(rep0),T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]])# V does not contribute to replicate probability
-					# V does not contribute to replicate probability)
-				}
-				
-				
-				listTab[[mm]]<-prod(lr0)
-			}
+      	   	drop0<-as.numeric(tclvalue(prD)) #get dropout-prob from GUI
+			for(jj in loc0) {
+                   popfreq = data0[[jj]] #get allele-frequencies
+			 rep0<-cspFinal[[jj]] #get evidence
+
+			 #denumerator Pr(E|Hd)
+  	 		 if(is.list(TdFinal )){ tmpTd<-unlist(TdFinal[jj])}
+			 else{ tmpTd<-0}
+                   Vd<-unlist(VdFinal[[jj]])
+        	       hd_val = likEvid(Repliste=(rep0),T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]]) # V does not contribute to replicate probability)
+ 
+			 #numerator Pr(E|Hp). G is all possible genotypes:
+                   hp_val = rep(NA,M) #vector for hp_values of random man
+                   G = t(as.matrix(expand.grid(rep(list(as.numeric(names(popfreq)),as.numeric(names(popfreq)) )))))
+                   keep = G[2,]>=G[1,] #unique genotypes
+                   G <- G[,keep]  #store genotypes
+                   tmpP = t(as.matrix(expand.grid(rep(list(as.numeric(popfreq),as.numeric(popfreq) )))))
+                   Gprob = exp(colSums(log(tmpP[,keep]))) #get genotype probs
+                   ishet = G[1,]!=G[2,]
+  			 Gprob[ishet] = 2*Gprob[ishet] #multiply with two to get heterozygote probs
+                   Gsampled = sample(1:length(Gprob),size=M,prob=Gprob,replace=TRUE)
+                   unGsampled = unique(Gsampled) #get unique sampled
+                   for(uu in 1:length(unGsampled)) {
+                    randoman = as.numeric(G[,unGsampled[uu]]) #get allele-frequence of unique random man
+        		  if(!is.null(TpFinal)){tp<-c(unlist(TpFinal[[jj]]), randoman)}
+			  else{tp<-randoman}
+                    hp_val[ Gsampled==unGsampled[uu] ] <-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]]) #calculate for unique random man
+                   } #end for each unique calculation
+		 	 lr0 = lr0*hp_val/hd_val #multiply with LR-value for current locus for all randoms
+     			 cat(paste(jj, 'completed','\n'))
+			} #end 'jj' for each locus
 			
 			print('===================================')
 		#--- sensitivity analysis
-			distriLR<-log(unlist(listTab), 10) 
+			distriLR<-log(lr0, 10) 
 			# # plot the empirical cumultaive distribution of the log10  LR, using function ecdf 
 			# plot(ecdf(log(distriLR,10)),xlab='log10 LR')
 			qvals <- c(0.01,0.05,0.5,0.95,0.99)
