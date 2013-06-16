@@ -477,23 +477,23 @@ LRmixTK <-function()
         	       hd_val = likEvid(Repliste=(rep0),T=tmpTd,V=Vd,x=xd,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)), freq=data0[[jj]]) # V does not contribute to replicate probability)
  
 			 #numerator Pr(E|Hp). G is all possible genotypes:
-                   hp_val = rep(NA,M) #vector for hp_values of random man
-                   G = t(as.matrix(expand.grid(rep(list(as.numeric(names(popfreq)),as.numeric(names(popfreq)) )))))
-                   keep = G[2,]>=G[1,] #unique genotypes
+                   hp_val <- rep(NA,M) #vector for hp_values of random man
+                   G <- t(as.matrix(expand.grid(rep(list(as.numeric(names(popfreq)),as.numeric(names(popfreq)) )))))
+                   keep <- G[2,]>=G[1,] #unique genotypes
                    G <- G[,keep]  #store genotypes
-                   tmpP = t(as.matrix(expand.grid(rep(list(as.numeric(popfreq),as.numeric(popfreq) )))))
-                   Gprob = exp(colSums(log(tmpP[,keep]))) #get genotype probs
-                   ishet = G[1,]!=G[2,]
-  			 Gprob[ishet] = 2*Gprob[ishet] #multiply with two to get heterozygote probs
-                   Gsampled = sample(1:length(Gprob),size=M,prob=Gprob,replace=TRUE)
-                   unGsampled = unique(Gsampled) #get unique sampled
+                   tmpP <- t(as.matrix(expand.grid(rep(list(as.numeric(popfreq),as.numeric(popfreq) )))))
+                   Gprob <- exp(colSums(log(tmpP[,keep]))) #get genotype probs
+                   ishet <- G[1,]!=G[2,]
+  			 Gprob[ishet] <- 2*Gprob[ishet] #multiply with two to get heterozygote probs
+                   Gsampled <- sample(1:length(Gprob),size=M,prob=Gprob,replace=TRUE)
+                   unGsampled <- unique(Gsampled) #get unique sampled
                    for(uu in 1:length(unGsampled)) {
-                    randoman = as.numeric(G[,unGsampled[uu]]) #get allele-frequence of unique random man
+                    randoman <- as.numeric(G[,unGsampled[uu]]) #get allele-frequence of unique random man
         		  if(!is.null(TpFinal)){tp<-c(unlist(TpFinal[[jj]]), randoman)}
 			  else{tp<-randoman}
                     hp_val[ Gsampled==unGsampled[uu] ] <-likEvid(Repliste=(rep0),T=tp,V=0,x=xp,theta=theta0,prDHet=rep(drop0,5),prDHom=rep(drop0^2,5),prC=as.numeric(tclvalue(prC)),freq=data0[[jj]]) #calculate for unique random man
                    } #end for each unique calculation
-		 	 lr0 = lr0*hp_val/hd_val #multiply with LR-value for current locus for all randoms
+		 	 lr0 <- lr0*hp_val/hd_val #multiply with LR-value for current locus for all randoms
      			 cat(paste(jj, 'completed','\n'))
 			} #end 'jj' for each locus
 			
