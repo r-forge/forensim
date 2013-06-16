@@ -2,7 +2,7 @@
 #include <math.h>
 #include <Rmath.h>
 
-#define WITH_PERMUTATIONS
+// #define WITH_PERMUTATIONS
 #define FAST_VERSION_INFOREP
 
 // #define DEBUG_TOOL
