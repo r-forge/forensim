@@ -1313,7 +1313,7 @@ colnames(LRtab2)<-c('Pr(D)','Pr(E|Hp)','Pr(E|Hd)','LR','log10(LR)')
 	openFile<-function(file0,caselist,top,ext)
 	{		
 		fileName<-tclvalue(tkgetOpenFile(parent=top,initialdir=tclvalue(file0),multiple="true",
-		filetypes="{{CSV Files} {.csv .txt}} {{Tab-delimited Files} {.tab}}")) #tclvalue(tkgetOpenFile())
+		filetypes="{{CSV Files} {.csv .txt}} ")) #tclvalue(tkgetOpenFile())
 		if (!nchar(fileName))
 		{
 			tkmessageBox(message="No file was selected!")
@@ -1656,7 +1656,7 @@ filePath2<-tclVar(''); 	extens2<-tclVar('')
 	# it will update the valueof filepath22 to its current value
 	importAF<-function(fa,pa,ex,d0)#frame, pathfile, and extension var
 	{
-		file0<-tclvalue(tkgetOpenFile(parent=fa,initialdir=tclvalue(pa),multiple="true",		filetypes="{{CSV Files} {.csv .txt}} {{Tab-delimited Files} {.tab}}"))
+		file0<-tclvalue(tkgetOpenFile(parent=fa,initialdir=tclvalue(pa),multiple="true",filetypes="{{CSV Files} {.csv .txt}}"))
 	
 		if (!nchar(file0))
 		{
