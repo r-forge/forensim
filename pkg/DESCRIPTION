@@ -3,7 +3,7 @@ Type: Package
 Title: Statistical tools for the interpretation of forensic DNA
         mixtures
 Version: 4.3
-Date: 2013-06-16
+Date: 2013-09-12
 Author: Hinda Haned <h.haned@nfi.minvenj.nl>
 Maintainer: Hinda Haned <h.haned@nfi.minvenj.nl>
 Depends: methods, tcltk,tcltk2,tkrplot
