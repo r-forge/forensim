@@ -64,11 +64,13 @@ d10<-ngm$tab$D10
 # evaluate the evidence under Hp; contributors are the suspect and one unknown,
 # dropout probabilities for the suspect and the unknown are the same: 0.2 for heterozygotes,
 # and 0.1 for homozygotes.
-likEvid(Repliste=c(12,13,14),T=c(12,13),V=0,x=1,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,
+likEvid(Repliste=c(12,13,14),T=c(12,13),V=0,x=1,theta=0,prDHet=c(0.2,0.2),
+prDHom=c(0.04,0.04),prC=0,
 freq=d10)
 #  evaluate the evidence under Hd; contributors are two unknown people, the dropout
 # probabilities for the unknowns is kept the same under Hd
-likEvid(Repliste=c(12,13,14),T=0,V=0,x=2,theta=0,prDHet=c(0.2,0.2),prDHom=c(0.04,0.04),prC=0,freq=d10)
+likEvid(Repliste=c(12,13,14),T=0,V=0,x=2,theta=0,prDHet=c(0.2,0.2),
+prDHom=c(0.04,0.04),prC=0,freq=d10)
 }
 \keyword{htest}
 
