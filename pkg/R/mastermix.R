@@ -3,7 +3,7 @@
 #July 2009
 mastermix<-function()
 {
-	if(!require(tcltk)) stop("package tcltk is required")
+	# if(!require(tcltk)) stop("package tcltk is required")
 	#tclRequire("Tktable")
 	#fonts definition
 	font0 <- tkfont.create(family="times",size=35,weight="bold",slant="italic")

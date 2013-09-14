@@ -5,7 +5,7 @@
 "A4.simu" <- function()
 {
 	#four-allele model: numerical results
-	if(!require(tcltk)) stop("package tcltk is required")
+	# if(!require(tcltk)) stop("package tcltk is required")
 	tclRequire("Tktable")
 	#fonts definition
 	font0 <- tkfont.create(family="times",size=35,weight="bold",slant="italic")

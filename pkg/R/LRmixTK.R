@@ -7,9 +7,9 @@
 # patch 4.1, Delft
 LRmixTK <-function()
 {
-	if(!require(tcltk)) stop("package tcltk is required")
-	if(!require(tcltk2)) stop("package tcltk2 is required")
-	if(!require(tkrplot)) stop("package tkrplot is required")
+	# if(!require(tcltk)) stop("package tcltk is required")
+	# if(!require(tcltk2)) stop("package tcltk2 is required")
+	# if(!require(tkrplot)) stop("package tkrplot is required")
 	tclRequire("Tktable")
 	font0 <- tkfont.create(family="courrier",size=35,weight="bold",slant="italic")
 	font1<-tkfont.create(family="times",size=14,weight="bold")#,slant="italic")
