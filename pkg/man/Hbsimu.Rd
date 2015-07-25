@@ -17,7 +17,7 @@ Hbsimu()
 }
 
 
-\author{ Hinda Haned  \email{h.haned@nfi.minvenj.nl} }
+\author{ Hinda Haned  \email{contact@hindahaned.info} }
 
 \references{
 Gill P, Curran J and Elliot K. A graphical simulation model of the entire DNA process associated with the analysis of short 

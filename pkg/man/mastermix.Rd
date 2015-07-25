@@ -50,7 +50,7 @@ model, while a right-click opens the corresponding help page.
 Gill P, Sparkes P, Pinchin R, Clayton, Whitaker J, Buckleton J. Interpreting simple STR mixtures using allele peak
 areas. \emph{Forensic Sci Int} 1998;91:41-5.
 }
-\author{ Hinda Haned  \email{h.haned@nfi.minvenj.nl} }
+\author{ Hinda Haned  \email{contact@hindahaned.info} }
 \seealso{\code{\link{A2.simu}}, \code{\link{A3.simu}} and \code{\link{A4.simu}}}
 
  

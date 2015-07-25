@@ -15,7 +15,7 @@ For more information about these classes type 'class ?tabfreq', 'class ?simugeno
 
  }
 
-\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
+\author{Hinda Haned  <contact@hindahaned.info>}
 
 \keyword{manip}
 \keyword{datagen}

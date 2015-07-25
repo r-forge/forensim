@@ -68,7 +68,7 @@ Wright S. The genetical structure of populations. \emph{Ann Eugen} 1951;15:323-3
 
  }
 
-\author{Hinda Haned \email{h.haned@nfi.minvenj.nl}}
+\author{Hinda Haned \email{contact@hindahaned.info}}
 \note{ The code used here  for the generation of random Dirichlet deviates was previously implemented in the gtools library.}
 \seealso{ \code{\link{simufreqD}}}
  

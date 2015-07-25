@@ -48,7 +48,7 @@ at their respective allele frequencies in the target population.
 }
 
 
-\author{Hinda Haned \email{h.haned@nfi.minvenj.nl}}
+\author{Hinda Haned \email{contact@hindahaned.info}}
 \examples{
 data(Tu)
 tab<-tabfreq(Tu)

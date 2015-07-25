@@ -27,7 +27,7 @@ A matrix of two columns:\cr
 used to compute the
 likelihood of the observed alleles in a mixed DNA stain given the number of contributors.  }
 
-\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
+\author{Hinda Haned  <contact@hindahaned.info>}
 
 
 

@@ -18,7 +18,7 @@ to "@" and "@<-".\cr
   A \linkS4class{simugeno}, a \linkS4class{simumix} or a \linkS4class{tabfreq} object.
 }
 
-\author{ Hinda Haned \email{h.haned@nfi.minvenj.nl} }
+\author{ Hinda Haned \email{contact@hindahaned.info} }
 
 
 

@@ -7,5 +7,5 @@ User-friendly graphical user interface for the LR calculator LR. }
 \usage{
 LRmixTK()
 }
-\author{Hinda Haned \email{h.haned@nfi.minvenj.nl}}
+\author{Hinda Haned \email{contact@hindahaned.info}}
 \keyword{htest}

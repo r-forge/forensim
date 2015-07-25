@@ -47,7 +47,7 @@ perform better than maximum allele count? \emph{ J Forensic Sci}, accepted 2010.
 Interpreting DNA Mixtures in Structured Populations. \emph{ J Forensic Sci} 1999;44(5): 987-995
 }
 
-\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
+\author{Hinda Haned  <contact@hindahaned.info>}
 
 
 

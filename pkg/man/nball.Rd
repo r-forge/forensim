@@ -16,7 +16,7 @@ nball(mix, byloc = FALSE)
 
 
 
-\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
+\author{Hinda Haned  <contact@hindahaned.info>}
 
 
 \seealso{  \code{\link{simumix}} }

@@ -30,7 +30,7 @@ Haned H., Pene L., Sauvage F., Pontier D., The predictive value of the maximum l
 to a DNA mixture, submitted, 2010.
 }
 
-\author{Hinda Haned  <h.haned@nfi.minvenj.nl>}
+\author{Hinda Haned  <contact@hindahaned.info>}
 
 \seealso{
 maximum likelihood estimator \code{\link{likestim}}
