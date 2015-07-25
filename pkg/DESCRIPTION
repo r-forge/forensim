@@ -4,8 +4,8 @@ Title: Statistical tools for the interpretation of forensic DNA
         mixtures
 Version: 4.3
 Date: 2013-09-14
-Author: Hinda Haned <h.haned@nfi.minvenj.nl>
-Maintainer: Hinda Haned <h.haned@nfi.minvenj.nl>
+Author: Hinda Haned <contact@hindahaned.info>
+Maintainer: Hinda Haned <contact@hindahaned.info>
 Depends: methods, tcltk,tcltk2,tkrplot
 Description: Statistical methods and simulation tools for the
         interpretation of forensic DNA mixtures
